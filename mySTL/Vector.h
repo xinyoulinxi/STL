@@ -63,10 +63,10 @@ namespace STL {
 		reference operator[](size_type i) { return *(begin() + i); }
 		pointer data() { return start_; }
 
-		//容器内容的修改
+		//容器内容的修改操作函数
 		void clear();
 		
-		void reallocate(size_t n = 0);
+		
 		void swap(vector& v);
 		void pop_back();
 		void copy(iterator start, iterator new_start);
@@ -80,12 +80,11 @@ namespace STL {
 
 		//空间配置器相关的操作函数
 	private:
-
+		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
-		iterator allocate_and_fill(size_type n, const T& x) {
-			
-		}
+		iterator allocate_and_fill(size_type n, const T& x);
 		
+
 	};
 	
 	template <typename T>
@@ -108,4 +107,6 @@ namespace STL {
 	}
 
 }
+//实现
+#include"Vector_detail.h"
 #endif

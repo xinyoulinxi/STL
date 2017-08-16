@@ -123,6 +123,7 @@
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="Vector_detail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
