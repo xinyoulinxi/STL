@@ -47,23 +47,21 @@ namespace STL {
 		const_iterator begin() const { return begin_; }
 		const_iterator cbegin() { return begin_; }
 		const_iterator cend() { return end_; }
-		//test github
+		//test new road
 
 		//大小，容量
 		size_type size() { return  end() - begin(); }
 		size_type capacity() { return end_of_storage - begin(); }
 		bool empty() { return begin() == end(); }
-		void push_back(const value_type & value);
+		void push_back(const value_type & value);//末尾添加
 		void pop_back() { if (!empty()) --end_; }
 
 		//元素访问
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
-		reference front() { return *begin(); }
-		reference back() { return *(end() - 1); }
+		reference front() { return *begin(); }//第一个元素
+		reference back() { return *(end() - 1); }//最后一个元素
 		reference operator[](size_type i) { return *(begin() + i); }
 		pointer data() { return start_; }
-
-		//
 
 		//容器内容的修改
 		void clear();
@@ -84,7 +82,9 @@ namespace STL {
 	private:
 
 		void fill_initialize(size_t n, const value_type& value);
-
+		iterator allocate_and_fill(size_type n, const T& x) {
+			
+		}
 		
 	};
 	
