@@ -20,8 +20,8 @@ namespace STL {
 		typedef size_t					size_type;
 		typedef ptrdiff_t	            difference_type;
 	private:
-		iterator begin_;   //表示目前使用空间的头部
-		iterator end_;     //表示目前使用空间的尾部
+		iterator start_;   //表示目前使用空间的头部
+		iterator finish_;     //表示目前使用空间的尾部
 		iterator end_of_storage; //表示当前可用空间的尾部
 
 		typedef Alloc data_Allocator;
@@ -41,12 +41,12 @@ namespace STL {
 		~vector();
 		//迭代器，位置相关
 
-		iterator begin() { return begin_; }
-		const_iterator end()const { return end_; }
-		iterator end() { return end_; }
-		const_iterator begin() const { return begin_; }
-		const_iterator cbegin() { return begin_; }
-		const_iterator cend() { return end_; }
+		iterator begin() { return (start_); }
+		const_iterator end()const { return (finish_); }
+		iterator end() { return (finish_); }
+		const_iterator begin() const { return (start_); }
+		const_iterator cbegin() { return (start_); }
+		const_iterator cend() { return (start_); }
 		//test new road
 
 		//大小，容量
@@ -54,7 +54,7 @@ namespace STL {
 		size_type capacity() { return end_of_storage - begin(); }
 		bool empty() { return begin() == end(); }
 		void push_back(const value_type & value);//末尾添加
-		void pop_back() { if (!empty()) --end_; }
+		void pop_back() { if (!empty()) --finish_; }
 
 		//元素访问
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }

@@ -8,14 +8,18 @@ namespace STL {
 	vector<T, Alloc>::vector(const size_type n) {
 		
 	}
-	template<class T, class Alloc>
-	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
-		iterator result = data_Allocator::allocate(n);
-	}
+
 
 	template<class T, class Alloc>
 	vector<T, Alloc>::vector(size_type n, const value_type& value) {
 
+	}
+	//ø’º‰≈‰÷√∆˜œ‡πÿ
+	template<class T, class Alloc>
+	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
+		allocate_and_fill(n, value);
+		end_ = begin_ + n;
+		end_of_storage = end_;
 	}
 
 	template<class T, class Alloc>
@@ -24,13 +28,15 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
-
+		if (begin_) {
+			
+		}
 	}
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::reallocate(size_t n = 0) {
 
 	}
-
+	
 }
 #endif
