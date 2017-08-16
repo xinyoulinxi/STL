@@ -127,7 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
-    <ClCompile Include="Vector.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

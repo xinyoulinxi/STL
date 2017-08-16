@@ -37,10 +37,10 @@ namespace STL {
 		vector& operator =(const vector& v);
 		vector& operator =(vector&& v);
 
-		void deallocate();
+
 		~vector();
 		//迭代器，位置相关
-		
+
 		iterator begin() { return begin_; }
 		const_iterator end()const { return end_; }
 		iterator end() { return end_; }
@@ -65,8 +65,8 @@ namespace STL {
 
 		//容器内容的修改操作函数
 		void clear();
-		
-		
+
+
 		void swap(vector& v);
 		void pop_back();
 		void copy(iterator start, iterator new_start);
@@ -74,37 +74,18 @@ namespace STL {
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
 		void push_back(const value_type & value);
-		void fill_initialize(size_t n, const value_type& value);
+
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 
 		//空间配置器相关的操作函数
 	private:
+		void deallocate();
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
 		iterator allocate_and_fill(size_type n, const T& x);
-		
 
 	};
-	
-	template <typename T>
-	void vector<T>::reallocate(size_t n = 0) {
-		size_t old_size = n;
-		size_t newCapacity = 2 * old_size + 1;
-
-		iterator new_begin;
-		iterator new_end;
-
-		new_begin = new value_type[newCapacity];
-
-		copy(begin(), new_begin);
-
-		free();
-
-		begin_ = new_begin;
-		end_ = begin_ + old_size;
-		end_of_storage = begin_ + newCapacity;
-	}
 
 }
 //实现
