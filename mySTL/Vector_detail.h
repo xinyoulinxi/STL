@@ -23,9 +23,9 @@ namespace STL {
 	}
 
 	template<class T, class Alloc>
-	iterator vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& x) {
-		iterator result = data_Allocater::allocate(n);//配置n个元素的空间
-		STL::uninitialized_fill_n(result, n, x);
+	iterator vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
+		start_ = data_Allocater::allocate(n);//配置n个元素的空间
+		STL::uninitialized_fill_n(start_, start_ + n, value);
 		
 	}
 	template<class T, class Alloc>
