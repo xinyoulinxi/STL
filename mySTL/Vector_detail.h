@@ -17,7 +17,7 @@ namespace STL {
 	//ø’º‰≈‰÷√∆˜œ‡πÿ
 	template<class T, class Alloc>
 	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
-		allocate_and_fill(n, value);
+		allocate_and_fill_n(n, value);
 		finish_ =start_ + n;
 		end_of_storage = finish_;
 	}
