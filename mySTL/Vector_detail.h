@@ -26,12 +26,13 @@ namespace STL {
 	iterator vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
 		start_ = data_Allocater::allocate(n);//配置n个元素的空间
 		STL::uninitialized_fill_n(start_, start_ + n, value);
-		
+		finish_ = end_of_storage = start_ + n;
 	}
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
 		if (start_) {
-			data_Allocator::deallocate(start_, end_of_storage - start);
+			data_Allocator::destory(start_,finish_);
+			data_Allocator::deallocate(start_, capacity());
 		}
 	}
 	
