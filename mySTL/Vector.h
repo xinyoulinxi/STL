@@ -21,6 +21,7 @@ namespace STL {
 		typedef ptrdiff_t	            difference_type;
 	private:
 		iterator start_;   //表示目前使用空间的头部
+
 		iterator finish_;     //表示目前使用空间的尾部
 		iterator end_of_storage; //表示当前可用空间的尾部
 
@@ -83,8 +84,8 @@ namespace STL {
 		void deallocate();
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
-		iterator allocate_and_fill(size_type n, const T& x);
-		void uninitialized_fill_n();
+		iterator allocate_and_fill_n(size_type n, const T& x);
+		void uninitialized_fill_n(iterator position,const size_type & n,const value_type& value);
 	};
 
 }

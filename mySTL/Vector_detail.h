@@ -18,21 +18,23 @@ namespace STL {
 	template<class T, class Alloc>
 	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
 		allocate_and_fill(n, value);
-		end_ = begin_ + n;
-		end_of_storage = end_;
+		finish_ =start_ + n;
+		end_of_storage = finish_;
 	}
 
 	template<class T, class Alloc>
-	iterator vector<T, Alloc>::allocate_and_fill(size_type n, const T& x) {
-
+	iterator vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& x) {
+		iterator result = data_Allocater::allocate(n);//配置n个元素的空间
+		STL::uninitialized_fill_n(result, n, x);
+		
 	}
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
-		if (begin_) {
-			
+		if (start_) {
+			data_Allocator::deallocate(start_, end_of_storage - start);
 		}
 	}
-
+	
 	template<class T, class Alloc>
 	void vector<T, Alloc>::reallocate(size_t n = 0) {
 
