@@ -5,6 +5,7 @@
 #include"Algorithm.h"
 namespace STL {
 	
+	/******************  uninitialized_fill_n  ************/
 	template<class ForwardIterator , class T>
 	void uninitialized_fill_n(ForwardIterator first, ForwardIterator last, const T& value) {
 		typedef typename __type_traits<T>::is_POD_type is_POD;
@@ -15,10 +16,10 @@ namespace STL {
 	void __uninitialized_fill(ForwardIterator first, ForwardIterator last, const T&value, __true_type) {
 		fill(first, last, value);
 	}
-	template<class ForwardIterator, class Size, class T>
-	void __uninitialized_fill_n(ForwardIterator first, Size n, const T& x,__false_type ) {
+	template<class ForwardIterator, class T>
+	void __uninitialized_fill_n(ForwardIterator first, ForwardIterator last, const T& value,__false_type ) {
 		for (; first != last; ++first) {
-			Construct::construct(first, value);
+			construct(first, value);
 		}
 	}
 

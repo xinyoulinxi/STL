@@ -9,7 +9,6 @@ namespace STL {
 		new(p)T1(value);
 	}
 	//调用析构函数,第一个版本，接受一个指针
-
 	template<typename T>
 	inline void destory(T* pointer) {
 		pointer->~T();
