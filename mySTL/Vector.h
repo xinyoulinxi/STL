@@ -85,7 +85,7 @@ namespace STL {
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
 		iterator allocate_and_fill_n(size_type n, const T& x);
-		void uninitialized_fill_n(iterator position,const size_type & n,const value_type& value);
+		
 	};
 
 }
