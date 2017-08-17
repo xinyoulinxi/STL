@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm.h" />
     <ClInclude Include="alloc.h" />
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="Construct.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="type_traits.h" />
+    <ClInclude Include="UninitializedFunc.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector_detail.h" />
   </ItemGroup>

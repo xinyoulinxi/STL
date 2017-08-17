@@ -45,6 +45,12 @@
     <ClInclude Include="Vector_detail.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="UninitializedFunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">
