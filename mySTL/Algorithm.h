@@ -1,6 +1,7 @@
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
 #include<cstring>
+#include"Iterator.h"
 namespace STL {
 	/**********************              fill()     ***********************************
 	**************************** Algorithm Complexity  O(N)  ******************************/ 
@@ -42,7 +43,28 @@ namespace STL {
 		memset(first, static_cast<unsigned char>(value), n * sizeof(wchar_t));
 		return first + n;
 	}
+	//********************        distance()          ******************************
+	//****************      Algorithm Complexity: O(N) *******************
 
+	template<class InputIterator>
+	typename iterator_traits<InputIterator>::difference_type
+		_distance(InputIterator first
+			, InputIterator last
+			, input_iterator_tag) {
+		typename iterator_traits<InputIterator>::difference_type dist = 0;
+		while (first++ != last) {
+			++dist;
+		}
+		return dist;
+	}
+	template<class RandomIterator>
+	typename iterator_traits<RandomIterator>::difference_type
+		_distance(RandomIterator first
+			, RandomIterator last
+			, random_access_iterator_tag) {
+		auto dist = last - first;
+		return dist;
+	}
 }
 
 #endif

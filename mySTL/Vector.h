@@ -76,6 +76,10 @@ namespace STL {
 
 		//空间配置器相关的操作函数
 	private:
+		template<class InputIterator>
+		void __insert(iterator position, InputIterator first, InputIterator last, std::false_type);
+		template<class Integer>
+		void __insert(iterator position, Integer n, const value_type& value, std::true_type);
 		void deallocate();
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
