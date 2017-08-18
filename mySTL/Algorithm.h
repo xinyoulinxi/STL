@@ -46,25 +46,33 @@ namespace STL {
 	//********************        distance()          ******************************
 	//****************      Algorithm Complexity: O(N) *******************
 
+	//整个的distance函数
 	template<class InputIterator>
 	typename iterator_traits<InputIterator>::difference_type
-		_distance(InputIterator first
+		__distance(InputIterator first
 			, InputIterator last
 			, input_iterator_tag) {
-		typename iterator_traits<InputIterator>::difference_type dist = 0;
+		typename iterator_traits<InputIterator>::difference_type n = 0;
 		while (first++ != last) {
-			++dist;
+			++n;
 		}
-		return dist;
+		return n;
 	}
 	template<class RandomIterator>
 	typename iterator_traits<RandomIterator>::difference_type
-		_distance(RandomIterator first
+		__distance(RandomIterator first
 			, RandomIterator last
 			, random_access_iterator_tag) {
-		auto dist = last - first;
-		return dist;
+		return (last - first;)
 	}
+	template<class Iterator>
+	typename iterator_traits<Iterator>::difference_type
+		distance(Iterator first, Iterator last) {
+		typedef typename iterator_traits<Iterator>::iterator_category category;
+		return __distance(first, last, category());
+	}
+
+	
 }
 
 #endif
