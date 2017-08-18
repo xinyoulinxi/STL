@@ -89,7 +89,6 @@ namespace STL {
 		}
 		auto it1 = this->start_;
 		auto it2 = v.start_;
-		size_type 
 			for (; it1 != this->finish_&&it2!=v.finish_; ++it1, ++it2) {
 				if (*it1 != *it2) {
 					return false;
