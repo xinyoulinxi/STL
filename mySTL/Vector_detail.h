@@ -19,13 +19,19 @@ namespace STL {
 	}
 
 	//********************************ø’º‰≈‰÷√∆˜œ‡πÿ*********************
-	template<class InputIterator>
 	template<class T, class Alloc>
+	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
 		, InputIterator last
 		, std::false_type) {
-
+		difference_type leftSize = end_of_storage;  // £”‡ø’º‰
+		difference_type needSize = distance(first, last);// last --> first
+		if (leftSize >= needSize) {
+			if (finish_ - position > needSize) {
+				
+			}
+		}
 	}
 	
 	template<class T, class Alloc>
@@ -34,8 +40,7 @@ namespace STL {
 		, Integer n
 		, const value_type& value
 		, std::true_type) {
-		difference_type leftSize = end_of_storage;
-		difference_type needSize=
+
 	}
 
 	template<class T, class Alloc>
@@ -58,7 +63,7 @@ namespace STL {
 			data_Allocator::deallocate(start_, capacity());
 		}
 	}
-	
+
 	template<class T, class Alloc>
 	void vector<T, Alloc>::reallocate(size_t n = 0) {
 

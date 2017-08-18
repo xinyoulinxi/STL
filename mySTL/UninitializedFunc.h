@@ -49,6 +49,29 @@ namespace STL {
 		}
 		return first;
 	}
+	/******************  uninitialized_fill_n()  ************/
+	template<class InputIterator, class ForwardIterator>
+	ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
+		typedef typename _type_traits<iterator_traits<InputIterator>::value_type>::is_POD_type isPODType;
+		return __uninitialized_copy(first, last, result, isPODType());
+	}
+
+	//针对不同类型的__function
+	template<class InputIterator, class ForwardIterator>
+	ForwardIterator __uninitialized_copy(InputIterator first, InputIterator last,
+		ForwardIterator result, _true_type) {
+		memcpy(result, first, (last - first) * sizeof(*first));
+		return result + (last - first);
+	}
+	template<class InputIterator, class ForwardIterator>
+	ForwardIterator __uninitialized_copy(InputIterator first, InputIterator last,
+		ForwardIterator result, _false_type) {
+		int i = 0;
+		for (; first != last; ++first, ++i) {
+			construct((result + i), *first);
+		}
+		return (result + i);
+	}
 }
 
 
