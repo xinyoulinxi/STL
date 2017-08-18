@@ -9,7 +9,6 @@ namespace STL {
 
 
 	public:
-		typedef vector<T> myVec_;
 
 		typedef T value_type;
 		typedef value_type*             pointer;
@@ -35,8 +34,8 @@ namespace STL {
 		explicit vector(const size_type n);
 
 		//±È½Ï²Ù×÷
-		vector& operator =(const vector& v);
-		vector& operator =(vector&& v);
+		vector& operator ==(const vector& v);
+		vector& operator !=(const vector& v);
 
 
 		~vector();

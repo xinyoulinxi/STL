@@ -19,6 +19,7 @@ namespace STL {
 	}
 
 	//********************************空间配置器相关*********************
+
 	template<class T, class Alloc>
 	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
 		allocate_and_fill_n(n, value);
@@ -53,6 +54,28 @@ namespace STL {
 	void vector<T, Alloc>::pop_back() {
 		--finish_;
 		data_Allocator::destroy(finish_);
+	}
+
+	//*********************************容器比较函数*****************************
+
+	template<class T, class Alloc>
+	vector<T, Alloc>::vector& operator ==(const vector& v) {
+		if (v.size() != this->size()) {
+			return false;
+		}
+		auto it1 = this->start_;
+		auto it2 = v.start_;
+		size_type 
+			for (; it1 != this->finish_&&it2!=v.finish_; ++it1, ++it2) {
+				if (*it1 != *it2) {
+					return false;
+				}
+		}
+		return true;
+	}
+	template<class T, class Alloc>
+	void vector<T, Alloc>::vector& operator !=(const vector& v) {
+		return !(*this == v);
 	}
 
 	//*******************************对容器进行修改的内部函数******************
