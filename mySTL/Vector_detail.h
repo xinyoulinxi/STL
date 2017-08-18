@@ -28,7 +28,7 @@ namespace STL {
 	}
 
 	template<class T, class Alloc>
-	iterator vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
+	void vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
 		start_ = data_Allocater::allocate(n);//配置n个元素的空间
 		STL::uninitialized_fill_n(start_, start_ + n, value);
 		finish_ = end_of_storage = start_ + n;
@@ -59,7 +59,7 @@ namespace STL {
 	//*********************************容器比较函数*****************************
 
 	template<class T, class Alloc>
-	vector<T, Alloc>::vector& operator ==(const vector& v) {
+	bool vector<T, Alloc>::operator ==(const vector& v) {
 		if (v.size() != this->size()) {
 			return false;
 		}
@@ -74,7 +74,7 @@ namespace STL {
 		return true;
 	}
 	template<class T, class Alloc>
-	void vector<T, Alloc>::vector& operator !=(const vector& v) {
+	bool vector<T, Alloc>::operator !=(const vector& v) {
 		return !(*this == v);
 	}
 

@@ -34,8 +34,8 @@ namespace STL {
 		explicit vector(const size_type n);
 
 		//比较操作
-		vector& operator ==(const vector& v);
-		vector& operator !=(const vector& v);
+		bool operator ==(const vector& v);
+		bool operator !=(const vector& v);
 
 
 		~vector();
@@ -53,9 +53,6 @@ namespace STL {
 		size_type size() { return  end() - begin(); }
 		size_type capacity() { return end_of_storage - begin(); }
 		bool empty() { return begin() == end(); }
-		void push_back(const value_type & value);//末尾添加
-		void pop_back() { if (!empty()) --finish_; }
-
 		//元素访问
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
 		reference front() { return *begin(); }//第一个元素
@@ -73,8 +70,7 @@ namespace STL {
 		void insert(iterator position, const size_type& n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
-		void push_back(const value_type & value);
-
+		void push_back(const value_type & value);//末尾添加
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 
@@ -83,7 +79,7 @@ namespace STL {
 		void deallocate();
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
-		iterator allocate_and_fill_n(size_type n, const T& x);
+		void allocate_and_fill_n(size_type n, const T& x);
 		
 	};
 
