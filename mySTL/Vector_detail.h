@@ -25,7 +25,7 @@ namespace STL {
 		, InputIterator first
 		, InputIterator last
 		, std::false_type) {
-		difference_type leftSize = end_of_storage;  //Ê£Óà¿Õ¼ä
+		difference_type leftSize = end_of_storage - finish_;  //ÈÝÆ÷ÖÐÊ£Óà¿Õ¼ä
 		difference_type needSize = distance(first, last);// last --> first
 		if (leftSize >= needSize) {
 			if (finish_ - position > needSize) {
