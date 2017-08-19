@@ -4,6 +4,8 @@
 #include"Allocator.h"
 #include"Iterator.h"
 #include"Algorithm.h"
+#include<algorithm>
+
 namespace STL {
 	template <class T, class Alloc = allocator<T> >
 	class vector {
