@@ -18,7 +18,42 @@ namespace STL {
 		allocate_and_fill_n(n, value);
 	}
 
+	template<class T, class Alloc>
+	template<class InputIterator>
+	vector<T, Alloc>::vector(InputIterator first, InputIterator last) {
+		__vector(first, last, typename std::is_integral<InputIterator>::type());
+	}
+	template<class T, class Alloc>
+	vector<T, Alloc>::vector(const vector& v) {
+		allocateAndCopy(v.start_, v.finish_);
+	}
+	template<class T, class Alloc>
+	vector<T, Alloc>::vector(vector&& v) {//右值引用
+		start_ = v.start_;
+		finish_ = v.finish_;
+		end_of_storage_ = v.end_of_storage_;
+		v.start_ = v.finish_ = v.end_of_storage_ = NULL;
+	}
 	//********************************空间配置器相关*********************
+
+
+	template<class T, class Alloc>
+	template<class InputIterator>
+	void vector<T, Alloc>::__vector(InputIterator first, InputIterator last, std::false_type) {
+		allocateAndCopy(first, last);
+	}
+	template<class T, class Alloc>
+	template<class Integer>
+	void vector<T, Alloc>::__vector(Integer n, const value_type& value, std::true_type) {
+		allocateAndFillN(n, value);
+	}
+	template<class T, class Alloc>
+	template<class InputIterator>
+	void vector<T, Alloc>::allocateAndCopy(InputIterator first, InputIterator last) {
+		start_ = data_Allocator::allocate(last - first);
+		finish_ = STL::uninitialized_copy(first, last, start_);
+		end_of_storage_ = finish_;
+	}
 
 	template<class T, class Alloc>
 	template<class InputIterator>
@@ -115,7 +150,7 @@ namespace STL {
 	}
 
 	template<class T, class Alloc>
-	void vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
+	void vector<T, Alloc>::allocateAndFillN(size_type n, const T& value) {
 		start_ = data_Allocater::allocate(n);//配置n个元素的空间
 		STL::uninitialized_fill_n(start_, start_ + n, value);
 		finish_ = end_of_storage_ = start_ + n;
@@ -214,6 +249,7 @@ namespace STL {
 		}
 		return first;
 	}
+
 	//*******************************容器容量相关的操作函数********************
 
 

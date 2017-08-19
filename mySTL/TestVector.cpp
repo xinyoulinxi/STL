@@ -33,7 +33,7 @@ namespace STL {
 			
 		}
 		void test3() {
-
+			vector<int> vec;
 		}
 	}
 }

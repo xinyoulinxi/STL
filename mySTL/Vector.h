@@ -36,6 +36,10 @@ namespace STL {
 			start_(0), finish_(0), end_of_storage_(0) {}
 		vector(size_type n, const value_type& value);
 		explicit vector(const size_type n);
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last);
+		vector(const vector& v);
+		vector(vector&& v);
 
 		//±È½Ï²Ù×÷
 		bool operator ==(const vector& v);
@@ -85,13 +89,23 @@ namespace STL {
 		template<class InputIterator>
 		void __insert(iterator position, InputIterator first, InputIterator last, std::false_type);
 		void __insert(iterator position,size_type n, const value_type& value, std::true_type);
+
 		void deallocate();
 		void fill_initialize(size_t n, const value_type& value);
-		void allocate_and_fill_n(size_type n, const T& x);
+		void allocateAndFillN(size_type n, const T& x);
+		template<class InputIterator>
+		void allocateAndCopy(InputIterator first, InputIterator last);
 		template<class InputIterator>
 		void reallocateAndCopy(iterator position, InputIterator first, InputIterator last);
 		void reallocateAndFillN(iterator position, const size_type& n, const value_type& value);
+
 		size_type getNewCapacitySize(size_type n)const;
+
+		template<class InputIterator>
+		void __vector(InputIterator first, InputIterator last, std::false_type);
+		template<class Integer>
+		void __vector(Integer n, const value_type& value, std::true_type);
+
 	public:
 		template<class T, class Alloc>
 		friend bool operator == (const vector<T, Alloc>& v1, const vector<T, Alloc>& v2);
