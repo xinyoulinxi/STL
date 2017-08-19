@@ -5,7 +5,7 @@
 #include"Algorithm.h"
 namespace STL {
 	
-	/******************  uninitialized_fill() ************/
+	/*****************************  uninitialized_fill() *******************************/
 	template<class ForwardIterator , class T>
 	void uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& value) {
 		typedef typename __type_traits<T>::is_POD_type is_POD;
@@ -22,7 +22,7 @@ namespace STL {
 			construct(first, value);
 		}
 	}
-	/******************  uninitialized_fill_n()  ************/
+	/****************************  uninitialized_fill_n()  ****************************/
 	template<class ForwardIterator, class Size, class T>
 	ForwardIterator _uninitialized_fill_n_aux(ForwardIterator first,
 		Size n, const T& value, _true_type);
@@ -49,7 +49,7 @@ namespace STL {
 		}
 		return first;
 	}
-	/******************  uninitialized_fill_n()  ************/
+	/*****************************  uninitialized_copy()  *******************************/
 	template<class InputIterator, class ForwardIterator>
 	ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
 		typedef typename _type_traits<iterator_traits<InputIterator>::value_type>::is_POD_type isPODType;
@@ -66,12 +66,15 @@ namespace STL {
 	template<class InputIterator, class ForwardIterator>
 	ForwardIterator __uninitialized_copy(InputIterator first, InputIterator last,
 		ForwardIterator result, _false_type) {
+		typedef typename __type_traits<ForwardIterator>::value_type Value;
 		int i = 0;
 		for (; first != last; ++first, ++i) {
-			construct((result + i), *first);
+			construct(result + i, Value(*first));
 		}
 		return (result + i);
 	}
+
+	/*****************************  uninitialized_fill_n()  *******************************/
 }
 
 

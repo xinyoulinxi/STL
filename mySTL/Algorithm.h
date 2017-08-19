@@ -65,14 +65,36 @@ namespace STL {
 			, random_access_iterator_tag) {
 		return (last - first;)
 	}
+
 	template<class Iterator>
 	typename iterator_traits<Iterator>::difference_type
 		distance(Iterator first, Iterator last) {
 		typedef typename iterator_traits<Iterator>::iterator_category category;
 		return __distance(first, last, category());
 	}
+	//先使用std自带的泛型函数
+	////********************      copy_backward()       ******************************
+	////****************      Algorithm Complexity: O(N) ****************************
 
-	
+	//template< class BidirIt1, class BidirIt2 >
+	//BidirIt2 copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last){
+	//	while (first != last) {
+	//		*(--d_last) = *(--last);
+	//	}
+	//	return d_last;
+	//}
+	////********************              copy()                 ***************************************
+	////****************      Algorithm Complexity: O(N) ****************************
+
+	//template<class InputIt, class OutputIt>
+	//OutputIt copy(InputIt first, InputIt last,
+	//	OutputIt d_first)
+	//{
+	//	while (first != last) {
+	//		*d_first++ = *first++;
+	//	}
+	//	return d_first;
+	//}
 }
 
 #endif

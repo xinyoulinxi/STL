@@ -19,18 +19,30 @@ namespace STL {
 	}
 
 	//********************************空间配置器相关*********************
+
 	template<class T, class Alloc>
 	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
 		, InputIterator last
-		, std::false_type) {
+		, std::false_type) {//复杂类型
 		difference_type leftSize = end_of_storage - finish_;  //容器中剩余空间
-		difference_type needSize = distance(first, last);// last --> first
+		difference_type needSize = distance(first, last);// last - first
 		if (leftSize >= needSize) {
 			if (finish_ - position > needSize) {
+				STL::uninitialized_copy(fininsh_ - needSize, finish_, finish_);
+				std::copy_backward(position, finish_ - needSize, finish_);
+				std::copy(first, last, position);
+			}
+			else {
+				STL::uninitialized_copy(first + (finish_ - position), last, finish_);
+				
 				
 			}
+			finish_ += needSize;
+		}
+		else {
+			
 		}
 	}
 	
@@ -39,7 +51,7 @@ namespace STL {
 	void vector<T, Alloc>::__insert(iterator position
 		, Integer n
 		, const value_type& value
-		, std::true_type) {
+		, std::true_type) {//简单类型
 
 	}
 
