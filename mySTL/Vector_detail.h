@@ -22,6 +22,24 @@ namespace STL {
 
 	template<class T, class Alloc>
 	template<class InputIterator>
+	void vector<T, Alloc>::reallocateAndCopy(iterator position, InputIterator first, InputIterator last) {
+
+		difference_type newCapacity = getNewCapacitySize(last - first);
+		iterator newStart = data_Allocator::allocate(newCapacity);
+		iterator newEndOfStorage = newStart + newCapacity;
+
+		iterator NewFinish = STL::uninitialized_copy(begin(), position, newStart);
+		NewFinish = STL::uninitialized_copy(first, last, position);
+		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
+
+		deallocate();
+		start_ = newStart;
+		finish_ = NewFinish;
+		end_of_storage = newEndOfStorage;
+		
+	}
+	template<class T, class Alloc>
+	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
 		, InputIterator last
@@ -35,14 +53,14 @@ namespace STL {
 				std::copy(first, last, position);
 			}
 			else {
-				STL::uninitialized_copy(first + (finish_ - position), last, finish_);
-				
-				
+				iterator temp = STL::uninitialized_copy(first + (finish_ - position), last, finish_);
+				STL::uninitialized_copy(position, finish_, temp);
+				std::copy(first, first + (finish_ - position), position);		
 			}
 			finish_ += needSize;
 		}
 		else {
-			
+		
 		}
 	}
 	
@@ -144,5 +162,15 @@ namespace STL {
 	}
 
 	//*******************************容器容量相关的操作函数********************
+
+
+	//杂项
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::size_type vector<T, Alloc>::getNewCapacitySize(size_type n)const {
+		size_type oldCapacity= end_of_storage - start_;
+		auto res = STL::max(oldCapacity, n);
+		size_type newCapacity = (oldCapacity != 0 ? (oldCapacity + res) : n);
+		return newCapacity;
+	}
 }
 #endif
