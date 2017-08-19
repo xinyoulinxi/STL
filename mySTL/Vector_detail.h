@@ -42,8 +42,7 @@ namespace STL {
 	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
-		, InputIterator last
-		, std::false_type) {//复杂类型
+		, InputIterator last) {
 		difference_type leftSize = end_of_storage - finish_;  //容器中剩余空间
 		difference_type needSize = distance(first, last);// last - first
 		if (leftSize >= needSize) {
@@ -60,7 +59,7 @@ namespace STL {
 			finish_ += needSize;
 		}
 		else {
-		
+			reallocateAndCopy();
 		}
 	}
 	
@@ -68,9 +67,8 @@ namespace STL {
 	template<class Integer>
 	void vector<T, Alloc>::__insert(iterator position
 		, Integer n
-		, const value_type& value
-		, std::true_type) {//简单类型
-
+		, const value_type& value) {
+		
 	}
 
 	template<class T, class Alloc>
@@ -89,7 +87,7 @@ namespace STL {
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
 		if (start_) {//存在被配置过的空间
-			data_Allocator::destory(start_,finish_);
+			data_Allocator::destroy(start_,finish_);
 			data_Allocator::deallocate(start_, capacity());
 		}
 	}
@@ -101,7 +99,7 @@ namespace STL {
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::clear() {
-		data_Allocator::destory(start_, finish_);
+		data_Allocator::destroy(start_, finish_);
 		finish_ = start_;
 	}
 	template<class T, class Alloc>
@@ -151,14 +149,16 @@ namespace STL {
 	void vector<T, Alloc>::insert(iterator position
 		, const size_type& n
 		, const value_type& value) {
-		__insert(position, n, value, typename std::_Is_integral<size_type>::type());
+
+		__insert(position, n, value);
 	}
+
 	template<class T, class Alloc>
 	template <class InputIterator>
 	void vector<T, Alloc>::insert(iterator position
 		, InputIterator first
 		, InputIterator last) {
-		__insert(position, first, last, typename std::_Is_integral<InputIterator>::type());
+		__insert(position, first, last);
 	}
 
 	//*******************************容器容量相关的操作函数********************
