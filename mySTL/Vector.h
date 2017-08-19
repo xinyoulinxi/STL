@@ -83,7 +83,6 @@ namespace STL {
 		void __insert(iterator position, InputIterator first, InputIterator last);
 		void __insert(iterator position,size_type n, const value_type& value);
 		void deallocate();
-		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
 		void allocate_and_fill_n(size_type n, const T& x);
 		template<class InputIterator>

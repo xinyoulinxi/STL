@@ -117,11 +117,6 @@ namespace STL {
 	}
 
 	template<class T, class Alloc>
-	void vector<T, Alloc>::reallocate(size_t n = 0) {
-
-	}
-
-	template<class T, class Alloc>
 	void vector<T, Alloc>::clear() {
 		data_Allocator::destroy(start_, finish_);
 		finish_ = start_;
