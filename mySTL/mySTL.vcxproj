@@ -122,6 +122,7 @@
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="TestIterator.h" />
+    <ClInclude Include="TestVector.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="UninitializedFunc.h" />
     <ClInclude Include="Vector.h" />
@@ -129,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
+    <ClCompile Include="TestVector.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

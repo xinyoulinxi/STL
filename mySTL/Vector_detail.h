@@ -43,7 +43,7 @@ namespace STL {
 	void vector<T, Alloc>::reallocateAndFillN(iterator position
 		, const size_type& n
 		, const value_type& value) {
-		difference_type newCapacity = getNewCapacitySize(last - first);
+		difference_type newCapacity = getNewCapacitySize(n);
 		iterator newStart = data_Allocator::allocate(newCapacity);
 		iterator newEndOfStorage = newStart + newCapacity;
 
@@ -61,16 +61,18 @@ namespace STL {
 	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
-		, InputIterator last) {
+		, InputIterator last, std::false_type) {
 		difference_type leftSize = end_of_storage_ - finish_;  //ÈÝÆ÷ÖÐÊ£Óà¿Õ¼ä
 		difference_type needSize = distance(first, last);// last - first
 		if (leftSize >= needSize) {
 			if (finish_ - position > needSize) {
-				STL::uninitialized_copy(fininsh_ - needSize, finish_, finish_);
+
+				STL::uninitialized_copy(finish_ - needSize, finish_, finish_);
 				std::copy_backward(position, finish_ - needSize, finish_);
 				std::copy(first, last, position);
 			}
 			else {
+				                     
 				iterator temp = STL::uninitialized_copy(first + (finish_ - position), last, finish_);
 				STL::uninitialized_copy(position, finish_, temp);
 				std::copy(first, first + (finish_ - position), position);		
@@ -78,14 +80,15 @@ namespace STL {
 			finish_ += needSize;
 		}
 		else {
-			reallocateAndCopy();
+			reallocateAndCopy(position, first, last);
 		}
 	}
 	
 	template<class T, class Alloc>
 	void vector<T, Alloc>::__insert(iterator position
 		, size_type n
-		, const value_type& value) {
+		, const value_type& value
+	    , std::true_type) {
 		assert(n != 0);
 		difference_type LeftSize = end_of_storage_ - finish_;
 		difference_type needSize = n;
@@ -178,7 +181,7 @@ namespace STL {
 		, const size_type& n
 		, const value_type& value) {
 
-		__insert(position, n, value);
+		__insert(position, n, value, typename std::is_integral<size_type>::type());
 	}
 	template<class T, class Alloc>
 	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert
@@ -192,7 +195,7 @@ namespace STL {
 	void vector<T, Alloc>::insert(iterator position
 		, InputIterator first
 		, InputIterator last) {
-		__insert(position, first, last);
+		__insert(position, first, last, typename std::is_integral<InputIterator>::type());
 	}
 
 	template<class T, class Alloc>

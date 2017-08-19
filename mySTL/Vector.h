@@ -4,6 +4,7 @@
 #include"Allocator.h"
 #include"Iterator.h"
 #include"Algorithm.h"
+#include"UninitializedFunc.h"
 #include<algorithm>
 
 namespace STL {
@@ -32,7 +33,7 @@ namespace STL {
 	public:
 		//构造函数，复制函数，析构函数
 		vector() :
-			begin_(0), end_(0), end_of_storage_(0) {}
+			start_(0), finish_(0), end_of_storage_(0) {}
 		vector(size_type n, const value_type& value);
 		explicit vector(const size_type n);
 
@@ -57,6 +58,7 @@ namespace STL {
 		size_type capacity() { return end_of_storage_ - begin(); }
 		bool empty() { return begin() == end(); }
 		//元素访问
+		reference operator[](const difference_type i) { return *(begin() + i); }
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
 		reference front() { return *begin(); }//第一个元素
 		reference back() { return *(end() - 1); }//最后一个元素
@@ -81,8 +83,8 @@ namespace STL {
 		//空间配置器相关的操作函数
 	private:
 		template<class InputIterator>
-		void __insert(iterator position, InputIterator first, InputIterator last);
-		void __insert(iterator position,size_type n, const value_type& value);
+		void __insert(iterator position, InputIterator first, InputIterator last, std::false_type);
+		void __insert(iterator position,size_type n, const value_type& value, std::true_type);
 		void deallocate();
 		void fill_initialize(size_t n, const value_type& value);
 		void allocate_and_fill_n(size_type n, const T& x);

@@ -64,7 +64,7 @@ namespace STL {
 		__distance(RandomIterator first
 			, RandomIterator last
 			, random_access_iterator_tag) {
-		return (last - first;)
+		return (last - first);
 	}
 
 	template<class Iterator>
