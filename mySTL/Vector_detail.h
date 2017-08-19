@@ -102,13 +102,7 @@ namespace STL {
 			reallocateAndFillN(position, n, value);
 		}
 	}
-	template<class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert
-	(iterator position, const value_type& value) {
-		const auto index = position - begin();//index防止空间不足造成的迭代器position失效
-		insert(position, 1, value);
-		return begin() + index;
-	}
+
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
@@ -173,7 +167,7 @@ namespace STL {
 		return !(v1 == v2);
 	}
 
-	//*******************************对容器进行修改的内部函数******************
+	//*******************************对容器内部元素进行修改的函数******************
 
 	template<class T, class Alloc>
 	void  vector<T, Alloc>::push_back(const value_type & value) {
@@ -186,7 +180,13 @@ namespace STL {
 
 		__insert(position, n, value);
 	}
-
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert
+	(iterator position, const value_type& value) {
+		const auto index = position - begin();//index防止空间不足造成的迭代器position失效
+		insert(position, 1, value);
+		return begin() + index;
+	}
 	template<class T, class Alloc>
 	template <class InputIterator>
 	void vector<T, Alloc>::insert(iterator position
@@ -195,6 +195,22 @@ namespace STL {
 		__insert(position, first, last);
 	}
 
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position) {
+		return erase(position, position + 1);
+	}
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase
+	(iterator first, iterator last) {
+		difference_type tailLeftItemsNum = end() - last;//尾部剩余的元素
+		difference_type removedItemsNum = last - first;//需要移出的元素
+		finish_ = finish_ - removedItemsNum;
+		for (; tailLeftItemsNum != 0; --tailLeftItemsNum) {
+			auto temp = (last - removedItemsNum);
+			*temp = *(last--);
+		}
+		return first;
+	}
 	//*******************************容器容量相关的操作函数********************
 
 
