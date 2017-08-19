@@ -83,22 +83,32 @@ namespace STL {
 	//*********************************容器比较函数*****************************
 
 	template<class T, class Alloc>
-	bool vector<T, Alloc>::operator ==(const vector& v) {
-		if (v.size() != this->size()) {
+	bool vector<T, Alloc>::operator ==(const vector& rhs) {
+		if (rhs.size() != this->size()) {
 			return false;
 		}
-		auto it1 = this->start_;
-		auto it2 = v.start_;
-			for (; it1 != this->finish_&&it2!=v.finish_; ++it1, ++it2) {
-				if (*it1 != *it2) {
-					return false;
-				}
+		auto ptrLhs = this->start_;
+		auto ptrRhs = rhs.start_;
+		for (; ptrLhs != this->finish_ && ptrRhs != rhs.finish_; ++ptrLhs, ++ptrRhs) {
+			if (*ptrLhs != *ptrRhs)
+				return false;
 		}
 		return true;
 	}
 	template<class T, class Alloc>
 	bool vector<T, Alloc>::operator !=(const vector& v) {
 		return !(*this == v);
+	}
+
+	template<class T, class Alloc>
+	bool operator == (const vector<T, Alloc>& v1, const vector<T, Alloc>& v2) {
+
+		return v1.operator==(v2);
+	}
+	template<class T, class Alloc>
+	bool operator != (const vector<T, Alloc>& v1, const vector<T, Alloc>& v2) {
+
+		return !(v1 == v2);
 	}
 
 	//*******************************对容器进行修改的内部函数******************
