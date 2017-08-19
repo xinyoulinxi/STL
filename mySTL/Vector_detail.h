@@ -92,7 +92,22 @@ namespace STL {
 		
 		if (LeftSize >= needSize) {
 			iterator temp = end() - 1;
+			for (; temp - position != 0; ++temp) {
+				STL::construct(temp + needSize, *temp);
+			}
+			STL::uninitialized_fill_n(position, n, value);
+			finish_ += n;
 		}
+		else {
+			reallocateAndFillN(position, n, value);
+		}
+	}
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert
+	(iterator position, const value_type& value) {
+		const auto index = position - begin();//index防止空间不足造成的迭代器position失效
+		insert(position, 1, value);
+		return begin() + index;
 	}
 
 	template<class T, class Alloc>

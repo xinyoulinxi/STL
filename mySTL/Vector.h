@@ -73,6 +73,7 @@ namespace STL {
 		void insert(iterator position, const size_type& n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
+		iterator insert(iterator position, const value_type& value);
 		void push_back(const value_type & value);//Ä©Î²Ìí¼Ó
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
