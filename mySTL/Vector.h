@@ -25,14 +25,14 @@ namespace STL {
 		iterator start_;   //表示目前使用空间的头部
 
 		iterator finish_;     //表示目前使用空间的尾部
-		iterator end_of_storage; //表示当前可用空间的尾部
+		iterator end_of_storage_; //表示当前可用空间的尾部
 
 		typedef Alloc data_Allocator;
 
 	public:
 		//构造函数，复制函数，析构函数
 		vector() :
-			begin_(0), end_(0), end_of_storage(0) {}
+			begin_(0), end_(0), end_of_storage_(0) {}
 		vector(size_type n, const value_type& value);
 		explicit vector(const size_type n);
 
@@ -54,7 +54,7 @@ namespace STL {
 
 		//大小，容量
 		size_type size() { return  end() - begin(); }
-		size_type capacity() { return end_of_storage - begin(); }
+		size_type capacity() { return end_of_storage_ - begin(); }
 		bool empty() { return begin() == end(); }
 		//元素访问
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
@@ -80,16 +80,15 @@ namespace STL {
 		//空间配置器相关的操作函数
 	private:
 		template<class InputIterator>
-		void __insert(iterator position, InputIterator first, InputIterator last, std::false_type);
-		template<class Integer>
-		void __insert(iterator position, Integer n, const value_type& value, std::true_type);
+		void __insert(iterator position, InputIterator first, InputIterator last);
+		void __insert(iterator position,size_type n, const value_type& value);
 		void deallocate();
 		void reallocate(size_t n = 0);
 		void fill_initialize(size_t n, const value_type& value);
 		void allocate_and_fill_n(size_type n, const T& x);
 		template<class InputIterator>
 		void reallocateAndCopy(iterator position, InputIterator first, InputIterator last);
-
+		void reallocateAndFillN(iterator position, const size_type& n, const value_type& value);
 		size_type getNewCapacitySize(size_type n)const;
 	public:
 		template<class T, class Alloc>

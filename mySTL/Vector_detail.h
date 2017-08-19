@@ -33,17 +33,36 @@ namespace STL {
 		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
 
 		deallocate();
+
 		start_ = newStart;
 		finish_ = NewFinish;
-		end_of_storage = newEndOfStorage;
+		end_of_storage_ = newEndOfStorage;
 		
+	}
+	template<class T, class Alloc>
+	void vector<T, Alloc>::reallocateAndFillN(iterator position
+		, const size_type& n
+		, const value_type& value) {
+		difference_type newCapacity = getNewCapacitySize(last - first);
+		iterator newStart = data_Allocator::allocate(newCapacity);
+		iterator newEndOfStorage = newStart + newCapacity;
+
+		iterator NewFinish = STL::uninitialized_copy(begin(), position, newStart);
+		NewFinish = STL::uninitialized_fill_n(NewFinish, n, value);
+		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
+
+		deallocate();
+
+		start_ = newStart;
+		finish_ = NewFinish;
+		end_of_storage_ = newEndOfStorage;
 	}
 	template<class T, class Alloc>
 	template<class InputIterator>
 	void vector<T, Alloc>::__insert(iterator position
 		, InputIterator first
 		, InputIterator last) {
-		difference_type leftSize = end_of_storage - finish_;  //ÈÝÆ÷ÖÐÊ£Óà¿Õ¼ä
+		difference_type leftSize = end_of_storage_ - finish_;  //ÈÝÆ÷ÖÐÊ£Óà¿Õ¼ä
 		difference_type needSize = distance(first, last);// last - first
 		if (leftSize >= needSize) {
 			if (finish_ - position > needSize) {
@@ -64,25 +83,30 @@ namespace STL {
 	}
 	
 	template<class T, class Alloc>
-	template<class Integer>
 	void vector<T, Alloc>::__insert(iterator position
-		, Integer n
+		, size_type n
 		, const value_type& value) {
+		assert(n != 0);
+		difference_type LeftSize = end_of_storage_ - finish_;
+		difference_type needSize = n;
 		
+		if (LeftSize >= needSize) {
+			iterator temp = end() - 1;
+		}
 	}
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::fill_initialize(size_t n, const value_type& value) {
 		allocate_and_fill_n(n, value);
 		finish_ = start_ + n;
-		end_of_storage = finish_;
+		end_of_storage_ = finish_;
 	}
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::allocate_and_fill_n(size_type n, const T& value) {
 		start_ = data_Allocater::allocate(n);//ÅäÖÃn¸öÔªËØµÄ¿Õ¼ä
 		STL::uninitialized_fill_n(start_, start_ + n, value);
-		finish_ = end_of_storage = start_ + n;
+		finish_ = end_of_storage_ = start_ + n;
 	}
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
@@ -167,7 +191,7 @@ namespace STL {
 	//ÔÓÏî
 	template<class T, class Alloc>
 	typename vector<T, Alloc>::size_type vector<T, Alloc>::getNewCapacitySize(size_type n)const {
-		size_type oldCapacity= end_of_storage - start_;
+		size_type oldCapacity= end_of_storage_ - start_;
 		auto res = STL::max(oldCapacity, n);
 		size_type newCapacity = (oldCapacity != 0 ? (oldCapacity + res) : n);
 		return newCapacity;

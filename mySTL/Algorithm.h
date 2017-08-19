@@ -2,6 +2,7 @@
 #define _ALGORITHM_H_
 #include<cstring>
 #include"Iterator.h"
+#include<assert.h>
 namespace STL {
 	/**********************              fill()     ***********************************
 	**************************** Algorithm Complexity  O(N)  ******************************/ 
