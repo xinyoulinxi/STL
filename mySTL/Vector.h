@@ -40,7 +40,8 @@ namespace STL {
 		vector(InputIterator first, InputIterator last);
 		vector(const vector& v);
 		vector(vector&& v);
-
+		vector& operator = (const vector& v);
+		vector& operator = (vector&& v);
 		//±È½Ï²Ù×÷
 		bool operator ==(const vector& v);
 		bool operator !=(const vector& v);

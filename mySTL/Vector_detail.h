@@ -2,7 +2,7 @@
 #ifndef _VECTOR_DETAIL_H
 #define _VECTOR_DETAIL_H
 namespace STL {
-	//*********************************构造、析构**************************************
+	//*********************************构造、析构、赋值**************************************
 
 	template<class T, class Alloc>
 	vector<T, Alloc>::~vector() {
@@ -33,6 +33,25 @@ namespace STL {
 		finish_ = v.finish_;
 		end_of_storage_ = v.end_of_storage_;
 		v.start_ = v.finish_ = v.end_of_storage_ = NULL;
+	}
+	template<class T, class Alloc>
+	vector<T,Alloc>& vector<T, Alloc>::operator = (const vector& v) {
+		if (*this != v) {
+			allocateAndCopy(v.start_, v.finish_);
+		}
+		return *this;
+		
+	}
+	template<class T, class Alloc>
+	vector<T, Alloc>& vector<T, Alloc>::operator = (vector&& v) {
+		if (v != *this) {
+			deallocate();
+			start_ = v.start_;
+			finish_ = v.finish_;
+			end_of_storage_ = v.end_of_storage_;
+			v.start_ = v.end_of_storage_ = v.finish_ = NULL;
+		}
+		return *this;
 	}
 	//********************************空间配置器相关*********************
 
