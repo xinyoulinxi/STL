@@ -62,6 +62,8 @@ namespace STL {
 		size_type size() { return  end() - begin(); }
 		size_type capacity() { return end_of_storage_ - begin(); }
 		bool empty() { return begin() == end(); }
+		void resize(size_t n,value_type value=value_type());
+		void researve(size_t n);
 		//元素访问
 		reference operator[](const difference_type i) { return *(begin() + i); }
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
@@ -69,10 +71,10 @@ namespace STL {
 		reference back() { return *(end() - 1); }//最后一个元素
 		reference operator[](size_type i) { return *(begin() + i); }
 		pointer data() { return start_; }
-
+		
 		//容器内容的修改操作函数
 		void clear();
-
+		
 
 		void swap(vector& v);
 		void pop_back();

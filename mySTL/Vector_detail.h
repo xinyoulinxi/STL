@@ -1,3 +1,4 @@
+#include "Vector.h"
 #pragma once
 #ifndef _VECTOR_DETAIL_H
 #define _VECTOR_DETAIL_H
@@ -35,12 +36,12 @@ namespace STL {
 		v.start_ = v.finish_ = v.end_of_storage_ = NULL;
 	}
 	template<class T, class Alloc>
-	vector<T,Alloc>& vector<T, Alloc>::operator = (const vector& v) {
+	vector<T, Alloc>& vector<T, Alloc>::operator = (const vector& v) {
 		if (*this != v) {
 			allocateAndCopy(v.start_, v.finish_);
 		}
 		return *this;
-		
+
 	}
 	template<class T, class Alloc>
 	vector<T, Alloc>& vector<T, Alloc>::operator = (vector&& v) {
@@ -91,7 +92,7 @@ namespace STL {
 		start_ = newStart;
 		finish_ = NewFinish;
 		end_of_storage_ = newEndOfStorage;
-		
+
 	}
 	template<class T, class Alloc>
 	void vector<T, Alloc>::reallocateAndFillN(iterator position
@@ -126,10 +127,10 @@ namespace STL {
 				std::copy(first, last, position);
 			}
 			else {
-				                     
+
 				iterator temp = STL::uninitialized_copy(first + (finish_ - position), last, finish_);
 				STL::uninitialized_copy(position, finish_, temp);
-				std::copy(first, first + (finish_ - position), position);		
+				std::copy(first, first + (finish_ - position), position);
 			}
 			finish_ += needSize;
 		}
@@ -137,16 +138,16 @@ namespace STL {
 			reallocateAndCopy(position, first, last);
 		}
 	}
-	
+
 	template<class T, class Alloc>
 	void vector<T, Alloc>::__insert(iterator position
 		, size_type n
 		, const value_type& value
-	    , std::true_type) {
+		, std::true_type) {
 		assert(n != 0);
 		difference_type LeftSize = end_of_storage_ - finish_;
 		difference_type needSize = n;
-		
+
 		if (LeftSize >= needSize) {
 			iterator temp = end() - 1;
 			for (; temp - position != 0; ++temp) {
@@ -177,21 +178,12 @@ namespace STL {
 	template<class T, class Alloc>
 	void vector<T, Alloc>::deallocate() {
 		if (start_) {//存在被配置过的空间
-			data_Allocator::destroy(start_,finish_);
+			data_Allocator::destroy(start_, finish_);
 			data_Allocator::deallocate(start_, capacity());
 		}
 	}
 
-	template<class T, class Alloc>
-	void vector<T, Alloc>::clear() {
-		data_Allocator::destroy(start_, finish_);
-		finish_ = start_;
-	}
-	template<class T, class Alloc>
-	void vector<T, Alloc>::pop_back() {
-		--finish_;
-		data_Allocator::destroy(finish_);
-	}
+
 
 	//*********************************容器比较函数*****************************
 
@@ -225,6 +217,18 @@ namespace STL {
 	}
 
 	//*******************************对容器内部元素进行修改的函数******************
+
+
+	template<class T, class Alloc>
+	void vector<T, Alloc>::clear() {
+		data_Allocator::destroy(start_, finish_);
+		finish_ = start_;
+	}
+	template<class T, class Alloc>
+	void vector<T, Alloc>::pop_back() {
+		--finish_;
+		data_Allocator::destroy(finish_);
+	}
 
 	template<class T, class Alloc>
 	void  vector<T, Alloc>::push_back(const value_type & value) {
@@ -271,11 +275,49 @@ namespace STL {
 
 	//*******************************容器容量相关的操作函数********************
 
+	template<class T, class Alloc>
+	inline void vector<T, Alloc>::researve(size_t n) {
+		if (n <= capacity()) {
+			return;
+		}
+		iterator newStart = data_Allocator::allocate(n);
+		iterator newFinish = STL::__uninitialized_copy(begin(), end(), newStart);
+
+		deallocate();
+		start_ = newStart;
+		finish_ = newFinish;
+		end_of_storage_ = newStart + n;
+
+	}
+	template<class T, class Alloc>
+	inline void vector<T, Alloc>::resize(size_t n, value_type value = value_type()) {
+		if (n < size()) {
+			data_Allocator::destroy(start_ + n, finish_);
+			finish_ = start_ + n;
+		}
+		else if (n > size() && n < capacity()) {
+			auto needInsertSize = n - size();
+			finish_ = STL::uninitialized_fill_n(finish_, needInsertSize, value);
+		}
+		else {
+			auto needInsertSize = n - size;
+			auto NewCapacity = getNewCapacitySize(n);
+			iterator newStart = data_Allocator::allocate(NewCapacity);
+			iterator newFinish = STL::uninitialized_copy(begin(), end(), newStart);
+			newFinish = STL::uninitialized_fill_n(newFinish, needInsertSize, value);
+
+			deallocate();
+
+			start_ = newStart;
+			finish_ = newFinish;
+			end_of_storage_ = start_ + NewCapacity;
+		}
+	}
 
 	//杂项
 	template<class T, class Alloc>
 	typename vector<T, Alloc>::size_type vector<T, Alloc>::getNewCapacitySize(size_type n)const {
-		size_type oldCapacity= end_of_storage_ - start_;
+		size_type oldCapacity = end_of_storage_ - start_;
 		auto res = STL::max(oldCapacity, n);
 		size_type newCapacity = (oldCapacity != 0 ? (oldCapacity + res) : n);
 		return newCapacity;
