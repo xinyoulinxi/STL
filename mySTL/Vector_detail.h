@@ -1,7 +1,6 @@
-#include "Vector.h"
-#pragma once
 #ifndef _VECTOR_DETAIL_H
 #define _VECTOR_DETAIL_H
+#include "Vector.h"
 namespace STL {
 	//*********************************构造、析构、赋值**************************************
 
