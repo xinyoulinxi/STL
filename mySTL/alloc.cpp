@@ -26,7 +26,7 @@ namespace STL{
 		}
 		//有可用空间，从free_list中取出适合大小的区块
 		free_list[index] = my_free_list->free_list_link;
-		return my_free_list->free_list_link;
+		return my_free_list;
 	}
 
 	void alloc::deallocate(void *p,size_t n){

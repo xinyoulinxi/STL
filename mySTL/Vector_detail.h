@@ -101,14 +101,14 @@ namespace STL {
 		iterator newStart = data_Allocator::allocate(newCapacity);
 		iterator newEndOfStorage = newStart + newCapacity;
 
-		iterator NewFinish = STL::uninitialized_copy(begin(), position, newStart);
-		NewFinish = STL::uninitialized_fill_n(NewFinish, n, value);
-		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
+		iterator newFinish = STL::uninitialized_copy(begin(), position, newStart);
+		newFinish = STL::uninitialized_fill_n(newFinish, n, value);
+		newFinish = STL::uninitialized_copy(position, end(), newFinish);
 
 		deallocate();
 
 		start_ = newStart;
-		finish_ = NewFinish;
+		finish_ = newFinish;
 		end_of_storage_ = newEndOfStorage;
 	}
 	template<class T, class Alloc>
@@ -122,14 +122,14 @@ namespace STL {
 			if (finish_ - position > needSize) {
 
 				STL::uninitialized_copy(finish_ - needSize, finish_, finish_);
-				std::copy_backward(position, finish_ - needSize, finish_);
-				std::copy(first, last, position);
+				STL::copy_backward(position, finish_ - needSize, finish_);
+				STL::copy(first, last, position);
 			}
 			else {
 
 				iterator temp = STL::uninitialized_copy(first + (finish_ - position), last, finish_);
 				STL::uninitialized_copy(position, finish_, temp);
-				std::copy(first, first + (finish_ - position), position);
+				STL::copy(first, first + (finish_ - position), position);
 			}
 			finish_ += needSize;
 		}
@@ -149,7 +149,7 @@ namespace STL {
 
 		if (LeftSize >= needSize) {
 			iterator temp = end() - 1;
-			for (; temp - position != 0; ++temp) {
+			for (; temp - position >= 0; --temp) {
 				STL::construct(temp + needSize, *temp);
 			}
 			STL::uninitialized_fill_n(position, n, value);
@@ -170,8 +170,8 @@ namespace STL {
 
 	template<class T, class Alloc>
 	void vector<T, Alloc>::allocateAndFillN(size_type n, const T& value) {
-		start_ = data_Allocater::allocate(n);//配置n个元素的空间
-		STL::uninitialized_fill_n(start_, start_ + n, value);
+		start_ = data_Allocator::allocate(n);//配置n个元素的空间
+		STL::uninitialized_fill_n(start_,  n, value);
 		finish_ = end_of_storage_ = start_ + n;
 	}
 	template<class T, class Alloc>

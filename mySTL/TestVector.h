@@ -2,14 +2,16 @@
 #include"Vector.h"
 #include<cassert>
 #include<iostream>
+#include<vector>
+#include<string>
 namespace STL {
 	namespace testVector {
 		template<class T>
 		using vector = STL::vector<T>;
 
 		void testAll();
-		void test1();
-		void test2();
-		void test3();
+		void testInsert();
+		void testErase();
+		void testPushBack();
 	}
 }

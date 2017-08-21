@@ -77,25 +77,25 @@ namespace STL {
 	////********************      copy_backward()       ******************************
 	////****************      Algorithm Complexity: O(N) ****************************
 
-	//template< class BidirIt1, class BidirIt2 >
-	//BidirIt2 copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last){
-	//	while (first != last) {
-	//		*(--d_last) = *(--last);
-	//	}
-	//	return d_last;
-	//}
-	////********************              copy()                 ***************************************
-	////****************      Algorithm Complexity: O(N) ****************************
+	template< class BidirIt1, class BidirIt2 >
+	BidirIt2 copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last){
+		while (first != last) {
+			*(--d_last) = *(--last);
+		}
+		return d_last;
+	}
+	//********************              copy()                 ***************************************
+	//****************      Algorithm Complexity: O(N) ****************************
 
-	//template<class InputIt, class OutputIt>
-	//OutputIt copy(InputIt first, InputIt last,
-	//	OutputIt d_first)
-	//{
-	//	while (first != last) {
-	//		*d_first++ = *first++;
-	//	}
-	//	return d_first;
-	//}
+	template<class InputIt, class OutputIt>
+	OutputIt copy(InputIt first, InputIt last,
+		OutputIt d_first)
+	{
+		while (first != last) {
+			*d_first++ = *first++;
+		}
+		return d_first;
+	}
 
 	//********************        max()          ******************************
 	//****************      Algorithm Complexity: O(1) *******************

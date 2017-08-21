@@ -14,7 +14,7 @@ namespace STL {
 
 	public:
 
-		typedef T value_type;
+		typedef T                       value_type;
 		typedef value_type*             pointer;
 		typedef value_type*             iterator;
 		typedef value_type&             reference;
@@ -22,16 +22,15 @@ namespace STL {
 		typedef const value_type&       const_reference;
 		typedef size_t					size_type;
 		typedef ptrdiff_t	            difference_type;
-	private:
+	private: 
 		iterator start_;   //表示目前使用空间的头部
-
 		iterator finish_;     //表示目前使用空间的尾部
 		iterator end_of_storage_; //表示当前可用空间的尾部
 
 		typedef Alloc data_Allocator;
 
 	public:
-		//构造函数，复制函数，析构函数
+		//构造函数，赋值构造函数，析构函数
 		vector() :
 			start_(0), finish_(0), end_of_storage_(0) {}
 		vector(size_type n, const value_type& value);
@@ -42,21 +41,19 @@ namespace STL {
 		vector(vector&& v);
 		vector& operator = (const vector& v);
 		vector& operator = (vector&& v);
+		~vector();
 		//比较操作
 		bool operator ==(const vector& v);
 		bool operator !=(const vector& v);
 
-
-		~vector();
+		
 		//迭代器，位置相关
-
 		iterator begin() { return (start_); }
 		const_iterator end()const { return (finish_); }
 		iterator end() { return (finish_); }
 		const_iterator begin() const { return (start_); }
 		const_iterator cbegin() { return (start_); }
 		const_iterator cend() { return (start_); }
-		//test new road
 
 		//大小，容量
 		size_type size() { return  end() - begin(); }
@@ -64,6 +61,7 @@ namespace STL {
 		bool empty() { return begin() == end(); }
 		void resize(size_t n,value_type value=value_type());
 		void researve(size_t n);
+
 		//元素访问
 		reference operator[](const difference_type i) { return *(begin() + i); }
 		const_reference operator[](const difference_type i)const { return *(cbegin() + i); }
@@ -74,11 +72,10 @@ namespace STL {
 		
 		//容器内容的修改操作函数
 		void clear();
-		
-
-		void swap(vector& v);
-		void pop_back();
 		void copy(iterator start, iterator new_start);
+		void swap(vector& v);
+
+		void pop_back();
 		void insert(iterator position, const size_type& n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
@@ -88,6 +85,7 @@ namespace STL {
 		iterator erase(iterator first, iterator last);
 
 		//空间配置器相关的操作函数
+		data_Allocator get_allocator() { return data_Allocator; }
 	private:
 		template<class InputIterator>
 		void __insert(iterator position, InputIterator first, InputIterator last, std::false_type);
@@ -108,8 +106,9 @@ namespace STL {
 		void __vector(InputIterator first, InputIterator last, std::false_type);
 		template<class Integer>
 		void __vector(Integer n, const value_type& value, std::true_type);
-
-	public:
+		
+		//         =。=
+	public:   
 		template<class T, class Alloc>
 		friend bool operator == (const vector<T, Alloc>& v1, const vector<T, Alloc>& v2);
 		template<class T, class Alloc>
