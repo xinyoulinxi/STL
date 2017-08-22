@@ -72,8 +72,8 @@ namespace STL {
 		
 		//容器内容的修改操作函数
 		void clear();
-		void copy(iterator start, iterator new_start);
-		void swap(vector& v);
+//		void copy(iterator start, iterator new_start);
+//		void swap(vector& v);
 
 		void pop_back();
 		void insert(iterator position, const size_type& n, const value_type& val);

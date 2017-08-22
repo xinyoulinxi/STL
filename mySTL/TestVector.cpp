@@ -47,7 +47,7 @@ namespace STL {
 		}
 		void testErase() {
 			vector<int> vec;
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 10; i++) {
 				vec.push_back(i);
 			}
 			int i = 1;
@@ -55,9 +55,10 @@ namespace STL {
 
 				assert(vec.size() == i);
 				it = vec.erase(vec.begin());
+				if (i != 10) {
+					assert(*it == i+1);
+				}
 			}
-
-			
 		}
 	}
 }
