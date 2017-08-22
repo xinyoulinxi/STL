@@ -7,6 +7,8 @@ namespace STL {
 			testPushBack();
 			testInsert();
 			testErase();
+			testSize();
+			testConstruct();
 		}
 		void testPushBack() {
 			vector<int> vec;
@@ -18,6 +20,22 @@ namespace STL {
 			vec.erase(vec.begin());
 			assert(vec.size() == 1);
 			
+		}
+
+		void testSize()
+		{
+			vector<int> vec;
+			vec.push_back(1);
+			assert(vec.size() == 1);
+			vec.clear();
+			assert(vec.size() == 0&&vec.empty());
+			vec.resize(5);
+			assert(vec.size() == 5 && vec[0] == int());
+
+		}
+
+		void testConstruct()
+		{
 		}
 
 		void testInsert() {
@@ -43,6 +61,12 @@ namespace STL {
 				 vec3.insert(it, i);
 			}
 			assert(vec3.size() == 20);
+
+			vector<int> vec4;
+			vec4.insert(vec4.begin(),vec.begin(), vec.end());
+			assert(vec4.size() == 11);
+			vec4.insert(vec4.begin(), 5, 1);
+			assert(vec4[0] == 1);
 
 		}
 		void testErase() {

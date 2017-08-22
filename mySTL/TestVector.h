@@ -13,8 +13,7 @@ namespace STL {
 		void testInsert();
 		void testErase();
 		void testPushBack();
-		void testResize();
-		void testResearve();
-
+		void testSize();
+		void testConstruct();
 	}
 }

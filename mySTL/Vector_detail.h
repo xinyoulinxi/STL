@@ -83,7 +83,7 @@ namespace STL {
 		iterator newEndOfStorage = newStart + newCapacity;
 
 		iterator NewFinish = STL::uninitialized_copy(begin(), position, newStart);
-		NewFinish = STL::uninitialized_copy(first, last, position);
+		NewFinish = STL::uninitialized_copy(first, last, NewFinish);
 		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
 
 		deallocate();
@@ -299,7 +299,7 @@ namespace STL {
 			finish_ = STL::uninitialized_fill_n(finish_, needInsertSize, value);
 		}
 		else {
-			auto needInsertSize = n - size;
+			auto needInsertSize = n - size();
 			auto NewCapacity = getNewCapacitySize(n);
 			iterator newStart = data_Allocator::allocate(NewCapacity);
 			iterator newFinish = STL::uninitialized_copy(begin(), end(), newStart);
