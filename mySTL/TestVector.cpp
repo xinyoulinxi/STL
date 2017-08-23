@@ -9,6 +9,8 @@ namespace STL {
 			testErase();
 			testSize();
 			testConstruct();
+
+			testStdAndmySTL();
 		}
 		void testPushBack() {
 			vector<int> vec;
@@ -19,7 +21,6 @@ namespace STL {
 			vec.push_back(2);
 			vec.erase(vec.begin());
 			assert(vec.size() == 1);
-			
 		}
 
 		void testSize()
@@ -36,6 +37,24 @@ namespace STL {
 
 		void testConstruct()
 		{
+
+			vector<int> vec1(5, 6);
+			assert(vec1.size() == 5 && vec1[0] == 6);
+
+			vector<int>vec2;
+			assert(vec2.empty());
+
+			vector<int> vec3(vec1.begin(), vec1.end());
+			assert(vec3.size() == 5 && vec3[0] == 6);
+
+			vector<int> vec4(vec1);
+			assert(vec4.size() == 5 && vec4[0] == 6);
+
+		}
+
+		void testStdAndmySTL()
+		{
+			std::vector<std::string>
 		}
 
 		void testInsert() {

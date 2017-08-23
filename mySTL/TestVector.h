@@ -15,5 +15,6 @@ namespace STL {
 		void testPushBack();
 		void testSize();
 		void testConstruct();
+		void testStdAndmySTL();
 	}
 }
