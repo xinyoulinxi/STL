@@ -11,11 +11,11 @@ namespace STL {
 
 	template<class T, class Alloc>
 	vector<T, Alloc>::vector(const size_type n) {
-		allocate_and_fill_n(n, value_type());
+		allocateAndFillN(n, value_type());
 	}
 	template<class T, class Alloc>
 	vector<T, Alloc>::vector(size_type n, const value_type& value) {
-		allocate_and_fill_n(n, value);
+		allocateAndFillN(n, value);
 	}
 
 	template<class T, class Alloc>
@@ -117,7 +117,7 @@ namespace STL {
 		, InputIterator first
 		, InputIterator last, std::false_type) {
 		difference_type leftSize = end_of_storage_ - finish_;  //ÈÝÆ÷ÖÐÊ£Óà¿Õ¼ä
-		difference_type needSize = distance(first, last);// last - first
+		difference_type needSize = STL::distance(first, last);// last - first
 		if (leftSize >= needSize) {
 			if (finish_ - position > needSize) {
 

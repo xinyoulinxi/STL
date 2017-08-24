@@ -81,7 +81,7 @@ namespace STL {
 		, InputIterator last
 		,ForwardIterator result
 		, __false_type) {
-		typedef typename __type_traits<ForwardIterator>::value_type Value;
+		typedef typename iterator_traits<ForwardIterator>::value_type Value;
 		int i = 0;
 		for (; first != last; ++first, ++i) {
 			construct(result + i, Value(*first));
