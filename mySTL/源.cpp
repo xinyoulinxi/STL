@@ -2,8 +2,8 @@
 #include"Allocator.h"
 #include"Vector.h"
 #include"TestVector.h"
+#include<stack>
 int main() {
-	std::vector<int> a;
 	STL::testVector::testAll();
 	system("pause");
 	return 0;

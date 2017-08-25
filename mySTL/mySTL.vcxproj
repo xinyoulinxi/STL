@@ -121,6 +121,7 @@
     <ClInclude Include="Construct.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Reserse_Iterator.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="TestVector.h" />
     <ClInclude Include="type_traits.h" />
