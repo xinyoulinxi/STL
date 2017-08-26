@@ -4,6 +4,7 @@
 #include"TestVector.h"
 #include<stack>
 #include<vector>
+#include"List.h"
 int main() {
 
 	STL::testVector::testAll();
