@@ -120,6 +120,8 @@
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="Construct.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="List_detail.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="TestIterator.h" />

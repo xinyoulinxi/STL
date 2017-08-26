@@ -1,5 +1,5 @@
-#ifndef _STACK_H
-#define _STACK_H
+#ifndef _STACK_H_
+#define _STACK_H_
 #include"Vector.h"
 
 namespace STL {

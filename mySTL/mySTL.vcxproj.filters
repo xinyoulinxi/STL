@@ -16,6 +16,9 @@
     <Filter Include="Test">
       <UniqueIdentifier>{4e3a880b-2aab-4377-82f9-4249ba61e245}</UniqueIdentifier>
     </Filter>
+    <Filter Include="detail">
+      <UniqueIdentifier>{ac97e30f-62f0-42d9-9f9a-bb33fc37d28f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alloc.h">
@@ -42,9 +45,6 @@
     <ClInclude Include="Vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Vector_detail.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="UninitializedFunc.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -56,6 +56,15 @@
     </ClInclude>
     <ClInclude Include="Stack.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector_detail.h">
+      <Filter>detail</Filter>
+    </ClInclude>
+    <ClInclude Include="List_detail.h">
+      <Filter>detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

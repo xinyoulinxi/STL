@@ -3,7 +3,6 @@
 #include "Vector.h"
 namespace STL {
 	//*********************************构造、析构、赋值**************************************
-
 	template<class T, class Alloc>
 	vector<T, Alloc>::~vector() {
 		deallocate();
