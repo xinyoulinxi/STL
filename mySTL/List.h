@@ -70,12 +70,12 @@ namespace STL {
 
 		//元素访问
 
-		reference front() { return (head.p->data); }
-		reference back() { return (tail.p->prev->data); }
-		iterator begin() { return head; }
-		iterator end() { return tail; };
-		const_iterator begin()const { return head; }
-		const_iterator end()const { return tail; }
+		reference front();
+		reference back();
+		iterator begin();
+		iterator end();
+		const_iterator begin()const;
+		const_iterator end()const;
 
 		//元素操作
 		void push_front(const value_type& val);
@@ -97,7 +97,7 @@ namespace STL {
 		size_type size()const;
 	private:
 		//空间配置器相关
-		nodePtr NewNode();
+		nodePtr newNode();
 		void deleteNode(nodePtr p);
 		void __insert(iterator position, size_type n, const T& val, std::true_type);
 		template<class InputIterator>
@@ -107,6 +107,10 @@ namespace STL {
 		void __list(InputIterator first, InputIterator last, std::false_type);
 
 	};
+
+
+
+
 }
 #include"List_detail.h"
 #endif // !_LIST_H_
