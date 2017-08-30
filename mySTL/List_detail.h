@@ -47,7 +47,7 @@ namespace STL {
 		head.p = newNode();
 		tail.p = head.p;
 	}
-	//__list 泛型的划分
+	//__list泛型进行划分
 	template<class T>
 	list<T>::list(size_type n, const value_type & val)
 	{
@@ -61,7 +61,7 @@ namespace STL {
 	template<class T>
 	inline list<T>::list(const list & lis)
 	{
-		//__list(lis.begin(), lis, end(), std::is_integral<lis.begin()>());
+		//__list(lis.begin(), lis.end(), std::is_integral<lis.begin()>());
 		//不能直接使用
 
 		head.p = newNode();
@@ -86,16 +86,27 @@ namespace STL {
 		nodeAllocator::deallocate(tail.p);
 	}
 
-
-
-
-	//                            空间配置器相关
+	//******************************** 空间配置器相关******************************************   
+	template<class T>
+	void list<T>::__insert(iterator position, size_type n, const T& val, std::true_type) {
+		for (auto i = n; i != 0; --i) {
+			position = insert(position, val);
+		}
+	}
+	template<class T>
+	template<class InputIterator>
+	void list<T>::__insert(iterator position, InputIterator first, InputIterator last, std::false_type) {
+		for (--last; first != last; --last) {//倒插
+			position = insert(position, *last);
+		}
+		insert(position, *last);
+	}
 	template<class T>
 	template<class InputIterator>
 	inline void list<T>::__list(InputIterator first, InputIterator last, std::false_type)
 	{
-		head.p = NewNode();
-		tail.p = NewNode();
+		head.p = newNode();
+		tail.p = newNode();
 		for (; first != last; ++first) {
 			push_back(*first);
 		}
@@ -104,8 +115,8 @@ namespace STL {
 	template<class T>
 	inline void list<T>::__list(size_type n, const value_type & val, std::true_type)
 	{
-		head.p = NewNode();
-		tail.p = NewNode();
+		head.p = newNode();
+		tail.p = newNode();
 		while (n--) {
 			push_back(val);
 		}
@@ -126,7 +137,7 @@ namespace STL {
 		nodeAllocator::destroy(p);
 		nodeAllocator::deallocate(p);
 	}
-	//                         元素操作相关
+	//**************************** 元素操作相关**********************************************     
 	template<class T>
 	void list<T>::remove(const value_type& val) {
 		for (auto it = begin(); it != end();) {
@@ -230,8 +241,7 @@ namespace STL {
 	}
 	template<class T>
 	void list<T>::push_back(const value_type& val) {
-		auto node = newNode();
-		(tail.p)->data = val;
+		auto node = newNode(val);
 		(tail.p)->next = node;
 		node->prev = tail.p;
 		tail.p = node;
@@ -243,7 +253,17 @@ namespace STL {
 		deleteNode(tail.p);
 		tail.p = newTail;
 	}
-	//                                容量相关
+
+	template<class T>
+	void list<T>::insert(iterator position, size_type n, const value_type& val) {
+		__insert(position, n, val, typename std::is_integral<InputIterator>::type());
+	}
+	template<class T>
+	template <class InputIterator>
+	void list<T>::insert(iterator position, InputIterator first, InputIterator last) {
+		__insert(position, first, last, typename std::is_integral<InputIterator>::type());
+	}
+	//***********************************容量相关***************************************                              
 
 	template<class T>
 	typename list<T>::size_type list<T>::size()const {
@@ -252,7 +272,8 @@ namespace STL {
 			++length;
 		return length;
 	}
-	//                               元素访问
+	//***********************************元素访问***************************************
+	                            
 	template<class T>
 	typename list<T>::iterator list<T>::begin() {
 		return head;
@@ -262,7 +283,7 @@ namespace STL {
 		return tail;
 	}
 
-	//                              比较函数
+	//*********************************比较函数*****************************************                            
 	template <class T>
 	bool operator== (const list<T>& lhs, const list<T>& rhs) {
 		auto nodeL = lhs.head.p, nodeR = rhs.head.p;

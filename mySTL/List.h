@@ -85,6 +85,7 @@ namespace STL {
 		template <class Func>
 		void remove_if(Func);
 		iterator insert(iterator position, const value_type& val);
+
 		void insert(iterator position, size_type n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
