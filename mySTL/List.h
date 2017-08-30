@@ -65,7 +65,6 @@ namespace STL {
 		list(const list& lis);
 		list& operator = (const list& rhs);
 		~list();
-
 	public:
 
 		//ÔªËØ·ÃÎÊ

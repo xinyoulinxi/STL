@@ -35,20 +35,21 @@ namespace STL {
 		}
 		template<class T>
 		bool operator!=(const list_iterator<T>& lhs, const list_iterator<T>& rhs) {
-			return false;
+			return !(lhs == rhs);
 		}
 	}//end of Detail
 
 	//                                    构造函数
-	template<class T>
-	inline list<T>::list()
+
+	template<class T> 
+	list<T>::list()
 	{
-		head.p = NewNode();
+		head.p = newNode();
 		tail.p = head.p;
 	}
 	//__list 泛型的划分
 	template<class T>
-	inline list<T>::list(size_type n, const value_type & val)
+	list<T>::list(size_type n, const value_type & val)
 	{
 		__list(n, val, std::is_integral<value_type>());
 	}
@@ -70,7 +71,7 @@ namespace STL {
 	}
 
 	template<class T>
-	inline list & list<T>::operator=(const list & rhs)
+	inline list<T> & list<T>::operator=(const list & rhs)
 	{
 
 	}
@@ -84,6 +85,8 @@ namespace STL {
 		}
 		nodeAllocator::deallocate(tail.p);
 	}
+
+
 
 
 	//                            空间配置器相关
@@ -146,20 +149,32 @@ namespace STL {
 
 	template<class T>
 	typename list<T>::iterator list<T>::insert(iterator position, const value_type& value) {
-		nodePtr tmp = newNode(value);
+		//以下两个判断为了防止插入位置为头尾时出现异常
+		if (position == begin()) {
+			push_front(val);
+			return begin();
+		}
+		else if (position == end()) {
+			auto ret = position;
+			push_back(val);
+			return ret;
+		}
+		auto node = newNode(val);
 		auto prev = position.p->prev;
-		
-		tmp->next = position.p;
-		tmp->prev = prev;
-
-		prev->next = tmp;
-		position.p->prev = tmp;
-		
-		return (iterator)tmp;//类型转换，存在构造函数可以进行转换
+		node->next = position.p;
+		node->prev = prev;
+		prev->next = node;
+		position.p->prev = node;
+		return iterator(node);  //类型转换
 	}
 
 	template<class T>
 	typename list<T>::iterator list<T>::erase(iterator position) {
+		//防止插入位置为头尾时出现异常
+		if (position == head) {
+			pop_front();
+			return head;
+		}
 		auto prev = position.p->prev;
 		prev->next = position.p->next;
 		position.p->next->prev = prev;
@@ -181,7 +196,7 @@ namespace STL {
 		
 		iterator first = begin();
 		iterator last = end();
-		if (first == last) {
+		if (first == last) {//空链表
 			return;
 		}
 		iterator next = first;
@@ -201,20 +216,32 @@ namespace STL {
 	}
 	template<class T>
 	void list<T>::push_front(const value_type& val) {
-		insert(begin(), val);
+		auto node = newNode(val);
+		head.p->prev = node;
+		node->next = head.p;
+		head.p = node;
 	}
 	template<class T>
 	void list<T>::pop_front() {
-		erase(begin());
+		auto oldNode = head.p;
+		head.p = oldNode->next;
+		head.p->prev = nullptr;
+		deleteNode(oldNode);
 	}
 	template<class T>
 	void list<T>::push_back(const value_type& val) {
-		insert(end(), x);
+		auto node = newNode();
+		(tail.p)->data = val;
+		(tail.p)->next = node;
+		node->prev = tail.p;
+		tail.p = node;
 	}
 	template<class T>
 	void list<T>::pop_back() {
-		iterator tmp = end();
-		erase(--tmp);
+		auto newTail = tail.p->prev;
+		newTail->next = nullptr;
+		deleteNode(tail.p);
+		tail.p = newTail;
 	}
 	//                                容量相关
 
