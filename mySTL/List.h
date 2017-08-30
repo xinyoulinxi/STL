@@ -19,7 +19,7 @@ namespace STL {
 			template<class T>
 			friend class list;
 		public:
-			typedef __list_node<T> *nodePtr;
+			typedef __list_node<T>* nodePtr;
 			nodePtr p;
 
 		public:
@@ -70,8 +70,8 @@ namespace STL {
 
 		//元素访问
 
-		reference front();
-		reference back();
+		reference front() { return head.p->data; }
+		reference back() { return tail.p->prev->data; }
 		iterator begin();
 		iterator end();
 		const_iterator begin()const;
@@ -82,18 +82,20 @@ namespace STL {
 		void pop_front();
 		void push_back(const value_type& val);
 		void pop_back();
-
+		void remove(const value_type& val);
+		template <class Func>
+		void remove_if(Func);
 		iterator insert(iterator position, const value_type& val);
 		void insert(iterator position, size_type n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
-
+		void unique();
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 		//容量相关
 		void clear();
 
-		bool empty();
+		bool empty() { return head.p->next == tail.p; };
 		size_type size()const;
 	private:
 		//空间配置器相关
