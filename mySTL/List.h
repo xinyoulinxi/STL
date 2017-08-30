@@ -97,7 +97,7 @@ namespace STL {
 		size_type size()const;
 	private:
 		//ø’º‰≈‰÷√∆˜œ‡πÿ
-		nodePtr newNode();
+		nodePtr newNode(const T& value = T());
 		void deleteNode(nodePtr p);
 		void __insert(iterator position, size_type n, const T& val, std::true_type);
 		template<class InputIterator>

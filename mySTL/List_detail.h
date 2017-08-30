@@ -108,11 +108,18 @@ namespace STL {
 
 
 	template<class T>
-	inline list<T>::nodePtr list<T>::newNode(const T& value = T())
+	inline typename list<T>::nodePtr list<T>::newNode(const T& value = T())
 	{
 		nodePtr node = nodeAllocator::allocate();
 		nodeAllocator::construct(node, Detail::__list_node<T>(value, nullptr, nullptr));
 		return node;
+	}
+	template<class T>
+	inline void list<T>::deleteNode(nodePtr p)
+	{
+		p->prev = p->next = nullptr;
+		nodeAllocator::destroy(p);
+		nodeAllocator::deallocate(p);
 	}
 	//                         元素操作有关
 	template<class T>

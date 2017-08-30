@@ -125,7 +125,6 @@ namespace STL {
 				STL::copy(first, last, position);
 			}
 			else {
-
 				iterator temp = STL::uninitialized_copy(first + (finish_ - position), last, finish_);
 				STL::uninitialized_copy(position, finish_, temp);
 				STL::copy(first, first + (finish_ - position), position);
