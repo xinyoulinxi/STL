@@ -93,10 +93,14 @@ namespace STL {
 		void unique();
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
+		void splice(iterator position, list& other);
+		void splice(iterator position, list& other, iterator i);
+		void splice(iterator position, list& other, iterator first, iterator last);
+
 		//容量相关
 		void clear();
 
-		bool empty() { return head.p->next == tail.p; };
+		bool empty() { return head == tail; };
 		size_type size()const;
 	private:
 		//空间配置器相关

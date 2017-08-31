@@ -69,11 +69,7 @@ namespace STL {
 		for (auto node = l.head.p; node != l.tail.p; node = node->next)
 			push_back(node->data);
 	}
-	template<class T>
-	void list<T>::swap(list& x) {
-		STL::swap(head.p, x.head.p);
-		STL::swap(tail.p, x.tail.p);
-	}
+
 	template<class T>
 	inline list<T>& list<T>::operator=(const list & rhs)
 	{
@@ -146,6 +142,11 @@ namespace STL {
 	}
 	//**************************** 元素操作相关**********************************************     
 	template<class T>
+	void list<T>::swap(list& x) {
+		STL::swap(head.p, x.head.p);
+		STL::swap(tail.p, x.tail.p);
+	}
+	template<class T>
 	void list<T>::remove(const value_type& val) {
 		for (auto it = begin(); it != end();) {
 			if (*it == val)
@@ -169,15 +170,15 @@ namespace STL {
 	typename list<T>::iterator list<T>::insert(iterator position, const value_type& value) {
 		//以下两个判断为了防止插入位置为头尾时出现异常
 		if (position == begin()) {
-			push_front(val);
+			push_front(value);
 			return begin();
 		}
 		else if (position == end()) {
 			auto ret = position;
-			push_back(val);
+			push_back(value);
 			return ret;
 		}
-		auto node = newNode(val);
+		auto node = newNode(value);
 		auto prev = position.p->prev;
 		node->next = position.p;
 		node->prev = prev;
@@ -207,6 +208,34 @@ namespace STL {
 			res = erase(temp);
 		}
 		return res;
+	}
+	template<class T>
+	inline void list<T>::splice(iterator position, list & other){
+		if (other.empty())return;
+		this->insert(position, other.begin(), other.end());
+		other.head.p = other.tail.p;  //将rhs列表置为空
+	}
+	template<class T>
+	inline void list<T>::splice(iterator position, list & other, iterator otherPos){
+		auto next = otherPos;
+		++next;
+		this->splice(position, other, otherPos, next);
+	}
+	template<class T>
+	inline void list<T>::splice(iterator position, list & other, iterator first, iterator last){
+		if (first == last) return;
+		//调整other链表
+		if (other.head.p == first.p) {
+			other.head.p = last.p;
+			other.head.p->prev = nullptr;
+		}
+		else {
+			first.p->prev->next = last.p;
+			last.p->prev = first.p->prev;
+		}
+		//调整this链表
+		insert(position, first, last);
+
 	}
 	template<class T>
 	void list<T>::unique()//移出数值相同且连续的元素,直到只剩下单个
@@ -248,7 +277,8 @@ namespace STL {
 	}
 	template<class T>
 	void list<T>::push_back(const value_type& val) {
-		auto node = newNode(val);
+		auto node = newNode();
+		tail.p->data = val;
 		(tail.p)->next = node;
 		node->prev = tail.p;
 		tail.p = node;
@@ -270,6 +300,7 @@ namespace STL {
 	void list<T>::insert(iterator position, InputIterator first, InputIterator last) {
 		__insert(position, first, last, typename std::is_integral<InputIterator>::type());
 	}
+
 	//***********************************容量相关***************************************                              
 
 	template<class T>
