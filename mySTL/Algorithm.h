@@ -3,6 +3,7 @@
 #include<cstring>
 #include"Iterator.h"
 #include<assert.h>
+#include"type_traits.h"
 namespace STL {
 	/**********************              fill()     ***********************************
 	**************************** Algorithm Complexity  O(N)  ******************************/ 
@@ -84,7 +85,7 @@ namespace STL {
 		}
 		return d_last;
 	}
-	//********************              copy()                 ***************************************
+	//********************              copy()         ***************************************
 	//****************      Algorithm Complexity: O(N) ****************************
 
 	template<class InputIt, class OutputIt>
@@ -98,7 +99,7 @@ namespace STL {
 	}
 
 	//********************        max()          ******************************
-	//****************      Algorithm Complexity: O(1) *******************
+	//****************      Algorithm Complexity: O(1) ****************************
 	template <class T>
 	const T& max(const T& a, const T& b) {
 		return (a < b) ? b : a;
@@ -108,7 +109,7 @@ namespace STL {
 		return (comp(a, b)) ? b : a;
 	}
 	//********************        min()          ******************************
-	//****************      Algorithm Complexity: O(1) *******************
+	//****************      Algorithm Complexity: O(1)****************************
 	template <class T>
 	const T& min(const T& a, const T& b) {
 		return !(b < a) ? a : b;
@@ -117,6 +118,62 @@ namespace STL {
 	const T& min(const T& a, const T& b, Compare comp) {
 		return !comp(b, a) ? a : b;
 	}
+	//********************       find()          ******************************
+	//****************      Algorithm Complexity: O(1)****************************
+
+	template<class InputIterator,class T>
+	InputIterator find(InputIterator first, InputIterator last, const T& value) {
+		while (first != last&&*first != value) {
+			++first;
+		}
+		return first;
+	}
+	//********************       find_if()          ******************************
+	//****************      Algorithm Complexity: O(1) ****************************
+
+	template<class InputIterator, class T,class Func>
+	InputIterator find(InputIterator first, InputIterator last, const T& value,Func isFunc) {
+		while (first != last&&!isFunc(value,first)) {
+			++first;
+		}
+		return first;
+	}
+	//********************       accumulate()        ******************************
+	//****************      Algorithm Complexity: O(1) ****************************
+	template<class InputIterator, class T>
+	InputIterator find(InputIterator first, InputIterator last, T init) {
+		for (; first != last; ++first) {
+			init = init + *first;
+		}
+		return init;
+	}
+	template<class InputIterator, class T, class BinaryOperation>
+	InputIterator find(InputIterator first, InputIterator last, T init, BinaryOperation binary_op) {
+		for (; first != last; ++first) {
+			init = binary_op(init, *firs);//对每个元素执行二元操作
+		}
+		return init;
+	}
+	//********************       iter_swap()        ******************************
+	//****************      Algorithm Complexity: O(1) ****************************
+	template<class InputIterator1, class InputIterator2>
+	inline void iter_swap(InputIterator1 itL, InputIterator1 itR) {
+		__iter_swap(itL, itR, value_type(itL));
+	}
+	template<class InputIterator1, class InputIterator2,class T>
+	inline void __iter_swap(InputIterator1 itL, InputIterator1 itR,T*) {
+		T tmp = *itL;
+		*itL = *itR;
+		*itR = tmp;
+	}
+	//也可直接这样书写
+	//template<class InputIterator1, class InputIterator2>
+	//inline void iter_swap(InputIterator1 itL, InputIterator1 itR) {
+	//	typename iterator_traits<InputIterator1>::value_type tmp = *itL;
+	//	*itL = *itR;
+	//	*itR = tmp;
+
+	//}
 	
 }
 
