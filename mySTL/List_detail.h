@@ -69,11 +69,18 @@ namespace STL {
 		for (auto node = l.head.p; node != l.tail.p; node = node->next)
 			push_back(node->data);
 	}
-
 	template<class T>
-	inline list<T> & list<T>::operator=(const list & rhs)
+	void list<T>::swap(list& x) {
+		STL::swap(head.p, x.head.p);
+		STL::swap(tail.p, x.tail.p);
+	}
+	template<class T>
+	inline list<T>& list<T>::operator=(const list & rhs)
 	{
-
+		if (this != &rhs) {
+			list(rhs).swap(*this);
+		}
+		return *this;
 	}
 	template<class T>
 	inline list<T>::~list()
