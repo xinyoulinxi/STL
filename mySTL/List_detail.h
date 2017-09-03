@@ -258,6 +258,25 @@ namespace STL {
 		}
 	}
 	template<class T>
+	template<class BinaryPredicate>
+	inline void list<T>::unique(BinaryPredicate binary_pre){
+		iterator first = begin();
+		iterator last = end();
+		if (first == last) {//空链表
+			return;
+		}
+		iterator next = first;
+		while (++next != last) {
+			if (binary_pre(*first,*next)) {
+				erase(next); 
+			}
+			else {
+				first = next;   
+			}
+			next = first;
+		}
+	}
+	template<class T>
 	void list<T>::clear() {
 		erase(begin(), end());
 	}
@@ -300,6 +319,8 @@ namespace STL {
 	void list<T>::insert(iterator position, InputIterator first, InputIterator last) {
 		__insert(position, first, last, typename std::is_integral<InputIterator>::type());
 	}
+
+
 
 	//***********************************容量相关***************************************                              
 

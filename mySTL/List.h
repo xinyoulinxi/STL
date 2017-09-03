@@ -91,6 +91,8 @@ namespace STL {
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
 		void unique();
+		template<class BinaryPredicate>
+		void unique(BinaryPredicate binary_pre);
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 		void splice(iterator position, list& other);
@@ -112,7 +114,15 @@ namespace STL {
 		void __list(size_type n, const value_type& val, std::true_type);
 		template <class InputIterator>
 		void __list(InputIterator first, InputIterator last, std::false_type);
+	public:
+		//±È½Ï
+		template <class T>
+		friend bool operator== (const list<T>& lhs, const list<T>& rhs);
+		template <class T>
+		friend bool operator!= (const list<T>& lhs, const list<T>& rhs);
 
+		template<class T>
+		friend void swap(list<T>& x, list<T>& y);
 	};
 
 
