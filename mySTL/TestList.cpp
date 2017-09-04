@@ -2,8 +2,7 @@
 namespace STL {
 	namespace testList {
 		static const Str testStr = "hello";
-		void testAll()
-		{
+		void testAll(){
 			testConstruct();
 			testInsert();
 			testErase();
@@ -16,8 +15,7 @@ namespace STL {
 			testGetItem();
 			testIterator();
 		}
-		void testConstruct()
-		{
+		void testConstruct(){
 			//int
 			myList<int> lis1;
 			
@@ -49,11 +47,48 @@ namespace STL {
 			assert(lisStr4.size() == 5);
 
 		}
-		void testInsert()
-		{
+		void testInsert(){
+			//int
+			myList<int> lis1;
+			lis1.insert(lis1.begin(), 1);
+			assert(*(lis1.begin()) == 1);
+
+			myList<int> lis2;
+			lis2.insert(lis2.begin(), lis1.begin(), lis1.end());
+			assert(lis1 == lis2);
+			
+			myList<int> lis3;
+			lis3.insert(lis3.begin(), 5, 10);
+			assert(lis3.size() == 5 && *(lis3.begin()) == 10);
+
+			
+			//string
+			myList<Str> lisStr1;
+			lisStr1.insert(lisStr1.begin(), testStr);
+			assert(*(lisStr1.begin()) == testStr);
+
+			myList<Str> lisStr2;
+			lisStr2.insert(lisStr2.begin(), lisStr1.begin(), lisStr1.end());
+			assert(lisStr1 == lisStr2);
+
+			myList<Str> lisStr3;
+			lisStr3.insert(lisStr3.begin(), 5, testStr);
+			assert(lisStr3.size() == 5 && *(lisStr3.begin()) == testStr);
+
 		}
-		void testErase()
-		{
+		void testErase(){
+			myList<int> lis1;
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+			}
+			lis1.erase(lis1.begin());
+			assert(lis1.size() == 9&&*lis1.begin()==1);
+
+			myList<int> lis2;
+			for (int i = 0; i < 10; i++) {
+				lis2.push_back(i);
+			}
+			
 		}
 		void testSplice()
 		{
