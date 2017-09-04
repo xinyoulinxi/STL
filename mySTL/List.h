@@ -122,7 +122,7 @@ namespace STL {
 		friend bool operator!= (const list<T>& lhs, const list<T>& rhs);
 
 		template<class T>
-		friend void swap(list<T>& x, list<T>& y);
+		friend void swap(list<T>& lhs, list<T>& rhs);
 	};
 
 

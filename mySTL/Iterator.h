@@ -77,7 +77,7 @@ namespace STL {
 	{//  ÐÍ±ð¡°Õ¥Ö­»ú¡±
 		typedef typename random_access_iterator_tag	 iterator_category;
 		typedef typename T		                     value_type;
-		typedef typename ptrdiff_t 	                 difference_type;
+		typedef typename size_t 	                 difference_type;
 		typedef typename T*							 pointer;
 		typedef typename T&			                 reference;
 	};
@@ -87,7 +87,7 @@ namespace STL {
 	{
 		typedef random_access_iterator_tag 	iterator_category;
 		typedef T 							value_type;
-		typedef ptrdiff_t 					difference_type;
+		typedef size_t 					difference_type;
 		typedef T*							pointer;
 		typedef T& 							reference;
 	};
@@ -96,7 +96,7 @@ namespace STL {
 	{
 		typedef random_access_iterator_tag 	iterator_category;
 		typedef T 							value_type;
-		typedef ptrdiff_t 					difference_type;
+		typedef size_t 					difference_type;
 		typedef const T*					pointer;
 		typedef const T& 					reference;
 	};

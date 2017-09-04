@@ -6,6 +6,7 @@ namespace STL {
 	namespace Detail {//         Detail namespace
 		template<class T>
 		list_iterator<T>& list_iterator<T>::operator ++() {
+
 			p = p->next;
 			return *this;
 		}
@@ -38,8 +39,9 @@ namespace STL {
 			return !(lhs == rhs);
 		}
 	}//end of Detail
-
-	//                                    构造函数
+	
+	 
+	//********************************  构造函数******************************************   
 
 	template<class T> 
 	list<T>::list()
@@ -66,7 +68,7 @@ namespace STL {
 
 		head.p = newNode();
 		tail.p = head.p;
-		for (auto node = l.head.p; node != l.tail.p; node = node->next)
+		for (auto node = lis.head.p; node != lis.tail.p; node = node->next)
 			push_back(node->data);
 	}
 
@@ -89,6 +91,12 @@ namespace STL {
 		nodeAllocator::deallocate(tail.p);
 	}
 
+
+	template<class T>
+	void swap(list<T>& lhs, list<T>& rhs) {
+		lhs.swap(rhs);
+	}
+
 	//******************************** 空间配置器相关******************************************   
 	template<class T>
 	void list<T>::__insert(iterator position, size_type n, const T& val, std::true_type) {
@@ -109,7 +117,7 @@ namespace STL {
 	inline void list<T>::__list(InputIterator first, InputIterator last, std::false_type)
 	{
 		head.p = newNode();
-		tail.p = newNode();
+		tail.p = head.p;
 		for (; first != last; ++first) {
 			push_back(*first);
 		}
@@ -119,7 +127,7 @@ namespace STL {
 	inline void list<T>::__list(size_type n, const value_type & val, std::true_type)
 	{
 		head.p = newNode();
-		tail.p = newNode();
+		tail.p = head.p;
 		while (n--) {
 			push_back(val);
 		}
@@ -297,10 +305,11 @@ namespace STL {
 	template<class T>
 	void list<T>::push_back(const value_type& val) {
 		auto node = newNode();
-		tail.p->data = val;
+		(tail.p)->data = val;
 		(tail.p)->next = node;
 		node->prev = tail.p;
 		tail.p = node;
+		
 	}
 	template<class T>
 	void list<T>::pop_back() {
