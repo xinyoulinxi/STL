@@ -14,7 +14,7 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	vector<T, Alloc>::vector(size_type n, const value_type& value) {
-		allocateAndFillN(n, value);
+		__vector(n, value, typename std::is_integral<size_type>::type());
 	}
 
 	template<class T, class Alloc>

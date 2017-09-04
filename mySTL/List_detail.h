@@ -51,14 +51,14 @@ namespace STL {
 	}
 	//__list泛型进行划分
 	template<class T>
-	list<T>::list(size_type n, const value_type & val)
+	list<T>::list(size_type n, const value_type & val = value_type())
 	{
-		__list(n, val, std::is_integral<value_type>());
+		__list(n, val, typename std::is_integral<size_type>::type());
 	}
 	template<class T>
 	template <class InputIterator>
 	list<T>::list(InputIterator first, InputIterator last) {
-		__list(first, last, std::is_integral<InputIterator>());
+		__list(first, last, typename std::is_integral<InputIterator>::type());
 	}
 	template<class T>
 	inline list<T>::list(const list & lis)
@@ -321,7 +321,7 @@ namespace STL {
 
 	template<class T>
 	void list<T>::insert(iterator position, size_type n, const value_type& val) {
-		__insert(position, n, val, typename std::is_integral<InputIterator>::type());
+		__insert(position, n, val, typename std::is_integral<size_type>::type());
 	}
 	template<class T>
 	template <class InputIterator>
