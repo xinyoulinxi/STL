@@ -13,6 +13,7 @@ namespace STL {
 			testStdAndmySTL();
 		}
 		void testPushBack() {
+			//int
 			vector<int> vec;
 			vec.push_back(1);
 
@@ -22,7 +23,7 @@ namespace STL {
 			vec.erase(vec.begin());
 			assert(vec.size() == 1);
 
-			//STRING TEST
+			//string
 			vector<std::string> vecS;
 			vecS.push_back(str);
 			assert(vecS[0] == str);
@@ -35,6 +36,7 @@ namespace STL {
 
 		void testSize()
 		{
+			//int
 			vector<int> vec;
 			vec.push_back(1);
 			assert(vec.size() == 1);
@@ -42,7 +44,7 @@ namespace STL {
 			assert(vec.size() == 0&&vec.empty());
 			vec.resize(5);
 			assert(vec.size() == 5 && vec[0] == int());
-			//STRING TEST
+			//string
 			vector<std::string> vecS;
 			vecS.push_back(str);
 			assert(vecS.size() == 1);
@@ -56,7 +58,7 @@ namespace STL {
 
 		void testConstruct()
 		{
-
+			//int
 			vector<int> vec1(5, 6);
 			assert(vec1.size() == 5 && vec1[0] == 6);
 
@@ -69,7 +71,7 @@ namespace STL {
 			vector<int> vec4(vec1);
 			assert(vec4.size() == 5 && vec4[0] == 6);
 
-			//STRING TEST
+			//string
 			vector<std::string> vecS1(5, str);
 			assert(vecS1.size() == 5 && vecS1[0] == str);
 
@@ -90,6 +92,7 @@ namespace STL {
 		}
 
 		void testInsert() {
+			//int
 			vector<int> vec;
 			vec.push_back(1);
 			auto it = vec.begin();
@@ -118,7 +121,7 @@ namespace STL {
 			vec4.insert(vec4.begin(), 5, 1);
 			assert(vec4[0] == 1);
 
-			//STRING TEST
+			//string
 			vector<std::string> vecS;
 			vecS.push_back(str);
 			auto itS = vecS.begin();
@@ -145,6 +148,7 @@ namespace STL {
 
 		}
 		void testErase() {
+			//int
 			vector<int> vec;
 			for (int i = 0; i < 10; i++) {
 				vec.push_back(i);
@@ -158,7 +162,7 @@ namespace STL {
 					assert(*it == i+1);
 				}
 			}
-
+			//string
 			vector<std::string> vecS;
 			for (int i = 0; i < 10; i++) {
 				vecS.push_back(str);
