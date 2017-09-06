@@ -124,7 +124,13 @@ namespace STL {
 
 
 		}
+		bool isEqualeInt(const int& a, const int& b) {
+			return a == b;
 
+		}
+		bool isEqualeString(const Str& a, const Str& b) {
+			return a == b;
+		}
 		void testItemOp(){
 			//int
 			myList<int> lis1;
@@ -174,11 +180,44 @@ namespace STL {
 			assert(*lisStr1.begin() == testStr);
 		}
 		void testUnique(){
+			//int 
 			myList<int> lis1;
-
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+				lis1.push_back(i);
+			}
+			assert(lis1.size() == 20);
+			lis1.unique();
+			assert(lis1.size() == 10);
+			lis1.clear();
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+				lis1.push_back(i);
+			}
+			assert(lis1.size() == 20);
+			lis1.unique(isEqualeInt);
+			assert(lis1.size() == 10);
+			//string
+			myList<Str> lisStr1;
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+				lisStr1.push_back(testStr);
+			}
+			assert(lisStr1.size() == 20);
+			lisStr1.unique();
+			assert(lisStr1.size() == 1);
+			lisStr1.clear();
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+				lisStr1.push_back(testStr);
+			}
+			assert(lisStr1.size() == 20);
+			lisStr1.unique(isEqualeString);
+			assert(lisStr1.size() == 1);
 		}
 		void testRemove()
 		{
+			
 		}
 		void testClear()
 		{
