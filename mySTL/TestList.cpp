@@ -14,6 +14,7 @@ namespace STL {
 			testSize();
 			testGetItem();
 			testIterator();
+			
 		}
 		void testConstruct(){
 			//int
@@ -77,6 +78,7 @@ namespace STL {
 
 		}
 		void testErase(){
+			//int 
 			myList<int> lis1;
 			for (int i = 0; i < 10; i++) {
 				lis1.push_back(i);
@@ -88,13 +90,64 @@ namespace STL {
 			for (int i = 0; i < 10; i++) {
 				lis2.push_back(i);
 			}
+			lis2.erase(lis2.begin(), lis2.end());
+			assert(lis2.size() == 0);
+			//string
+			myList<Str> lisStr1;
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+			}
+			lisStr1.erase(lisStr1.begin());
+			assert(lisStr1.size() == 9 && *lisStr1.begin() == testStr);
+
+			myList<Str> lisStr2;
+			for (int i = 0; i < 10; i++) {
+				lisStr2.push_back(testStr);
+			}
+			lisStr2.erase(lisStr2.begin(), lisStr2.end());
+			assert(lisStr2.size() == 0);
 			
 		}
 		void testSplice()
 		{
+			myList<int >lis1(5, 1);
+			myList<int >lis2(5, 3);
+
+			lis1.splice(lis1.begin(),lis2);
+			assert(lis1.size() == 10 && *lis1.begin() == 3);
+			assert(lis2.empty());
+			
+			myList<int >lis3(5, 3);
+			//lis3.splice(lis3.begin(), lis1, lis1.begin());
+			//assert(*lis3.begin() == 3 && lis3.size() == 6);
+
+
+
 		}
-		void testItemOp()
-		{
+
+		void testItemOp(){
+			myList<int> lis1;
+			lis1.push_back(1);
+			assert(*lis1.begin() == 1);
+			lis1.push_front(2);
+			assert(*lis1.begin() == 2);
+			lis1.pop_back();
+			auto itLast = --(lis1.end());
+			assert(*itLast == 2);
+			lis1.push_back(1);
+			lis1.pop_front();
+			auto itBegin = lis1.begin();
+			assert(*itBegin == 1);// 1
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+				lis1.push_front(i);
+			}
+			assert(*lis1.begin() == 9);
+			for (int i = 0; i < 10; i++) {
+				lis1.pop_back();
+				lis1.pop_front();
+			}//1
+			assert(*lis1.begin() == 1);
 		}
 		void testUnique()
 		{

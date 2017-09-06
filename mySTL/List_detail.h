@@ -5,14 +5,14 @@ namespace STL {
 
 	namespace Detail {//         Detail namespace
 		template<class T>
-		list_iterator<T>& list_iterator<T>::operator ++() {
+		list_iterator<T>& list_iterator<T>::operator ++() {//Ç°×º
 
 			p = p->next;
 			return *this;
 		}
 
 		template<class T>
-		inline list_iterator<T> list_iterator<T>::operator ++(int) {
+		inline list_iterator<T> list_iterator<T>::operator ++(int) {//ºó×º
 			auto res = *this;
 			++*this;
 			return res;
