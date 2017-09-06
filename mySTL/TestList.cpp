@@ -291,8 +291,35 @@ namespace STL {
 		{
 			
 		}
-		void testIterator()
-		{
+		void testIterator(){
+			//int 
+			int i = 0;
+			myList<int> lis1;
+			for (i = 0; i < 10; i++) {
+				lis1.push_back(i);
+			}
+			i = 0;
+			for (auto it = lis1.begin(); it != lis1.end(); ++it) {
+				assert(*it == i++);
+			}
+			i = 9;
+			for (auto it =lis1.end(); it != lis1.end(); ) {
+				--it;
+				assert(*it == i--);
+			}
+			//string
+			myList<Str> lisStr1;
+			for (i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+			}
+
+			for (auto it = lisStr1.begin(); it != lisStr1.end(); ++it) {
+				assert(*it == testStr);
+			}
+			for (auto it = lisStr1.end(); it != lisStr1.end();) {
+				--it;
+				assert(*it ==testStr);
+			}
 		}
 	}
 }
