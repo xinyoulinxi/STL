@@ -10,7 +10,6 @@ namespace STL{
 
 		void testAll();
 		void testPopAndPush();
-		void testConstruct();
 		void testItemGet();
 		void testSize();
 
