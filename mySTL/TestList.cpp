@@ -250,14 +250,46 @@ namespace STL {
 			lisStr2.remove_if(isRemoveStr);
 			assert(lisStr2.size() == 1);
 		}
-		void testClear()
-		{
+		void testClear(){
+			//int 
+			myList<int> lis1;
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+			}
+			assert(lis1.size() == 10);
+			lis1.clear();
+			assert(lis1.empty());
+			//string
+			myList<Str> lisStr1;
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+			}
+			assert(lisStr1.size() == 10);
+			lisStr1.clear();
+			assert(lisStr1.empty());
 		}
 		void testSize()
 		{
+			//int 
+			myList<int> lis1;
+			for (int i = 0; i < 10; i++) {
+				lis1.push_back(i);
+			}
+			assert(lis1.size() == 10);
+			lis1.clear();
+			assert(lis1.size()==0);
+			//string
+			myList<Str> lisStr1;
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+			}
+			assert(lisStr1.size() == 10);
+			lisStr1.clear();
+			assert(lisStr1.size() == 0);
 		}
 		void testGetItem()
 		{
+			
 		}
 		void testIterator()
 		{
