@@ -289,7 +289,21 @@ namespace STL {
 		}
 		void testGetItem()
 		{
-			
+			//int 
+			int i = 0;
+			myList<int> lis1;
+			for (i = 0; i < 10; i++) {
+				lis1.push_back(i);
+			}
+			assert(lis1.back() == 9);
+			assert(lis1.front()== 0);
+			//string
+			myList<Str> lisStr1;
+			for (i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+			}
+			assert(lisStr1.back() == testStr);
+			assert(lisStr1.front() == testStr);
 		}
 		void testIterator(){
 			//int 
