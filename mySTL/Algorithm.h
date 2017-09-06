@@ -5,7 +5,7 @@
 #include<assert.h>
 #include"type_traits.h"
 namespace STL {
-	/**********************              fill()     ***********************************
+	/**********************              fill()     ***************************************
 	**************************** Algorithm Complexity  O(N)  ******************************/ 
 
 	template<class ForwardIterator, class T>

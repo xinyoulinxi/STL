@@ -126,6 +126,7 @@
     <ClInclude Include="Stack.h" />
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="TestList.h" />
+    <ClInclude Include="TestStack.h" />
     <ClInclude Include="TestVector.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="UninitializedFunc.h" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
     <ClCompile Include="TestList.cpp" />
+    <ClCompile Include="TestStack.cpp" />
     <ClCompile Include="TestVector.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>

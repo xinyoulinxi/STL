@@ -14,7 +14,7 @@ namespace STL {
 		container_type container_;
 	public:
 		explicit stack(container_type con= container_type()) :container_(con) {}
-		void pop() { Container.erase(container_.end() - 1); }
+		void pop() { container_.erase(container_.end() - 1); }
 		void push(const value_type&value) { container_.push_back(value); }
 		size_type size() { return container_.size(); }
 		bool empty() { return container_.empty(); }

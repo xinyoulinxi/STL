@@ -1,7 +1,7 @@
 #include"TestList.h"
 namespace STL {
 	namespace testList {
-		static const Str testStr = "hello";
+		static const Str testStr = "hello list";
 		void testAll(){
 			testConstruct();
 			testInsert();

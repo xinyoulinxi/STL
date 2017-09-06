@@ -2,7 +2,7 @@
 
 namespace STL {
 	namespace testVector {
-		const std::string str = "string";
+		static const std::string str = "hello vector";
 		void testAll() {
 			testPushBack();
 			testInsert();
