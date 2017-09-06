@@ -43,22 +43,22 @@ namespace STL {
 		vector& operator = (vector&& v);
 		~vector();
 		//比较操作
-		bool operator ==(const vector& v);
-		bool operator !=(const vector& v);
+		bool operator ==(const vector& v)const;
+		bool operator !=(const vector& v)const;
 
 		
 		//迭代器，位置相关
 		iterator begin() { return (start_); }
+		const_iterator begin() const { return (start_); }
 		const_iterator end()const { return (finish_); }
 		iterator end() { return (finish_); }
-		const_iterator begin() const { return (start_); }
 		const_iterator cbegin() { return (start_); }
 		const_iterator cend() { return (start_); }
 
 		//大小，容量
-		size_type size() { return  end() - begin(); }
-		size_type capacity() { return end_of_storage_ - begin(); }
-		bool empty() { return begin() == end(); }
+		size_type size()const { return  end() - begin(); }
+		size_type capacity() const{ return end_of_storage_ - begin(); }
+		bool empty()const { return begin() == end(); }
 		void resize(size_t n,value_type value=value_type());
 		void researve(size_t n);
 

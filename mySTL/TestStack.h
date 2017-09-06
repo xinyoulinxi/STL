@@ -12,6 +12,7 @@ namespace STL{
 		void testPopAndPush();
 		void testItemGet();
 		void testSize();
+		void testSwap();
 
 	}
 }

@@ -185,8 +185,8 @@ namespace STL {
 	//*********************************ÈÝÆ÷±È½Ïº¯Êý*****************************
 
 	template<class T, class Alloc>
-	bool vector<T, Alloc>::operator ==(const vector& rhs) {
-		if (rhs.size() != this->size()) {
+	bool vector<T, Alloc>::operator ==(const vector& rhs)const {
+		if (size() != rhs.size()) {
 			return false;
 		}
 		auto ptrLhs = this->start_;
@@ -198,8 +198,8 @@ namespace STL {
 		return true;
 	}
 	template<class T, class Alloc>
-	bool vector<T, Alloc>::operator !=(const vector& v) {
-		return !(*this == v);
+	bool vector<T, Alloc>::operator !=(const vector& rhs)const {
+		return !(*this == rhs);
 	}
 
 	template<class T, class Alloc>

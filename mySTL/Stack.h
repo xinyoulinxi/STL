@@ -20,12 +20,16 @@ namespace STL {
 		bool empty() { return container_.empty(); }
 		reference top() { return container_.back(); }
 		const reference top() const{ return container_.back(); }
-
+		void swap(stack& rhs) { STL::swap(this->container_, rhs.container_); }
 	public:
 		template <class T, class Container>
 		friend bool operator ==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 		template <class T, class Container>
 		friend bool operator!= (const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+		
+		
+		template <class T, class Container>
+		friend void swap(stack<T, Container>& x, stack<T, Container>& y);
 
 	};
 	
@@ -40,7 +44,10 @@ namespace STL {
 	{
 		return lhs.container_ != rhs.container_;
 	}
-
+	template <class T, class Container>
+	void swap(stack<T, Container>& x, stack<T, Container>& y) {
+		x.swap(y);
+	}
 }
 
 #endif // !_STACK_H
