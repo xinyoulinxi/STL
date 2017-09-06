@@ -215,9 +215,40 @@ namespace STL {
 			lisStr1.unique(isEqualeString);
 			assert(lisStr1.size() == 1);
 		}
+		//testRemove() testfunction
+		bool isRemoveInt(const int& val) {
+			if (val > 0) {
+				return true;
+			}
+			return false;
+		}
+		bool isRemoveStr(const Str& val) {
+			if (val[0] =='h') {
+				return true;
+			}
+			return false;
+		}
 		void testRemove()
 		{
-			
+			//int 
+			myList<int> lis1(5,1);
+			lis1.remove(1);
+			assert(lis1.empty());
+
+			myList<int> lis2(5, 1);
+			lis2.push_back(-7);
+			lis2.remove_if(isRemoveInt);
+			assert(lis2.size()==1);
+
+			//string
+			myList<Str> lisStr1(5, testStr);
+			lisStr1.remove(testStr);
+			assert(lis1.empty());
+
+			myList<Str> lisStr2(5, testStr);
+			lisStr2.push_back("metoo");
+			lisStr2.remove_if(isRemoveStr);
+			assert(lisStr2.size() == 1);
 		}
 		void testClear()
 		{
