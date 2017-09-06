@@ -126,6 +126,7 @@ namespace STL {
 		}
 
 		void testItemOp(){
+			//int
 			myList<int> lis1;
 			lis1.push_back(1);
 			assert(*lis1.begin() == 1);
@@ -148,9 +149,33 @@ namespace STL {
 				lis1.pop_front();
 			}//1
 			assert(*lis1.begin() == 1);
+			//string
+			myList<Str> lisStr1;
+			lisStr1.push_back(testStr);
+			assert(*lisStr1.begin() == testStr);
+			lisStr1.push_front(testStr);
+			assert(*lisStr1.begin() == testStr);
+			lisStr1.pop_back();
+			auto itLastStr = --(lisStr1.end());
+			assert(*itLastStr == testStr);
+			lisStr1.push_back(testStr);
+			lisStr1.pop_front();
+			auto itBeginStr = lisStr1.begin();
+			assert(*itBeginStr == testStr);// 1
+			for (int i = 0; i < 10; i++) {
+				lisStr1.push_back(testStr);
+				lisStr1.push_front(testStr);
+			}
+			assert(*lisStr1.begin() == testStr);
+			for (int i = 0; i < 10; i++) {
+				lisStr1.pop_back();
+				lisStr1.pop_front();
+			}//1
+			assert(*lisStr1.begin() == testStr);
 		}
-		void testUnique()
-		{
+		void testUnique(){
+			myList<int> lis1;
+
 		}
 		void testRemove()
 		{
