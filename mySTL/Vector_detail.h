@@ -274,7 +274,7 @@ namespace STL {
 
 	template<class T, class Alloc>
 	inline void vector<T, Alloc>::reserve(size_t n) {
-		if (n <= capacity()) {
+		if (n <= capacity()) {//Ö»Ôö£¬²»¼õ
 			return;
 		}
 		iterator newStart = data_Allocator::allocate(n);
@@ -318,6 +318,21 @@ namespace STL {
 		auto res = STL::max(oldCapacity, n);
 		size_type newCapacity = (oldCapacity != 0 ? (oldCapacity + res) : n);
 		return newCapacity;
+	}
+	template<class T, class Alloc>
+		typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type pos) {
+		if (pos >= size()) {
+			return;
+		}
+		return start_ + pos;
+
+	}
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type pos)const {
+		if (pos >= size()) {
+			return;
+		}
+		return start_ + pos;
 	}
 }
 #endif

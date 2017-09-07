@@ -6,7 +6,7 @@
 #include"Algorithm.h"
 #include"UninitializedFunc.h"
 #include<algorithm>
-
+#include<string>
 namespace STL {
 	template <class T, class Alloc = allocator<T> >
 	class vector {
@@ -69,7 +69,8 @@ namespace STL {
 		reference back() { return *(end() - 1); }//最后一个元素
 		reference operator[](size_type i) { return *(begin() + i); }
 		pointer data() { return start_; }
-		
+		reference at(size_type pos);
+		const_reference at(size_type pos)const;
 		//容器内容的修改操作函数
 		void clear();
 //		void copy(iterator start, iterator new_start);
