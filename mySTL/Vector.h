@@ -60,7 +60,7 @@ namespace STL {
 		size_type capacity() const{ return end_of_storage_ - begin(); }
 		bool empty()const { return begin() == end(); }
 		void resize(size_t n,value_type value=value_type());
-		void researve(size_t n);
+		void reserve(size_t n);
 
 		//ÔªËØ·ÃÎÊ
 		reference operator[](const difference_type i) { return *(begin() + i); }

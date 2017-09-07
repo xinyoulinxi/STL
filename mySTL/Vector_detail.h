@@ -273,7 +273,7 @@ namespace STL {
 	//*******************************容器容量相关的操作函数********************
 
 	template<class T, class Alloc>
-	inline void vector<T, Alloc>::researve(size_t n) {
+	inline void vector<T, Alloc>::reserve(size_t n) {
 		if (n <= capacity()) {
 			return;
 		}
