@@ -334,5 +334,15 @@ namespace STL {
 		}
 		return start_ + pos;
 	}
+	template<class T, class Alloc>
+	void vector<T, Alloc>::shrink_to_fit() {
+		iterator newStart = (iterator)data_Allocator::allocate(size());//刚好能容纳所有元素
+		iterator newFinish = STL::uninitialized_copy(start_, finish_, newStart);
+		deallocate();
+		finish_ = newFinish;
+		start_ = newStart;
+		end_of_storage_ = newFinish;
+		
+	}
 }
 #endif

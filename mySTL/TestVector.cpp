@@ -44,6 +44,9 @@ namespace STL {
 			assert(vec.size() == 0&&vec.empty());
 			vec.resize(5);
 			assert(vec.size() == 5 && vec[0] == int());
+			vec.clear();
+			vec.shrink_to_fit();
+			assert(vec.capacity() == 0);
 			//string
 			vector<std::string> vecS;
 			vecS.push_back(str);
@@ -52,7 +55,9 @@ namespace STL {
 			assert(vecS.size() == 0 && vecS.empty());
 			vecS.resize(5);
 			assert(vecS.size() == 5 && vecS[0] == std::string());
-
+			vecS.clear();
+			vecS.shrink_to_fit();
+			assert(vecS.capacity() == 0);
 
 		}
 
