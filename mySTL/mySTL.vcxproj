@@ -119,6 +119,8 @@
     <ClInclude Include="alloc.h" />
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="Construct.h" />
+    <ClInclude Include="Deque.h" />
+    <ClInclude Include="Deque_detail.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="List_detail.h" />
