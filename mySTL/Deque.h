@@ -3,29 +3,47 @@
 #include"Allocator.h"
 #include"Iterator.h"
 namespace STL {
-	
+	template<class T, class Alloc>
+	class deque;
 	//deque_iterator detail
 	namespace Detail {
+		
 		template<class T>
 		class deque_iterator:public iterator<random_access_iterator_tag, T>{//继承自包含标准迭代器typedef的iterator
 			//static size_t buffer_size;
-			
+			template<class T,class Alloc>
+			friend class STL::deque;
+			typedef deque<T>* containerPtr;
 			//
 		private:
+			containerPtr container_;
 			size_type  mapIndex_; 
 			T*         cur_;      //此迭代器所指缓存区的当前位置
-			T*         first_;    //迭代器所指的缓存区的头部
-			T*         last_;     //迭代器所指的缓存区的尾部
-
+			//T*         first_;    //迭代器所指的缓存区的头部
+			//T*         last_;     //迭代器所指的缓存区的尾部
+		    
 		public:
 			
-			deque_iterator():mapIndex_(-1),cur_(nullptr),first_(nullptr),last_(nullptr){}
 			deque_iterator()
+				:mapIndex_(-1),cur_(nullptr),container_(nullptr){}
+			deque_iterator(const deque_iterator& it)
+				:mapIndex_(it.mapIndex_), cur_(it.cur_), container_(it.container_){}
+			deque_iterator& operator = (const deque_iterator& it);
+			deque_iterator& operator ++ ();
+			deque_iterator operator ++ (int);
+			deque_iterator& operator -- ();
+			deque_iterator operator -- (int);
+			
+			template<class T>
+			friend bool operator ==(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
+			template<class T>
+			friend bool operator !=(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
 
 		};
+		
 	}//end of Detail
 	
-	template<class T, class Alloc>
+	template<class T, class Alloc=allocator<T>>
 	class deque {
 	public :
 		typedef T                  value_type;
