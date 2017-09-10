@@ -41,19 +41,13 @@ namespace STL {
 			pointer operator ->() { return &(operator*()); }
 			const pointer operator ->()const { return &(operator*()); }
 
-			bool operator ==(const dq_iter& rhs)const;
-			bool operator !=(const dq_iter& rhs)const;
+			bool operator ==(const deque_iterator& rhs)const;
+			bool operator !=(const deque_iterator& rhs)const;
 
 			
-		public:
-			template<class T>
-			friend bool operator ==(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
-			template<class T>
-			friend bool operator !=(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
-			
 		private://ÈÝÆ÷Ïà¹Ø
-			deque_iterator getNowBuckTail();
-			deque_iterator getNowBuckHead();
+			deque_iterator getNowBuckTail(size_t mapIndex);
+			deque_iterator getNowBuckHead(size_t mapIndex);
 			size_t getBuckSize();
 
 		};
