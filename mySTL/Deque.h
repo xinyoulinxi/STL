@@ -48,10 +48,9 @@ namespace STL {
 			bool operator ==(const deque_iterator& rhs)const;
 			bool operator !=(const deque_iterator& rhs)const;
 
-
 		private://ÈÝÆ÷Ïà¹Ø
-			deque_iterator getNowBuckTail();
-			deque_iterator getNowBuckHead();
+			T* getNowBuckTail();
+			T* getNowBuckHead();
 			size_t getBuckSize();
 
 		};

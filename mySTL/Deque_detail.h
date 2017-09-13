@@ -17,14 +17,14 @@ namespace STL {
 		template<class T>
 		deque_iterator<T>  & deque_iterator<T>::operator++() {
 			if (cur_ != getNowBuckTail()) {//+1之后依然在桶内
-				++cur;
+				++cur_;
 			}
-			else if (mapIndex_ + 1 < container_->mapSize_) {//已经在桶的结尾，但是之后还有新的map指针
+			else if (mapIndex_ + 1 < container_->map_size_) {//已经在桶的结尾，但是之后还有新的map指针
 				++mapIndex_;
 				cur_ = getNowBuckHead();//指向下一个桶的开头
 			}
 			else {//mapIndex_ +1之后没有了map
-				mapIndex_ = container_->mapSize_;
+				mapIndex_ = container_->map_size_;
 
 				cur_ = container_->map_[mapIndex_];//指向未知区域
 			}
@@ -69,12 +69,12 @@ namespace STL {
 			return !(rhs == *this);
 		}
 		template<class T>
-		deque_iterator<T> deque_iterator<T>::getNowBuckTail()
+		T* deque_iterator<T>::getNowBuckTail()
 		{
 			return container_->map_[mapIndex_] + (container_->getBuckSize() - 1);
 		}
 		template<class T>
-		deque_iterator<T> deque_iterator<T>::getNowBuckHead()
+		T* deque_iterator<T>::getNowBuckHead()
 		{
 			return container_->map_[mapIndex_];
 		}
@@ -141,13 +141,15 @@ namespace STL {
 		if (map_size_ > 2 * new_num_mapNodes) {//剩余map空间还有很多
 			newStartIndex = (map_size_ - new_num_mapNodes) / 2
 				+ (add_at_front ? nodes_to_add : 0);
-			newStart = map_[newStartIndex];
-			if (newStart < start_.mapIndex_) {
-				copy(map_[start_.mapIndex_], map_[finish_.mapIndex_], newStart);
+			newStart = map_ + newStartIndex;
+			if (newStartIndex < start_.mapIndex_) {
+				copy(map_+start_.mapIndex_
+					, map_+finish_.mapIndex_
+					, newStart);
 			}
 			else {
-				copy_backward(map_[start_.mapIndex_]
-					, map_[finish_.mapIndex_]
+				copy_backward(map_ + start_.mapIndex_
+					, map_+ finish_.mapIndex_
 					, newStart + old_num_mapNodes);
 			}
 		}
@@ -159,9 +161,9 @@ namespace STL {
 				+ (add_at_front ? nodes_to_add : 0);
 			newStart = new_map + newStartIndex;
 			//复制原map的内容
-			copy(map_[start_.mapIndex_], map_[finish_.mapIndex_], newStart);
+			copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
 			//释放原map
-			free[] map_;
+			delete [] map_;
 			//设定新的map的地址和大小
 			map_ = new_map;
 			map_size_ = new_map_size;
@@ -261,16 +263,16 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::init() {
-		mapSize_ = 2;
-		map_ = getNewMapAndGetNewBucks(mapSize_);
+		map_size_ = 2;
+		map_ = getNewMapAndGetNewBucks(map_size_);
 		//将起始点放置在中间
 		start_.container_ = finish_.container_ = this;
-		start_.mapIndex_ = finish_.mapIndex_ = mapSize_ - 1;
-		start_.cur_ = finish_.cur_ = map_[mapSize_ - 1];
+		start_.mapIndex_ = finish_.mapIndex_ = map_size_ - 1;
+		start_.cur_ = finish_.cur_ = map_[map_size_ - 1];
 	}
 	template<class T, class Alloc>
 	bool deque<T, Alloc>::isBackFull()const {
-		return map_[map_size_ - 1] && end().cur_ == map[map_size_ - 1] + getBuckSize();
+		return map_[map_size_ - 1] && end().cur_ == map_[map_size_ - 1] + getBuckSize();
 	}
 	template<class T, class Alloc>
 	bool deque<T, Alloc>::isFrontFull()const {
