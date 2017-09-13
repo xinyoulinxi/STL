@@ -112,7 +112,12 @@ namespace STL {
 	void deque<T, Alloc>::__deque(size_t n
 		, const value_type& value
 		, std::true_type) {
-
+		reallocateMap(n);
+		size_t num = n;
+		auto it = begin();
+		while (num--) {
+			
+		}
 	}
 	template<class T, class Alloc>
 	template<class Iterator>
@@ -122,22 +127,53 @@ namespace STL {
 
 	}
 	template<class T, class Alloc>
-	void deque<T, Alloc>::reallocateMap(size_t nodes_to_add) {
-		size_t newMapSize = getNewMapSize(
-			map_size_ > nodes_to_add ?
-			map_size_, nodes_to_add);
-		auto newMap = getNewMapAndGetNewBucks(newMapSize);
-		size_t startIndex = newMapSize / 4;
-		for (int i = 0; i + start_.mapIndex_ != mapSize_; ++i)
-			for (int j = 0; j != getBuckSize(); ++j)
-				newMap[startIndex + i][j] = map_[start_.mapIndex_ + i][j];
-
-		free[] map_;
-
-		map_ = newMap;
-		map_size_ = newMapSize;
-
-
+	void deque<T, Alloc>::reallocateMap(size_t nodes_to_add, bool add_at_front) {
+		//size_t newMapSize = getNewMapSize(
+		//	map_size_ > nodes_to_add ?
+		//	map_size_, nodes_to_add);
+		//auto newMap = get(newMapSize);
+		//size_t startIndex = newMapSize / 4;
+		size_t old_num_mapNodes = finish_.mapIndex_ - start_.mapIndex_ + 1 ;
+		size_t new_num_mapNodes = old_num_mapNodes + nodes_to_add;
+		 
+		map_Pointer newStart;
+		size_t newStartIndex;
+		if (map_size_ > 2 * new_num_mapNodes) {//剩余map空间还有很多
+			newStartIndex = (map_size_ - new_num_mapNodes) / 2
+				+ (add_at_front ? nodes_to_add : 0);
+			newStart = map_[newStartIndex];
+			if (newStart < start_.mapIndex_) {
+				copy(map_[start_.mapIndex_], map_[finish_.mapIndex_], newStart);
+			}
+			else {
+				copy_backward(map_[start_.mapIndex_]
+					, map_[finish_.mapIndex_]
+					, newStart + old_num_mapNodes);
+			}
+		}
+		else {
+			size_t new_map_size = map_size_ + max(map_size_, nodes_to_add) + 2;
+			//配置新map空间
+			map_Pointer new_map = GetNewMap(new_map_size);
+			newStartIndex = (new_map_size - new_num_mapNodes) / 2
+				+ (add_at_front ? nodes_to_add : 0);
+			newStart = new_map + newStartIndex;
+			//复制原map的内容
+			copy(map_[start_.mapIndex_], map_[finish_.mapIndex_], newStart);
+			//释放原map
+			free[] map_;
+			//设定新的map的地址和大小
+			map_ = new_map;
+			map_size_ = new_map_size;
+		}
+		//设定新的start和finish地址
+		start_ = iterator(newStartIndex
+			,*newStart
+			,this);
+		finish_ = iterator(newStartIndex + old_num_mapNodes - 1
+			,*(newStart+old_num_mapNodes-1)
+			,this);
+		
 	}
 	//元素访问
 	template<class T, class Alloc>
@@ -186,7 +222,7 @@ namespace STL {
 			init();
 		}
 		else if (isBackFull()) {
-			reallocateMap(1);
+			reallocateMap(1,false);
 		}
 		STL::construct(finish_.cur_, value);
 		++finish_;
@@ -202,7 +238,7 @@ namespace STL {
 			init();
 		}
 		else if (isFrontFull()) {
-			reallocateMap();
+			reallocateMap(1,false);
 		}
 		--start_;
 		STL::construct(start_.cur_, value);

@@ -28,8 +28,11 @@ namespace STL {
 			//构造相关
 			deque_iterator()
 				:mapIndex_(-1), cur_(nullptr), container_(nullptr) {}
+			deque_iterator(size_t index, T *ptr, containerPtr container)
+				:mapIndex_(index), cur_(ptr), container_(container) {}
 			deque_iterator(const deque_iterator& it)
 				:mapIndex_(it.mapIndex_), cur_(it.cur_), container_(it.container_) {}
+			
 			deque_iterator& operator = (const deque_iterator& it);
 
 			//符号重载
@@ -112,7 +115,7 @@ namespace STL {
 		template<class Iterator>
 		void __deque(Iterator first, Iterator last, std::false_type);
 		bool isFrontFull()const;
-		void reallocateMap(size_t nodes_to_add);
+		void reallocateMap(size_t nodes_to_add,bool add_at_front);
 		void init();
 	public:
 
