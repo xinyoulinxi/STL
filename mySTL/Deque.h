@@ -47,19 +47,20 @@ namespace STL {
 
 			bool operator ==(const deque_iterator& rhs)const;
 			bool operator !=(const deque_iterator& rhs)const;
-			template<T>
-			friend deque_iterator<T> operator -(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
-			template<T>
-			friend deque_iterator<T> operator +(const deque_iterator<T>& it, const typename deque_iterator<T>::difference_type& n);
-			template<T>
-			friend deque_iterator<T> operator -(const deque_iterator<T>& it, const typename deque_iterator<T>::difference_type& n);
+		public:
+			template<class T>
+			friend typename deque_iterator<T>::difference_type operator -(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
+			template<class T>
+			friend deque_iterator<T> operator +(const deque_iterator<T>& it,  typename deque_iterator<T>::difference_type n);
+			template<class T>
+			friend deque_iterator<T> operator -(const deque_iterator<T>& it, typename deque_iterator<T>::difference_type n);
 			//friend iterator operator -(const deque_iterator::difference_type& n,const deque_iterator& it );
 			//friend iterator operator +(const deque_iterator::difference_type& n, const deque_iterator& it);
 			//
 		private://容器相关
-			T* getNowBuckTail();
-			T* getNowBuckHead();
-			size_t getBuckSize();
+			T* getNowBuckTail()const;
+			T* getNowBuckHead()const;
+			size_t getBuckSize()const;
 
 		};
 
@@ -84,7 +85,7 @@ namespace STL {
 	private:
 		iterator start_;   //指向map的头部
 		iterator finish_;  //指向map的尾部
-		map_Pointer map_;   //指向map（map为一段连续空间）,其内部元素为指针，指向一个缓存区
+		map_Pointer map_;   //指向map（map为一段连续空间）,其内部元素为指针，每个指针指向一个缓存区
 
 		size_type map_size_; //map内部指针的个数
 		enum class BuckSize { BUCK_SIZE = 16};
@@ -116,7 +117,7 @@ namespace STL {
 		//空间配置器
 
 		T * getANewBuck();
-		T ** getNewMapAndGetNewBucks(const size_t size);
+		T ** getNewMapAndGetNewBucks(const size_t& size);
 		T**  GetNewMap(const size_t& size);
 		void __deque(size_t n, const value_type& value, std::true_type);
 		template<class Iterator>
@@ -136,7 +137,7 @@ namespace STL {
 	private:
 
 		//获取操作(内部或迭代器使用）
-		size_type getBuckSize()const { return (size_t)BuckSize::BUCK_SIZE; }
+		size_type getBuckSize()const { return (size_type)BuckSize::BUCK_SIZE; }
 		size_t getNewMapSize(const size_t size);
 		bool isBackFull()const;
 

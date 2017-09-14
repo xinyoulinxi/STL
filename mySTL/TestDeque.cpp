@@ -2,18 +2,20 @@
 #include<iostream>
 namespace STL {
 	namespace testDeque {
-		
+
 		void testAll() {
 			testConstruct();
 		}
 		void testConstruct() {
 			myDeque<int >deq;
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 700; i++) {
 				deq.push_back(i);
 			}
-			
-			auto it = deq.begin();
-			std::cout << *it <<std::endl;
+
+
+			//std::cout << deq.size() << std::endl;
+			/*auto it = deq.begin();
+			std::cout << *it <<std::endl;*/
 		}
 
 	}

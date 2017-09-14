@@ -26,7 +26,7 @@ namespace STL {
 			else {//mapIndex_ +1之后没有了map
 				mapIndex_ = container_->map_size_;
 
-				cur_ = container_->map_[mapIndex_ - 1] +getBuckSize() ;//指向最后一个桶的最后一个元素的后方区域
+				cur_ = container_->map_[mapIndex_];//指向最后一个桶的最后一个元素的后方区域
 			}
 			return *this;
 		}
@@ -69,21 +69,21 @@ namespace STL {
 			return !(rhs == *this);
 		}
 		template<class T>
-		T* deque_iterator<T>::getNowBuckTail()
+		T* deque_iterator<T>::getNowBuckTail()const
 		{
 			return container_->map_[mapIndex_] + (container_->getBuckSize() - 1);
 		}
 		template<class T>
-		T* deque_iterator<T>::getNowBuckHead()
+		T* deque_iterator<T>::getNowBuckHead()const
 		{
 			return container_->map_[mapIndex_];
 		}
 		template<class T>
-		size_t deque_iterator<T>::getBuckSize() {
+		size_t deque_iterator<T>::getBuckSize() const{
 			return container_->getBuckSize();
 		}
 		template<class T>
-		deque_iterator<T> operator -(const deque_iterator<T>& lhs
+		typename deque_iterator<T>::difference_type operator -(const deque_iterator<T>& lhs
 			, const deque_iterator<T>& rhs) {
 			if (lhs.container_ != rhs.container_) {
 				return 0;
@@ -91,14 +91,17 @@ namespace STL {
 			else if (lhs.container_ == rhs.container_&&lhs.container_ == nullptr) {
 				return 0;
 			}
-			return typename deque_iterator<T>::difference_type(
+			typename deque_iterator<T>::difference_type retDis =
+				typename deque_iterator<T>::difference_type(
 				(lhs.mapIndex_ - rhs.mapIndex_ - 1)*lhs.getBuckSize()
-				+ (lhs.cur_ - lhs.getNowBuckHead()) + (rhs.getNowBuckTail() - rhs.cur_ - 1)
-			);
+					+ (lhs.cur_ - lhs.getNowBuckHead() + 1)
+					+ (rhs.getNowBuckTail() - rhs.cur_ )
+				);
+			return retDis;
 		}
 		template<class T>
 		deque_iterator<T> operator +(const deque_iterator<T>& it
-			, const typename deque_iterator<T>::difference_type& n) {
+			, typename deque_iterator<T>::difference_type n) {
 			deque_iterator<T> retIt(it);
 			auto leftSize = retIt.getNowBuckTail() - retIt.cur_;
 			if (n <= leftSize) {//前进n步后依然在当前桶内
@@ -115,7 +118,7 @@ namespace STL {
 		}
 		template<class T>
 		deque_iterator<T> operator -(const deque_iterator<T>& it
-			, const typename deque_iterator<T>::difference_type& n) {
+			,typename deque_iterator<T>::difference_type n) {
 			deque_iterator<T> retIt(it);
 			auto leftSize = n - retIt.getNowBuckHead();
 			if (leftSize >= n) {//后退n步后依然在当前桶内
@@ -146,7 +149,7 @@ namespace STL {
 		return map;
 	}
 	template<class T, class Alloc>
-	T ** deque<T, Alloc>::getNewMapAndGetNewBucks(const size_t size){
+	T ** deque<T, Alloc>::getNewMapAndGetNewBucks(const size_t& size){
 		T **map = new T*[size];
 		for (int i = 0; i != size; ++i) {
 			map[i] = getANewBuck();
@@ -218,13 +221,12 @@ namespace STL {
 		}
 		//设定新的start和finish地址
 		start_ = iterator(newStartIndex
-			,*newStart
+			,start_.cur_
 			,this);
 		
 		finish_ = iterator(newStartIndex + old_num_mapNodes - 1
-			,*(newStart+old_num_mapNodes)
+			,finish_.cur_
 			,this);
-		
 	}
 	//元素访问
 	template<class T, class Alloc>
@@ -272,11 +274,21 @@ namespace STL {
 		if (empty()) {
 			init();
 		}
-		else if (isBackFull()) {
-			reallocateMap(1,false);
+		if (finish_.cur_ != finish_.getNowBuckTail()) {
+			STL::construct(finish_.cur_, value);
+			++finish_;
 		}
-		STL::construct(finish_.cur_, value);
-		++finish_;
+		else if (isBackFull()) {//map后端填满
+			reallocateMap(1,false);
+			finish_.container_->map_[finish_.mapIndex_ + 1] = getANewBuck();
+			finish_.cur_ = map_[finish_.mapIndex_ + 1];
+			finish_.mapIndex_++;
+			STL::construct(finish_.cur_, value);
+			++finish_;
+		}
+		
+		
+		
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::pop_back() {
@@ -290,9 +302,11 @@ namespace STL {
 		}
 		else if (isFrontFull()) {
 			reallocateMap(1,false);
+			start_.container_->map_[start_.mapIndex_ - 1] = getANewBuck();
 		}
 		--start_;
 		STL::construct(start_.cur_, value);
+		
 
 	}
 	template<class T, class Alloc>
@@ -321,7 +335,7 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	bool deque<T, Alloc>::isBackFull()const {
-		return map_[map_size_ - 1] && end().cur_ == (map_[map_size_ - 1] + getBuckSize());
+		return map_[map_size_ - 1] && end().cur_ == (map_[map_size_]);
 	}
 	template<class T, class Alloc>
 	bool deque<T, Alloc>::isFrontFull()const {
