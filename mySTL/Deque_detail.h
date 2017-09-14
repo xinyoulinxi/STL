@@ -180,11 +180,6 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::reallocateMap(size_t nodes_to_add, bool add_at_front) {
-		//size_t newMapSize = getNewMapSize(
-		//	map_size_ > nodes_to_add ?
-		//	map_size_, nodes_to_add);
-		//auto newMap = get(newMapSize);
-		//size_t startIndex = newMapSize / 4;
 		size_t old_num_mapNodes = finish_.mapIndex_ - start_.mapIndex_ + 1 ;
 		size_t new_num_mapNodes = old_num_mapNodes + nodes_to_add;
 		map_Pointer newStart;
@@ -194,14 +189,10 @@ namespace STL {
 				+ (add_at_front ? nodes_to_add : 0);
 			newStart = map_ + newStartIndex;
 			if (newStartIndex < start_.mapIndex_) {
-				copy(map_+start_.mapIndex_
-					, map_+finish_.mapIndex_
-					, newStart);
+				copy(map_+start_.mapIndex_	, map_+finish_.mapIndex_, newStart);
 			}
 			else {
-				copy_backward(map_ + start_.mapIndex_
-					, map_+ finish_.mapIndex_
-					, newStart + old_num_mapNodes);
+				copy_backward(map_ + start_.mapIndex_, map_+ finish_.mapIndex_, newStart + old_num_mapNodes);
 			}
 		}
 		else {
@@ -220,13 +211,8 @@ namespace STL {
 			map_size_ = new_map_size;
 		}
 		//设定新的start和finish地址
-		start_ = iterator(newStartIndex
-			,start_.cur_
-			,this);
-		
-		finish_ = iterator(newStartIndex + old_num_mapNodes - 1
-			,finish_.cur_
-			,this);
+		start_ = iterator(newStartIndex,start_.cur_,this);
+		finish_ = iterator(newStartIndex + old_num_mapNodes - 1,finish_.cur_,this);
 	}
 	//元素访问
 	template<class T, class Alloc>
