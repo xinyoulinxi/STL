@@ -8,7 +8,10 @@ namespace STL {
 		}
 		void testConstruct() {
 			myDeque<int >deq;
-			deq.push_back(1);
+			for (int i = 0; i < 100; i++) {
+				deq.push_back(i);
+			}
+			
 			auto it = deq.begin();
 			std::cout << *it <<std::endl;
 		}

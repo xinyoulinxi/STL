@@ -50,7 +50,7 @@ namespace STL {
 		typedef T*							pointer;
 		typedef T&							reference;
 	};
-	template<class Category, class T, class Distance = size_t,
+	template<class Category, class T, class Distance = ptrdiff_t,
 		class Pointer = T* , class Reference = T& >
 		struct iterator
 	{

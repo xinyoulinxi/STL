@@ -47,7 +47,15 @@ namespace STL {
 
 			bool operator ==(const deque_iterator& rhs)const;
 			bool operator !=(const deque_iterator& rhs)const;
-
+			template<T>
+			friend deque_iterator<T> operator -(const deque_iterator<T>& lhs, const deque_iterator<T>& rhs);
+			template<T>
+			friend deque_iterator<T> operator +(const deque_iterator<T>& it, const typename deque_iterator<T>::difference_type& n);
+			template<T>
+			friend deque_iterator<T> operator -(const deque_iterator<T>& it, const typename deque_iterator<T>::difference_type& n);
+			//friend iterator operator -(const deque_iterator::difference_type& n,const deque_iterator& it );
+			//friend iterator operator +(const deque_iterator::difference_type& n, const deque_iterator& it);
+			//
 		private://ÈÝÆ÷Ïà¹Ø
 			T* getNowBuckTail();
 			T* getNowBuckHead();
