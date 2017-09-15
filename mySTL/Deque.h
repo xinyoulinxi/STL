@@ -81,6 +81,7 @@ namespace STL {
 		template<class T>
 		friend class       ::STL::Detail::deque_iterator;
 		typedef Alloc              dataAllocator;
+		typedef allocator<T*>       mapAllocator;
 		typedef pointer*      map_Pointer;
 	private:
 		iterator start_;   //指向map的头部
@@ -122,9 +123,15 @@ namespace STL {
 		void __deque(size_t n, const value_type& value, std::true_type);
 		template<class Iterator>
 		void __deque(Iterator first, Iterator last, std::false_type);
+
+		void __push_back(const value_type& value);
+		void __push_front(const value_type& value);
 		bool isFrontFull()const;
 		void reallocateMap(size_t nodes_to_add,bool add_at_front);
 		void init();
+		void __pop_front();
+		void __pop_back();
+		void deallocateABuck(size_t index);
 	public:
 
 		//元素操作

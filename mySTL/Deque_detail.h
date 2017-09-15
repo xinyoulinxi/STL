@@ -46,7 +46,7 @@ namespace STL {
 				cur_ = getNowBuckTail();
 			}
 			else {
-				mapIndex = 0;
+				mapIndex_ = 0;
 				cur_ = container_->map_[mapIndex_];
 			}
 			return *this;
@@ -140,6 +140,24 @@ namespace STL {
 
 	//空间配置器
 	template<class T, class Alloc>
+	void deque<T, Alloc>::deallocateABuck(size_t index) {
+		dataAllocator::deallocate(map_[index], getBuckSize());
+	}
+	template<class T, class Alloc>
+	void deque<T, Alloc>::__pop_front() {
+		STL::destory(start_.cur_);
+		deallocateABuck(start_.mapIndex_);
+		start_.mapIndex_ += 1;
+		start_.cur_ = start_.getNowBuckHead();
+	}
+	template<class T, class Alloc>
+	void  deque<T, Alloc>::__pop_back() {
+		deallocateABuck(finish_.mapIndex_);
+		finish_.mapIndex_ -= 1;
+		finish_.cur_ = finish_.getNowBuckTail();
+		STL::destory(finish_.cur_);
+	}
+	template<class T, class Alloc>
 	T * deque<T, Alloc>::getANewBuck(){
 		return dataAllocator::allocate(getBuckSize());//未构造空间
 	}
@@ -150,7 +168,7 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	T ** deque<T, Alloc>::getNewMapAndGetNewBucks(const size_t& size){
-		T **map = new T*[size];
+		T **map =  mapAllocator::allocate(size);
 		for (int i = 0; i != size; ++i) {
 			map[i] = getANewBuck();
 		}
@@ -205,14 +223,42 @@ namespace STL {
 			//复制原map的内容
 			copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
 			//释放原map
-			delete [] map_;
+			mapAllocator::deallocate(map_);
 			//设定新的map的地址和大小
 			map_ = new_map;
 			map_size_ = new_map_size;
 		}
+		//给map指向的缓存区分配未初始化的内存空间
+		//for (int i = 0; i < newStartIndex; ++i) {
+		//	map_[i] = getANewBuck();
+		//}
+		//for (int i = newStartIndex + old_num_mapNodes; i < map_size_; ++i) {
+		//	map_[i] = getANewBuck();
+		//}
 		//设定新的start和finish地址
-		start_ = iterator(newStartIndex,start_.cur_,this);
-		finish_ = iterator(newStartIndex + old_num_mapNodes - 1,finish_.cur_,this);
+		start_ = iterator(newStartIndex, start_.cur_, this);
+		finish_ = iterator(newStartIndex + old_num_mapNodes - 1, finish_.cur_, this);
+	}
+	template<class T, class Alloc>
+	void  deque<T, Alloc>::__push_back(const value_type& value) {
+		if (isBackFull()) {//map后端填满
+			reallocateMap(1, false);
+		}
+		map_[finish_.mapIndex_ + 1] = getANewBuck();
+
+		STL::construct(finish_.cur_, value);
+		++finish_.mapIndex_;
+		finish_.cur_ = finish_.getNowBuckHead();
+	}
+	template<class T, class Alloc>
+		void  deque<T, Alloc>::__push_front(const value_type& value) {
+			if (isFrontFull()) {
+				reallocateMap(1, true);
+			}
+			map_[start_.mapIndex_ - 1] = getANewBuck();
+			--start_.mapIndex_;
+			start_.cur_ = start_.getNowBuckTail();
+			STL::construct(start_.cur_, value);
 	}
 	//元素访问
 	template<class T, class Alloc>
@@ -260,44 +306,47 @@ namespace STL {
 		if (empty()) {
 			init();
 		}
-		if (finish_.cur_ != finish_.getNowBuckTail()) {
+		if(finish_.cur_!=finish_.getNowBuckTail()){
 			STL::construct(finish_.cur_, value);
 			++finish_;
 		}
-		else if (isBackFull()) {//map后端填满
-			reallocateMap(1,false);
-			finish_.container_->map_[finish_.mapIndex_ + 1] = getANewBuck();
-			finish_.cur_ = map_[finish_.mapIndex_ + 1];
-			finish_.mapIndex_++;
-			STL::construct(finish_.cur_, value);
-			++finish_;
+		else {
+			__push_back(value);
 		}
-		
-		
-		
+
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::pop_back() {
-		--finish_;
-		STL::destory(finish_.cur_);
+		if (finish_.cur_ != finish_.getNowBuckHead()) {
+			--finish_;
+			STL::destory(finish_.cur_);
+		}
+		else {
+			__pop_back();
+		}
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::push_front(const value_type& value) {
 		if (empty()) {
 			init();
 		}
-		else if (isFrontFull()) {
-			reallocateMap(1,false);
-			start_.container_->map_[start_.mapIndex_ - 1] = getANewBuck();
+		if (start_.cur_ != start_.getNowBuckHead()) {
+			--start_;
+			STL::construct(start_.cur_, value);
 		}
-		--start_;
-		STL::construct(start_.cur_, value);
-		
-
+		else {
+			__push_front(value);
+		}
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::pop_front() {
-
+		if (start_.cur_+1 != start_.getNowBuckTail()) {
+			STL::destory(start_.cur_);
+			++start_;
+		}
+		else {
+			__pop_front();
+		}
 	}
 	template<class T, class Alloc>
 	void deque<T, Alloc>::clear() {
@@ -325,7 +374,7 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	bool deque<T, Alloc>::isFrontFull()const {
-		return map_[0] && begin().cur_ == map[0];
+		return map_[0] && begin().cur_ == map_[0];
 	}
 	
 }

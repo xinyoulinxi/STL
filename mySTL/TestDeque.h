@@ -5,6 +5,6 @@ namespace STL {
 		using myDeque = deque<T>;
 		void testAll();
 		void testConstruct();
-
+		void testItemOp();
 	}
 }
