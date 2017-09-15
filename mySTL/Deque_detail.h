@@ -120,7 +120,7 @@ namespace STL {
 		deque_iterator<T> operator -(const deque_iterator<T>& it
 			, typename deque_iterator<T>::difference_type n) {
 			deque_iterator<T> retIt(it);
-			auto leftSize = n - retIt.getNowBuckHead();
+			auto leftSize = retIt.cur_ - retIt.getNowBuckHead();
 			if (leftSize >= n) {//后退n步后依然在当前桶内
 				retIt.cur_ -= n;
 			}
@@ -192,13 +192,14 @@ namespace STL {
 	void deque<T, Alloc>::__deque(InputIterator first
 		, InputIterator last
 		, std::false_type) {
-		auto size = first - last;
+		auto size = last - first;
 		creat_map_and_nodes(size);
 //		uninitialized_copy(first, last, start_);
 		iterator indexIterator = start_;
 		for (; first != last; ++first,++indexIterator) {
 			STL::construct(indexIterator.cur_, *(first.cur_));
 		}
+
 	}	
 	template<class T, class Alloc>
 	void deque<T, Alloc>::creat_map_and_nodes(size_t num_elements) {
@@ -307,10 +308,13 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	deque<T, Alloc>::deque(const deque& rhs) {
-
+		deque(rhs.begin(), rhs.end());
 	}
 	template<class T, class Alloc>
 	deque<T, Alloc>::~deque() {
+		clear();
+		dataAllocator::deallocate(map_[start_.mapIndex_]);
+		mapAllocator::deallocate(map_, map_size_);
 	}
 
 	//元素操作相关
@@ -364,8 +368,8 @@ namespace STL {
 	template<class T, class Alloc>
 	void deque<T, Alloc>::clear() {
 		//将除了头尾缓存区之外的所有缓存区中的元素析构（其都是饱和状态）
-		for (map_Pointer node = map_[start_.mapIndex_ + 1]
-			; node < map_[start_.mapIndex_ - 1]
+		for (map_Pointer node = map_ + start_.mapIndex_ + 1
+			; node < map_ + finish_.mapIndex_
 			; ++node) {
 			STL::destroy(*node, *(node + getBuckSize()));
 			dataAllocator::deallocate(*node, getBuckSize());
@@ -376,7 +380,7 @@ namespace STL {
 			STL::destroy(start_.cur_, start_.getNowBuckTail());
 			STL::destroy(finish_.getNowBuckHead(), finish_.cur_);
 			//释放尾部缓存区，根据设计，至少需要保留一个缓存区
-			dataAllocator::deallocate(map[finish_.mapIndex_], getBuckSize());
+			dataAllocator::deallocate(map_[finish_.mapIndex_], getBuckSize());
 		}
 		else {//只有一个缓存区
 			STL::destroy(start_.cur_, finish_.cur_);

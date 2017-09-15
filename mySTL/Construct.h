@@ -22,11 +22,11 @@ namespace STL {
 	template<class ForwardIterator>
 	inline void __destroy(ForwardIterator first, ForwardIterator last) {
 		typedef typename STL::__type_traits<ForwardIterator>::has_trivial_destructor trivial_destoructor;
-		__destroy_aux(first, last, trivial_destoructor);
+		__destroy_aux(first, last, trivial_destoructor());
 	}
 
 	template<class ForwardIterator>
-	inline void __destroy_aux(ForwardIterator first, ForwardIterator last, __true_type) {}
+	inline void __destroy_aux(ForwardIterator first, ForwardIterator last, STL::__true_type) {}
 
 	template<class ForwardIterator>
 	void __destroy_aux(ForwardIterator first, ForwardIterator last, STL::__false_type) {

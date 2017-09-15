@@ -113,7 +113,8 @@ namespace STL {
 		explicit deque(size_type n, const value_type& val = value_type());
 		template <class InputIterator>
 		deque(InputIterator first, InputIterator last);
-		deque(const deque& x);
+		deque(const deque& rhs);
+		deque(const deque&& rhs);
 		~deque();
 	private:
 		//ø’º‰≈‰÷√∆˜
@@ -127,7 +128,7 @@ namespace STL {
 
 		void __push_back(const value_type& value);
 		void __push_front(const value_type& value);
-		bool isFrontFull()const;
+		
 		void reallocateMap(size_t nodes_to_add,bool add_at_front);
 		void init();
 		void __pop_front();
@@ -142,10 +143,10 @@ namespace STL {
 		void pop_back();
 		void pop_front();
 		void clear();
-		iterator insert(iterator pos,const value_type& value);
-		
-		iterator erase(iterator pos);
-		iterator erase(iterator first, iterator last);
+		//iterator insert(iterator pos,const value_type& value);
+		//
+		//iterator erase(iterator pos);
+		//iterator erase(iterator first, iterator last);
 		
 	private:
 
@@ -153,7 +154,7 @@ namespace STL {
 		size_type getBuckSize()const { return (size_type)BuckSize::BUCK_SIZE; }
 		size_t getNewMapSize(const size_t size);
 		bool isBackFull()const;
-
+		bool isFrontFull()const;
 	};
 
 }
