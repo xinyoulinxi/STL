@@ -5,9 +5,11 @@
 #include"TestList.h"
 #include<stack>
 #include<vector>
+#include<deque>
 #include"List.h"
 #include"TestDeque.h"
 int main() {
+	std::deque<int> q;
 	STL::testList::testAll();
 	STL::testVector::testAll();
 	STL::testDeque::testAll();

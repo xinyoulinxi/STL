@@ -10,28 +10,28 @@ namespace STL {
 	}
 	//调用析构函数,第一个版本，接受一个指针
 	template<typename T>
-	inline void destory(T* pointer) {
+	inline void destroy(T* pointer) {
 		pointer->~T();
 	}
 	//接收两个迭代器
 	template<class ForwordIterator>
-	inline void destory(ForwordIterator first, ForwordIterator last) {
-		__destory(first, last);
+	inline void destroy(ForwordIterator first, ForwordIterator last) {
+		__destroy(first, last);
 	}
 
 	template<class ForwardIterator>
-	inline void __destory(ForwardIterator first, ForwardIterator last) {
+	inline void __destroy(ForwardIterator first, ForwardIterator last) {
 		typedef typename STL::__type_traits<ForwardIterator>::has_trivial_destructor trivial_destoructor;
-		__destory_aux(first, last, trivial_destoructor);
+		__destroy_aux(first, last, trivial_destoructor);
 	}
 
 	template<class ForwardIterator>
-	inline void __destroy(ForwardIterator first, ForwardIterator last, __true_type) {}
+	inline void __destroy_aux(ForwardIterator first, ForwardIterator last, __true_type) {}
 
 	template<class ForwardIterator>
-	void __destory_aux(ForwardIterator first, ForwardIterator last, STL::__false_type) {
+	void __destroy_aux(ForwardIterator first, ForwardIterator last, STL::__false_type) {
 		for (; first < last; ++first) {
-			destory(&*first);
+			destroy(&*first);
 		}
 	}
 }

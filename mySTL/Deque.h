@@ -3,6 +3,7 @@
 #include"Allocator.h"
 #include"Iterator.h"
 #include"Algorithm.h"
+#include"UninitializedFunc.h"
 namespace STL {
 	template<class T, class Alloc = allocator<T>>
 	class deque;
@@ -121,8 +122,8 @@ namespace STL {
 		T ** getNewMapAndGetNewBucks(const size_t& size);
 		T**  GetNewMap(const size_t& size);
 		void __deque(size_t n, const value_type& value, std::true_type);
-		template<class Iterator>
-		void __deque(Iterator first, Iterator last, std::false_type);
+		template<class InputIterator>
+		void __deque(InputIterator first, InputIterator last, std::false_type);
 
 		void __push_back(const value_type& value);
 		void __push_front(const value_type& value);
@@ -132,6 +133,7 @@ namespace STL {
 		void __pop_front();
 		void __pop_back();
 		void deallocateABuck(size_t index);
+		void creat_map_and_nodes(size_t n);
 	public:
 
 		//元素操作
@@ -140,7 +142,11 @@ namespace STL {
 		void pop_back();
 		void pop_front();
 		void clear();
-
+		iterator insert(iterator pos,const value_type& value);
+		
+		iterator erase(iterator pos);
+		iterator erase(iterator first, iterator last);
+		
 	private:
 
 		//获取操作(内部或迭代器使用）
