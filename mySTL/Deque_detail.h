@@ -230,10 +230,10 @@ namespace STL {
 				+ (add_at_front ? nodes_to_add : 0);
 			newStart = map_ + newStartIndex;
 			if (newStartIndex < start_.mapIndex_) {
-				copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
+				STL::copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
 			}
 			else {
-				copy_backward(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart + old_num_mapNodes);
+				STL::copy_backward(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart + old_num_mapNodes);
 			}
 		}
 		else {
@@ -244,7 +244,7 @@ namespace STL {
 				+ (add_at_front ? nodes_to_add : 0);
 			newStart = new_map + newStartIndex;
 			//复制原map的内容
-			copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
+			STL::copy(map_ + start_.mapIndex_, map_ + finish_.mapIndex_, newStart);
 			//释放原map
 			mapAllocator::deallocate(map_);
 			//设定新的map的地址和大小
@@ -281,6 +281,10 @@ namespace STL {
 		return *(begin() + n);
 	}
 	template<class T, class Alloc>
+	typename deque<T, Alloc>::const_reference deque<T, Alloc>::operator[] (size_type n) const {
+		return *(begin() + n);
+	}
+	template<class T, class Alloc>
 	typename deque<T, Alloc>::reference deque<T, Alloc>::front() {
 		return *begin();
 	}
@@ -300,7 +304,6 @@ namespace STL {
 		__deque(n, value, typename std::is_integral<size_type>::type());
 	}
 	template<class T, class Alloc>
-
 	template <class InputIterator>
 	deque<T, Alloc>::deque(InputIterator first, InputIterator last)
 		:map_size_(0), map_(nullptr) {
