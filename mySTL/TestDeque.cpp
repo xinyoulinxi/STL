@@ -85,8 +85,11 @@ namespace STL {
 			}
 			assert(deqStr1.empty());
 		}
-
+		myDeque<int> getDeque() {
+			return myDeque<int>();
+		}
 		void testGetOp(){
+			deque<int> d(getDeque());
 			//int 
 			myDeque<int >deq;
 			deq.push_back(1);

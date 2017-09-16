@@ -294,6 +294,16 @@ namespace STL {
 	}
 	//构造函数相关
 	template<class T, class Alloc>
+	deque<T, Alloc>::deque(const deque&& rhs) {
+		start_ = rhs.start_;
+		finish_ = rhs.finish_;
+		map_ = rhs.map_;
+		map_size_ = rhs.map_size_;
+		rhs.start_ = rhs.finish_ = iterator();
+		rhs.map_ = nullptr;
+		rhs.map_size_ = 0;
+	}
+	template<class T, class Alloc>
 	deque<T, Alloc>::deque()
 		:map_size_(0), map_(nullptr) {
 	}
@@ -315,9 +325,11 @@ namespace STL {
 	}
 	template<class T, class Alloc>
 	deque<T, Alloc>::~deque() {
-		clear();
-		dataAllocator::deallocate(map_[start_.mapIndex_]);
-		mapAllocator::deallocate(map_, map_size_);
+		if (map_ != nullptr) {
+			clear();
+			dataAllocator::deallocate(map_[start_.mapIndex_]);
+			mapAllocator::deallocate(map_, map_size_);
+		}
 	}
 
 	//元素操作相关
