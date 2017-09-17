@@ -81,6 +81,12 @@
     <ClInclude Include="TestDeque.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestQueue.h">
+      <Filter>Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">
@@ -99,6 +105,9 @@
       <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="TestDeque.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestQueue.cpp">
       <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>

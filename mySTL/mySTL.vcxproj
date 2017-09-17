@@ -124,11 +124,13 @@
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="List_detail.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="TestDeque.h" />
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="TestList.h" />
+    <ClInclude Include="TestQueue.h" />
     <ClInclude Include="TestStack.h" />
     <ClInclude Include="TestVector.h" />
     <ClInclude Include="type_traits.h" />
@@ -140,6 +142,7 @@
     <ClCompile Include="alloc.cpp" />
     <ClCompile Include="TestDeque.cpp" />
     <ClCompile Include="TestList.cpp" />
+    <ClCompile Include="TestQueue.cpp" />
     <ClCompile Include="TestStack.cpp" />
     <ClCompile Include="TestVector.cpp" />
     <ClCompile Include="源.cpp" />
