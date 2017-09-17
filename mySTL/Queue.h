@@ -16,6 +16,10 @@ namespace STL {
 		container_type container_;
 	public:
 		queue(container_type conr = container_type()) :container_(conr) {}
+		template<class InputIterator>
+		queue(InputIterator first, InputIterator last) : container_(first, last) {}
+		queue(const queue& rhs) : container_(rhs.container_) {}
+		queue(const queue&& rhs) :container_(rhs.container_) {}
 		
 		reference front();
 		reference back();
