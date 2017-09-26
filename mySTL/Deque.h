@@ -12,17 +12,13 @@ namespace STL {
 
 		template<class T>
 		class deque_iterator :public iterator<random_access_iterator_tag, T> {//继承自包含标准迭代器typedef的iterator
-			//static size_t buffer_size;
 			template<class T, class Alloc>
 			friend class deque;
 			typedef deque<T>* containerPtr;
-			//
 		private:
-			containerPtr container_;
+			containerPtr container_;  
 			size_t    mapIndex_;
 			T*           cur_;      //此迭代器所指缓存区的当前位置
-			//T*         first_;    //迭代器所指的缓存区的头部
-			//T*         last_;     //迭代器所指的缓存区的尾部
 
 		public:
 
@@ -37,13 +33,13 @@ namespace STL {
 			deque_iterator& operator = (const deque_iterator& it);
 
 			//符号重载
-			deque_iterator& operator ++ ();
-			deque_iterator operator ++ (int);
+			deque_iterator& operator ++ ();//前置++
+			deque_iterator operator ++ (int);//后置++
 			deque_iterator& operator -- ();
 			deque_iterator operator -- (int);
-			reference operator *() { return *cur_; }
-			const reference operator *()const { return *cur_; }
-			pointer operator ->() { return &(operator*()); }
+			reference operator *() { return *cur_; }//*运算符
+			const reference operator *()const { return *cur_; }//const限定
+			pointer operator ->() { return &(operator*()); }//->运算符
 			const pointer operator ->()const { return &(operator*()); }
 
 			bool operator ==(const deque_iterator& rhs)const;
@@ -90,7 +86,7 @@ namespace STL {
 		map_Pointer map_;   //指向map（map为一段连续空间）,其内部元素为指针，每个指针指向一个缓存区
 
 		size_type map_size_; //map内部指针的个数
-		enum class BuckSize { BUCK_SIZE = 16};
+		static enum class BuckSize { BUCK_SIZE = 16};
 	public:
 		//元素访问
 		iterator begin() { return start_; }

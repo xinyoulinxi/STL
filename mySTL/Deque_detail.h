@@ -257,13 +257,13 @@ namespace STL {
 	template<class T, class Alloc>
 	void  deque<T, Alloc>::__push_back(const value_type& value) {
 		if (isBackFull()) {//map后端填满
-			reallocateMap(1, false);
+			reallocateMap(1, false);//将指向区块的指针数组移去新的更大的数组空间
 		}
-		map_[finish_.mapIndex_ + 1] = getANewBuck();
+		map_[finish_.mapIndex_ + 1] = getANewBuck();//在当前区块地址元素的后一个元素赋值为新分配的内存空间
 
-		STL::construct(finish_.cur_, value);
-		++finish_.mapIndex_;
-		finish_.cur_ = finish_.getNowBuckHead();
+		STL::construct(finish_.cur_, value);//构造
+		++finish_.mapIndex_;//调整finish_的区块位置
+		finish_.cur_ = finish_.getNowBuckHead();//指向新的区块的开头
 	}
 	template<class T, class Alloc>
 	void  deque<T, Alloc>::__push_front(const value_type& value) {
@@ -338,11 +338,11 @@ namespace STL {
 		if (empty()) {
 			init();
 		}
-		if (finish_.cur_ != finish_.getNowBuckTail()) {
+		if (finish_.cur_ != finish_.getNowBuckTail()) {//如果当前区块没有被填满
 			STL::construct(finish_.cur_, value);
 			++finish_;
 		}
-		else {
+		else {//当前区块被填满了
 			__push_back(value);
 		}
 
@@ -405,7 +405,8 @@ namespace STL {
 	template<class T, class Alloc>
 	void deque<T, Alloc>::init() {
 		map_size_ = 2;
-		map_ = getNewMapAndGetNewBucks(map_size_);
+		map_ = getNewMapAndGetNewBucks(map_size_);//获得大小为map_size_的指针空间并且为其分配未构造的内存空间
+
 		//将起始点放置在中间
 		start_.container_ = finish_.container_ = this;
 		start_.mapIndex_ = finish_.mapIndex_ = map_size_ - 1;
