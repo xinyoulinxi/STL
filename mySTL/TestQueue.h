@@ -1,6 +1,7 @@
 #ifndef _TEST_DEQUE_H_
 #define _TEST_DEQUE_H_
 #include"Queue.h"
+#include<string>
 namespace STL{
 	namespace testQueue {
 		template<class T>

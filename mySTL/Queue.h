@@ -32,42 +32,42 @@ namespace STL {
 
 	};
 	template<class T, class Container>
-	inline queue<T, Container>::reference queue<T, Container>::front()
+	typename queue<T, Container>::reference queue<T, Container>::front()
 	{
 		return container_.front();
 	}
 	template<class T, class Container>
-	inline queue<T, Container>::reference queue<T, Container>::back()
+	typename queue<T, Container>::reference queue<T, Container>::back()
 	{
 		return container_.back();
 	}
 	template<class T, class Container>
-	inline queue<T, Container>::const_reference queue<T, Container>::front() const
+	 typename queue<T, Container>::const_reference queue<T, Container>::front() const
 	{
 		return container_.front();
 	}
 	template<class T, class Container>
-	inline queue<T, Container>::const_reference queue<T, Container>::back() const
+	typename queue<T, Container>::const_reference queue<T, Container>::back() const
 	{
 		return container_.back();
 	}
 	template<class T, class Container>
-	inline void queue<T, Container>::push(const value_type& value)
+	 void queue<T, Container>::push(const value_type& value)
 	{
 		container_.push_back(value);
 	}
 	template<class T, class Container>
-	inline void queue<T, Container>::pop()
+	 void queue<T, Container>::pop()
 	{
 		container_.pop_front();
 	}
 	template<class T, class Container>
-	inline bool queue<T, Container>::empty() const
+	 bool queue<T, Container>::empty() const
 	{
 		return container_.empty();
 	}
 	template<class T, class Container>
-	inline queue<T, Container>::size_type queue<T, Container>::size() const
+	typename queue<T, Container>::size_type queue<T, Container>::size() const
 	{
 		return container_.size();
 	}

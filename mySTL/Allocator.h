@@ -65,21 +65,19 @@ namespace STL{
 
 	template<class T>
 	void allocator<T>::construct(T *ptr) {//调用default placement new 
-		new(ptr)T();
+		STL::construct(ptr,T());
 	}
 	template<class T>
 	void allocator<T>::construct(T *ptr, const T& value) {//带参调用 placement new 
-		new(ptr)T(value);
+		STL::construct(ptr, value);
 	}
 	template<class T>
 	void allocator<T>::destroy(T *ptr) {// 调用 operator delete 去析构 T
-		ptr->~T();
+		STL::destroy(ptr);
 	}
 	template<class T>
 	void allocator<T>::destroy(T *first, T *last) {
-		for (; first != last; ++first) {
-			first->~T();
-		}
+		STL::destroy(first,last);
 	}
 
 }
