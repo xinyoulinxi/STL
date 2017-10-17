@@ -127,6 +127,7 @@
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="TestDeque.h" />
     <ClInclude Include="TestIterator.h" />
     <ClInclude Include="TestList.h" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="TestDeque.cpp" />
     <ClCompile Include="TestList.cpp" />
     <ClCompile Include="TestQueue.cpp" />

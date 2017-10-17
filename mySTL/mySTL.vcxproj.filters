@@ -87,6 +87,9 @@
     <ClInclude Include="TestQueue.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="TestQueue.cpp">
       <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>detail</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
