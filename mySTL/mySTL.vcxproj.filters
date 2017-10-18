@@ -92,9 +92,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="alloc.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="源.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -114,6 +111,9 @@
       <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="String.cpp">
+      <Filter>detail</Filter>
+    </ClCompile>
+    <ClCompile Include="alloc.cpp">
       <Filter>detail</Filter>
     </ClCompile>
   </ItemGroup>

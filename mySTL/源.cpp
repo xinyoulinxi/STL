@@ -8,11 +8,12 @@
 #include<deque>
 #include"List.h"
 #include"TestDeque.h"
+#include"TestQueue.h"
 int main() {
-	std::deque<int> q;
 	STL::testList::testAll();
 	STL::testVector::testAll();
 	STL::testDeque::testAll();
+	STL::testQueue::testAll();
 	system("pause");
 	return 0;
 }
