@@ -7,7 +7,9 @@
 namespace STL {
 	namespace testVector {
 		template<class T>
-		using vector = STL::vector<T>;
+		using myVector = STL::vector<T>;
+		template<class T>
+		using stdVector = std::vector<T>;
 
 		void testAll();
 		void testInsert();
