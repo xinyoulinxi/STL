@@ -97,7 +97,6 @@ namespace STL {
 		}
 		return d_first;
 	}
-
 	//********************        max()          ******************************
 	//****************      Algorithm Complexity: O(1) ****************************
 	template <class T>

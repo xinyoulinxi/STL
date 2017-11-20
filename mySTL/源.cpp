@@ -6,14 +6,19 @@
 #include<stack>
 #include<vector>
 #include<deque>
+#include<map>
 #include"List.h"
 #include"TestDeque.h"
 #include"TestQueue.h"
 int main() {
-	STL::testList::testAll();
-	STL::testVector::testAll();
-	STL::testDeque::testAll();
-	STL::testQueue::testAll();
+
+	//STL::testList::testAll();
+	//STL::testVector::testAll();
+	//STL::testDeque::testAll();
+	//STL::testQueue::testAll();
+
+
+	STL::testVector::testStdAndmySTL();
 	system("pause");
 	return 0;
 }

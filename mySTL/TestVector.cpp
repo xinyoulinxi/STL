@@ -1,5 +1,5 @@
 #include"TestVector.h"
-
+#include"Timer.h"
 namespace STL {
 	namespace testVector {
 		static const std::string str = "hello vector";
@@ -93,12 +93,175 @@ namespace STL {
 
 		void testStdAndmySTL()
 		{
-			//int
-			myVector<int> myV;
-			stdVector<int> stdV;
-			for (int i = 0; i < 100000; i++) {
-				
+			//以下所有测试都是在release模式下进行
+        // *************************以下是对简单类型的vector的push_back函数性能测试****************************
+
+#ifdef TEST_ALL
+
+
+			//10^7
+			{
+			// myVector  10^7
+				STL::Timer::start();
+				STL::vector<int> myIntVec;
+				for (int i = 0; i < 10000000; ++i) {
+					myIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+			//std::vector 10^7
+				STL::Timer::start();
+				std::vector<int> stdIntVec;
+				for (int i = 0; i < 10000000; ++i) {
+					stdIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				10000000数量级情况下
+				两者对比如下：
+				myVector:    120 ms
+				std::vector: 137 ms
+				*/
 			}
+
+			//10^6
+			{
+			//myVector  10^6
+				STL::Timer::start();
+				STL::vector<int> myIntVec;
+				for (int i = 0; i < 1000000; ++i) {
+					myIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+			//std::vector 10^6
+				STL::Timer::start();
+				std::vector<int> stdIntVec;
+				for (int i = 0; i < 1000000; ++i) {
+					stdIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				两者对比如下：
+				myVector:    11 ms
+				std::vector: 12 ms
+				*/
+			}
+
+			//10^5
+			{
+				//myVector  10^5
+				STL::Timer::start();
+				STL::vector<int> myIntVec;
+				for (int i = 0; i < 100000; ++i) {
+					myIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+				//std::vector 10^5
+				STL::Timer::start();
+				std::vector<int> stdIntVec;
+				for (int i = 0; i < 100000; ++i) {
+					stdIntVec.push_back(i);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				两者对比如下：
+				myVector:    1 ms
+				std::vector: 1 ms
+				*/
+			}
+		
+	
+			// *************************以下是对复杂类型的vector的insert函数性能测试****************************
+			//10^7
+			{
+
+				// myVector  10^7
+				STL::Timer::start();
+				STL::vector<std::string> myIntVec;
+				
+				for (int i = 0; i < 10000000; ++i) {
+					myIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+				//std::vector 10^7
+				STL::Timer::start();
+				std::vector<std::string> stdIntVec;
+				for (int i = 0; i < 10000000; ++i) {
+					stdIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				10000000数量级情况下
+				两者对比如下：
+				myVector:    926 ms
+				std::vector: 880 ms
+				*/
+			}
+
+			//10^6
+			{
+				//myVector  10^6
+				STL::Timer::start();
+				STL::vector<std::string> myIntVec;
+				for (int i = 0; i < 1000000; ++i) {
+					myIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+				//std::vector 10^6
+				STL::Timer::start();
+				std::vector<std::string> stdIntVec;
+				for (int i = 0; i < 1000000; i++) {
+					stdIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				两者对比如下：
+				myVector:    82 ms
+				std::vector: 78 ms
+				*/
+			}
+
+			//10^5
+			{
+				//myVector  10^5
+				STL::Timer::start();
+				STL::vector<std::string> myIntVec;
+				for (int i = 0; i < 100000; i++) {
+					myIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+
+				//std::vector 10^5
+				STL::Timer::start();
+				std::vector<std::string> stdIntVec;
+				for (int i = 0; i < 100000; i++) {
+					stdIntVec.push_back(str);
+				}
+				STL::Timer::finish();
+				STL::Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				两者对比如下：
+				myVector:    10 ms
+				std::vector: 5 ms
+				*/
+			}
+#endif // TEST_ALL
+
 		}
 
 		void testInsert() {

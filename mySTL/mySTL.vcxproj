@@ -125,6 +125,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="List_detail.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="rb_tree.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="String.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="TestQueue.h" />
     <ClInclude Include="TestStack.h" />
     <ClInclude Include="TestVector.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="UninitializedFunc.h" />
     <ClInclude Include="Vector.h" />
