@@ -52,8 +52,8 @@
   * find
   * find_if
   * accumulate
-  * swap
-  * 待完善
+  * swap
+  * 待完善
   - - -
 ## 单元测试覆盖率
  * vector 100%
@@ -69,7 +69,7 @@
 ```
 //myVector  10^5,普通类型，复杂类型大致也是如此
 STL::Timer::start();
-STL::vector<std::string> myIntVec;
+STL::vector<int> myIntVec;
 for (int i = 0; i < 100000; i++) {
    myIntVec.push_back(i);
 }
