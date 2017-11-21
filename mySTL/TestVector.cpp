@@ -93,7 +93,7 @@ namespace STL {
 
 		void testStdAndmySTL()
 		{
-			//以下所有测试都是在release模式下进行
+		//以下所有测试都是在release模式下进行
         // *************************以下是对简单类型的vector的push_back函数性能测试****************************
 
 #ifdef TEST_ALL
@@ -185,19 +185,19 @@ namespace STL {
 
 				// myVector  10^7
 				STL::Timer::start();
-				STL::vector<std::string> myIntVec;
+				STL::vector<std::string> myStrVec;
 				
 				for (int i = 0; i < 10000000; ++i) {
-					myIntVec.push_back(str);
+					myStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 
 				//std::vector 10^7
 				STL::Timer::start();
-				std::vector<std::string> stdIntVec;
+				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 10000000; ++i) {
-					stdIntVec.push_back(str);
+					stdStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -213,18 +213,18 @@ namespace STL {
 			{
 				//myVector  10^6
 				STL::Timer::start();
-				STL::vector<std::string> myIntVec;
+				STL::vector<std::string> myStrVec;
 				for (int i = 0; i < 1000000; ++i) {
-					myIntVec.push_back(str);
+					myStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 
 				//std::vector 10^6
 				STL::Timer::start();
-				std::vector<std::string> stdIntVec;
+				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 1000000; i++) {
-					stdIntVec.push_back(str);
+					stdStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -239,18 +239,18 @@ namespace STL {
 			{
 				//myVector  10^5
 				STL::Timer::start();
-				STL::vector<std::string> myIntVec;
+				STL::vector<std::string> myStrVec;
 				for (int i = 0; i < 100000; i++) {
-					myIntVec.push_back(str);
+					myStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 
 				//std::vector 10^5
 				STL::Timer::start();
-				std::vector<std::string> stdIntVec;
+				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 100000; i++) {
-					stdIntVec.push_back(str);
+					stdStrVec.push_back(str);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
