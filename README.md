@@ -91,3 +91,32 @@ STL::Timer::PrintUsedTimeOnStream(std::cout);
 
 ### vector 性能测试总结
 可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，但是在面对复杂类型string等的时候，就出现了性能问题，后面将会对这个问题进行分析
+
+
+### list 性能测试
+*测试代码*
+```
+stdList<Str> stdStrLis;
+myList<Str> myStrLis;
+//普通类型  10^5  std
+Timer::start();
+for (int i = 0; i < 100000; ++i) {
+		stdStrLis.insert(stdStrLis.begin(), testStr);
+}
+Timer::finish();
+Timer::PrintUsedTimeOnStream(std::cout);
+
+```
+
+*性能测试数据如下 单位: ms*
+
+|类型| 数量级 | std::list | STL::list
+| ------ | -------- | ----- | ------|
+|int |10万|4|1
+|int |100万|59|12
+|int |1000万|546|132
+|std::string |10万|9|4
+|std::string |100万|78|37
+|std::string |1000万|744|296
+
+### list 性能测试总结
