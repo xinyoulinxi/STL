@@ -92,7 +92,7 @@ STL::Timer::PrintUsedTimeOnStream(std::cout);
 ### vector 性能测试总结
 可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，但是在面对复杂类型string等的时候，就出现了性能问题，后面将会对这个问题进行分析
 
-
+- - -
 ### list 性能测试
 *测试代码*
 ```
@@ -120,3 +120,4 @@ Timer::PrintUsedTimeOnStream(std::cout);
 |std::string |1000万|744|296
 
 ### list 性能测试总结
+在头尾的插入上，STL::list的效率是高于std::list的，在中间插入的效率和删除的效率就不再进行测试，最主要的原因还是STL::list的节点的简单性，少了很多的判断和assert
