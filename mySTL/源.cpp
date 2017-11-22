@@ -12,13 +12,10 @@
 #include"TestQueue.h"
 int main() {
 
-	//STL::testList::testAll();
-	//STL::testVector::testAll();
-	//STL::testDeque::testAll();
-	//STL::testQueue::testAll();
-
-	//
-	STL::testVector::testStdAndmySTL();
+	STL::testList::testAll();
+	STL::testVector::testAll();
+	STL::testDeque::testAll();
+	STL::testQueue::testAll();
 	system("pause");
 	return 0;
 }

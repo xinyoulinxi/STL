@@ -149,6 +149,7 @@
     <ClCompile Include="TestQueue.cpp" />
     <ClCompile Include="TestStack.cpp" />
     <ClCompile Include="TestVector.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

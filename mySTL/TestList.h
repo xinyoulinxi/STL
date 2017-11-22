@@ -1,8 +1,12 @@
 #include"List.h"
 #include<list>
 #include<string>
+#include"Timer.h"
 namespace STL {
+	
 	namespace testList {
+	//#define TEST_ALL
+	//测试所有的性能测试
 		template<class T>
 		using myList = STL::list<T>;
 		
@@ -23,6 +27,6 @@ namespace STL {
 		void testSize();
 		void testGetItem();
 		void testIterator();
-		
+		void testStdAndMySTL();
 	}
 }

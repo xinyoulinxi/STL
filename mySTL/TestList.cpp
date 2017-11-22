@@ -2,6 +2,7 @@
 namespace STL {
 	namespace testList {
 		static const Str testStr = "hello list";
+		
 		void testAll(){
 			testConstruct();
 			testInsert();
@@ -14,7 +15,7 @@ namespace STL {
 			testSize();
 			testGetItem();
 			testIterator();
-			
+			testStdAndMySTL();
 		}
 		void testConstruct(){
 			//int
@@ -334,6 +335,188 @@ namespace STL {
 				--it;
 				assert(*it ==testStr);
 			}
+		}
+		void testStdAndMySTL(){
+#ifdef TEST_ALL
+			
+
+     //**********************************进行简单类型的std和STL的性能测试*********************************
+		//1、以下是对list的普通类型的插入操作进行性能测试(同时也是对push_back()和push_front()的测试)
+			//10^5
+			{
+				
+				stdList<int> stdIntLis;
+				myList<int> myIntLis;
+
+				//普通类型  10^5  std
+				Timer::start();
+				for (int i = 0; i < 100000; ++i) {
+					stdIntLis.insert(stdIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^5  STL
+				Timer::start();
+				for (int i = 0; i < 100000; ++i) {
+					myIntLis.insert(myIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				100000数量级情况下
+				两者对比如下：
+				std::list: 4 ms
+				STL::List: 1 ms
+				*/
+			}
+
+			//10^6
+			{
+
+				stdList<int> stdIntLis;
+				myList<int> myIntLis;
+
+				//普通类型  10^6  std
+				Timer::start();
+				for (int i = 0; i < 1000000; ++i) {
+					stdIntLis.insert(stdIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^6  STL
+				Timer::start();
+				for (int i = 0; i < 1000000; ++i) {
+					myIntLis.insert(myIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				100000数量级情况下
+				两者对比如下：
+				std::list: 59 ms
+				STL::List: 12 ms
+				*/
+			}
+
+			//10^7
+			{
+
+				stdList<int> stdIntLis;
+				myList<int> myIntLis;
+
+				//普通类型  10^7  std
+				Timer::start();
+				for (int i = 0; i < 10000000; ++i) {
+					stdIntLis.insert(stdIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^7  STL
+				Timer::start();
+				for (int i = 0; i < 10000000; ++i) {
+					myIntLis.insert(myIntLis.begin(), i);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				100000数量级情况下
+				两者对比如下：
+				std::list: 546 ms
+				STL::List: 132 ms
+				*/
+			}
+
+		//2、以下是对list的复杂类型的插入操作进行性能测试(同时也是对push_back()和push_front()的测试)
+			//10^5
+			{
+
+				stdList<Str> stdStrLis;
+				myList<Str> myStrLis;
+
+				//普通类型  10^5  std
+				Timer::start();
+				for (int i = 0; i < 100000; ++i) {
+					stdStrLis.insert(stdStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^5  STL
+				Timer::start();
+				for (int i = 0; i < 100000; ++i) {
+					myStrLis.insert(myStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				100000数量级情况下
+				两者对比如下：
+				std::list: 9 ms
+				STL::List: 4 ms
+				*/
+			}
+
+			//10^6
+			{
+
+				stdList<Str> stdStrLis;
+				myList<Str> myStrLis;
+
+				//普通类型  10^6  std
+				Timer::start();
+				for (int i = 0; i < 1000000; ++i) {
+					stdStrLis.insert(stdStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^6  STL
+				Timer::start();
+				for (int i = 0; i < 1000000; ++i) {
+					myStrLis.insert(myStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				1000000数量级情况下
+				两者对比如下：
+				std::list: 77 ms
+				STL::List: 37 ms
+				*/
+			}
+
+			//10^7
+			{
+
+				stdList<Str> stdStrLis;
+				myList<Str> myStrLis;
+
+				//普通类型  10^7  std
+				Timer::start();
+				for (int i = 0; i < 10000000; ++i) {
+					stdStrLis.insert(stdStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+
+				//普通类型  10^7  STL
+				Timer::start();
+				for (int i = 0; i < 10000000; ++i) {
+					myStrLis.insert(myStrLis.begin(), testStr);
+				}
+				Timer::finish();
+				Timer::PrintUsedTimeOnStream(std::cout);
+				/*
+				10000000数量级情况下
+				两者对比如下：
+				std::list: 744 ms
+				STL::List: 296 ms
+				*/
+			}
+#endif //TEST_ALL
 		}
 	}
 }

@@ -122,5 +122,8 @@
     <ClCompile Include="alloc.cpp">
       <Filter>detail</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>detail</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

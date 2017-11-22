@@ -2,7 +2,7 @@
 #include"Timer.h"
 namespace STL {
 	namespace testVector {
-		static const std::string str = "hello vector";
+		static const std::string testStr = "hello vector";
 		void testAll() {
 			testPushBack();
 			testInsert();
@@ -25,12 +25,12 @@ namespace STL {
 
 			//string
 			myVector<std::string> vecS;
-			vecS.push_back(str);
-			assert(vecS[0] == str);
-			vecS.push_back(std::string(str));
-			assert(vecS[0] == str);
+			vecS.push_back(testStr);
+			assert(vecS[0] == testStr);
+			vecS.push_back(std::string(testStr));
+			assert(vecS[0] == testStr);
 			for (int i = 0; i < 10; i++) {
-				vecS.push_back(str);
+				vecS.push_back(testStr);
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace STL {
 			assert(vec.capacity() == 0);
 			//string
 			myVector<std::string> vecS;
-			vecS.push_back(str);
+			vecS.push_back(testStr);
 			assert(vecS.size() == 1);
 			vecS.clear();
 			assert(vecS.size() == 0 && vecS.empty());
@@ -77,31 +77,119 @@ namespace STL {
 			assert(vec4.size() == 5 && vec4[0] == 6);
 
 			//string
-			myVector<std::string> vecS1(5, str);
-			assert(vecS1.size() == 5 && vecS1[0] == str);
+			myVector<std::string> vecS1(5, testStr);
+			assert(vecS1.size() == 5 && vecS1[0] == testStr);
 
 			myVector<std::string>vecS2;
 			assert(vecS2.empty());
 
 			myVector<std::string> vecS3(vecS1.begin(), vecS1.end());
-			assert(vecS3.size() == 5 && vecS3[0] == str);
+			assert(vecS3.size() == 5 && vecS3[0] == testStr);
 
 			myVector<std::string> vecS4(vecS1);
-			assert(vecS4.size() == 5 && vecS4[0] == str);
+			assert(vecS4.size() == 5 && vecS4[0] == testStr);
 
 		}
 
+	
+
+		void testInsert() {
+			//int
+			myVector<int> vec;
+			vec.push_back(1);
+			auto it = vec.begin();
+		    vec.insert(it, 10, 5);
+
+			/*	for (it=vec.begin(); it != vec.end(); ++it) {
+			std::cout << *it << std::endl;
+			}*/
+			assert(vec.size() == 11);
+
+			myVector<int> vec1(10, 5);
+			it = vec1.begin();
+		
+			assert(vec1.size() == 10);
+
+			myVector<int> vec3(10,3);
+			int i = 0;
+			for ( auto it =vec3.begin(); i < 10; i++) {
+				 it=vec3.insert(it, i);
+			}
+			assert(vec3.size() == 20);
+
+			myVector<int> vec4;
+			vec4.insert(vec4.begin(),vec.begin(), vec.end());
+			assert(vec4.size() == 11);
+			vec4.insert(vec4.begin(), 5, 1);
+			assert(vec4[0] == 1);
+
+			//string
+			myVector<std::string> vecS;
+			vecS.push_back(testStr);
+			auto itS = vecS.begin();
+			vecS.insert(itS, 10, testStr);
+			assert(vecS.size() == 11);
+
+			myVector<std::string> vecS1(10, testStr);
+			itS = vecS1.begin();
+
+			assert(vecS1.size() == 10);
+
+			myVector<std::string> vecS3(10, testStr);
+			i = 0;
+			for (auto itS = vecS3.begin(); i < 10; i++) {
+				itS=vecS3.insert(itS, testStr);
+			}
+			assert(vecS3.size() == 20);
+
+			myVector<std::string> vecS4;
+			vecS4.insert(vecS4.begin(), vecS.begin(), vecS.end());
+			assert(vecS4.size() == 11);
+			vecS4.insert(vecS4.begin(), 5, testStr);
+			assert(vecS4[0] == testStr);
+
+		}
+		void testErase() {
+			//int
+			myVector<int> vec;
+			for (int i = 0; i < 10; i++) {
+				vec.push_back(i);
+			}
+			int i = 1;
+			for (auto it = vec.begin(); it != vec.begin();++i) {
+
+				assert(vec.size() == i);
+				it = vec.erase(vec.begin());
+				if (i != 10) {
+					assert(*it == i+1);
+				}
+			}
+			//string
+			myVector<std::string> vecS;
+			for (int i = 0; i < 10; i++) {
+				vecS.push_back(testStr);
+			}
+			 i = 1;
+			for (auto it = vecS.begin(); it != vecS.begin(); ++i) {
+
+				assert(vecS.size() == i);
+				it = vecS.erase(vecS.begin());
+				if (i != 10) {
+					assert(*it == testStr);
+				}
+			}
+		}
 		void testStdAndmySTL()
 		{
-		//以下所有测试都是在release模式下进行
-        // *************************以下是对简单类型的vector的push_back函数性能测试****************************
+			//以下所有测试都是在release模式下进行
+			// *************************以下是对简单类型的vector的push_back函数性能测试****************************
 
 #ifdef TEST_ALL
 
 
 			//10^7
 			{
-			// myVector  10^7
+				// myVector  10^7
 				STL::Timer::start();
 				STL::vector<int> myIntVec;
 				for (int i = 0; i < 10000000; ++i) {
@@ -110,7 +198,7 @@ namespace STL {
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 
-			//std::vector 10^7
+				//std::vector 10^7
 				STL::Timer::start();
 				std::vector<int> stdIntVec;
 				for (int i = 0; i < 10000000; ++i) {
@@ -128,7 +216,7 @@ namespace STL {
 
 			//10^6
 			{
-			//myVector  10^6
+				//myVector  10^6
 				STL::Timer::start();
 				STL::vector<int> myIntVec;
 				for (int i = 0; i < 1000000; ++i) {
@@ -137,7 +225,7 @@ namespace STL {
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 
-			//std::vector 10^6
+				//std::vector 10^6
 				STL::Timer::start();
 				std::vector<int> stdIntVec;
 				for (int i = 0; i < 1000000; ++i) {
@@ -177,8 +265,8 @@ namespace STL {
 				std::vector: 1 ms
 				*/
 			}
-		
-	
+
+
 			// *************************以下是对复杂类型的vector的insert函数性能测试****************************
 			//10^7
 			{
@@ -186,7 +274,7 @@ namespace STL {
 				// myVector  10^7
 				STL::Timer::start();
 				STL::vector<std::string> myStrVec;
-				
+
 				for (int i = 0; i < 10000000; ++i) {
 					myStrVec.push_back(str);
 				}
@@ -262,93 +350,6 @@ namespace STL {
 			}
 #endif // TEST_ALL
 
-		}
-
-		void testInsert() {
-			//int
-			myVector<int> vec;
-			vec.push_back(1);
-			auto it = vec.begin();
-		    vec.insert(it, 10, 5);
-
-			/*	for (it=vec.begin(); it != vec.end(); ++it) {
-			std::cout << *it << std::endl;
-			}*/
-			assert(vec.size() == 11);
-
-			myVector<int> vec1(10, 5);
-			it = vec1.begin();
-		
-			assert(vec1.size() == 10);
-
-			myVector<int> vec3(10,3);
-			int i = 0;
-			for ( auto it =vec3.begin(); i < 10; i++) {
-				 it=vec3.insert(it, i);
-			}
-			assert(vec3.size() == 20);
-
-			myVector<int> vec4;
-			vec4.insert(vec4.begin(),vec.begin(), vec.end());
-			assert(vec4.size() == 11);
-			vec4.insert(vec4.begin(), 5, 1);
-			assert(vec4[0] == 1);
-
-			//string
-			myVector<std::string> vecS;
-			vecS.push_back(str);
-			auto itS = vecS.begin();
-			vecS.insert(itS, 10, str);
-			assert(vecS.size() == 11);
-
-			myVector<std::string> vecS1(10, str);
-			itS = vecS1.begin();
-
-			assert(vecS1.size() == 10);
-
-			myVector<std::string> vecS3(10, str);
-			i = 0;
-			for (auto itS = vecS3.begin(); i < 10; i++) {
-				itS=vecS3.insert(itS, str);
-			}
-			assert(vecS3.size() == 20);
-
-			myVector<std::string> vecS4;
-			vecS4.insert(vecS4.begin(), vecS.begin(), vecS.end());
-			assert(vecS4.size() == 11);
-			vecS4.insert(vecS4.begin(), 5, str);
-			assert(vecS4[0] == str);
-
-		}
-		void testErase() {
-			//int
-			myVector<int> vec;
-			for (int i = 0; i < 10; i++) {
-				vec.push_back(i);
-			}
-			int i = 1;
-			for (auto it = vec.begin(); it != vec.begin();++i) {
-
-				assert(vec.size() == i);
-				it = vec.erase(vec.begin());
-				if (i != 10) {
-					assert(*it == i+1);
-				}
-			}
-			//string
-			myVector<std::string> vecS;
-			for (int i = 0; i < 10; i++) {
-				vecS.push_back(str);
-			}
-			 i = 1;
-			for (auto it = vecS.begin(); it != vecS.begin(); ++i) {
-
-				assert(vecS.size() == i);
-				it = vecS.erase(vecS.begin());
-				if (i != 10) {
-					assert(*it == str);
-				}
-			}
 		}
 	}
 }
