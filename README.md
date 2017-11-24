@@ -12,6 +12,7 @@
   * queue
   * stack
   * map
+  * set
 * alloc              （以字节为单位的空间配置器，为allocator提供底层空间配置方案）
 * allocator          （以对象为基本单位的空间配置器）
 * iterator
