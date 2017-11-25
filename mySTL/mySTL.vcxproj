@@ -126,6 +126,7 @@
     <ClInclude Include="List_detail.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="rb_tree.h" />
+    <ClInclude Include="rb_tree_detail.h" />
     <ClInclude Include="Reserse_Iterator.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="String.h" />

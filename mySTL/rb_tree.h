@@ -52,7 +52,7 @@ namespace STL {
 						node = node->left;
 					}
 				}
-				else{                                        //没有右子节点
+				else {                                        //没有右子节点
 					base_ptr y = node->parent;               //找出父节点
 					while (node == y->right) {               //上溯
 						node = y;
@@ -63,7 +63,7 @@ namespace STL {
 					}
 				}
 			}
-			void decrement(){
+			void decrement() {
 				if (node->color == __rb_tree_red &&
 					node->parent->parent == node)
 					node = node->right;
@@ -83,7 +83,37 @@ namespace STL {
 				}
 			}
 		};
-	}
+
+		//红黑树的迭代器
+		template<class Value, class  Ref, class Ptr>
+		struct __rb_tree_iterator :public __rb_tree_base_iterator {
+			//正常typedef
+			typedef Value      value_type;
+			typedef Ref        reference;
+			typedef Ptr        pointer;
+			typedef __rb_tree_iterator<Value, Value&, Value*>             iterator;
+			typedef __rb_tree_iterator<Value, const Value&, const Value*> const_iterator;
+			typedef __rb_tree_iterator<Value, Ref, Ptr>                   self;
+			typedef __rb_tree_node<Value>* link_type;
+
+			__rb_tree_iterator() {}
+			__rb_tree_iterator(link_type x) { node = x; }
+			__rb_tree_iterator(const iterator& it) { node = it.node; }
+
+			//符号重载
+			pointer operator->() const { return &(operator*()); }
+			reference operator*() const { return link_type(node)->value_field; }
+			self& operator++();
+			self operator++(int);
+			self& operator--();
+			self operator--(int);
+			
+		};
+
+	}//end of detail 
 }
-#endif // !1
+//实现细节
+#include"rb_tree_detail.h"
+
+#endif // !_RB_TREE_H_
 

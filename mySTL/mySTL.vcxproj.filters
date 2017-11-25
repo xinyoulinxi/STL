@@ -96,6 +96,9 @@
     <ClInclude Include="Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="rb_tree_detail.h">
+      <Filter>detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="源.cpp">
