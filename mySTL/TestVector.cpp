@@ -209,8 +209,8 @@ namespace STL {
 				/*
 				10000000数量级情况下
 				两者对比如下：
-				myVector:    120 ms
-				std::vector: 137 ms
+				myVector:    128 ms
+				std::vector: 125 ms
 				*/
 			}
 
@@ -236,7 +236,7 @@ namespace STL {
 				/*
 				两者对比如下：
 				myVector:    11 ms
-				std::vector: 12 ms
+				std::vector: 10 ms
 				*/
 			}
 
@@ -262,7 +262,7 @@ namespace STL {
 				/*
 				两者对比如下：
 				myVector:    1 ms
-				std::vector: 1 ms
+				std::vector: 2 ms
 				*/
 			}
 
@@ -292,8 +292,8 @@ namespace STL {
 				/*
 				10000000数量级情况下
 				两者对比如下：
-				myVector:    926 ms
-				std::vector: 880 ms
+				myVector:    828 ms
+				std::vector: 1064 ms
 				*/
 			}
 
@@ -318,8 +318,8 @@ namespace STL {
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 				/*
 				两者对比如下：
-				myVector:    82 ms
-				std::vector: 78 ms
+				myVector:    58 ms
+				std::vector: 83 ms
 				*/
 			}
 
@@ -344,8 +344,8 @@ namespace STL {
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
 				/*
 				两者对比如下：
-				myVector:    10 ms
-				std::vector: 5 ms
+				myVector:    6 ms
+				std::vector: 9 ms
 				*/
 			}
 #endif // TEST_ALL

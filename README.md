@@ -84,14 +84,14 @@ STL::Timer::PrintUsedTimeOnStream(std::cout);
 |类型| 数量级 | std::vector | STL::vector
 | ------ | -------- | ----- | ------|
 |int |10万|1|1
-|int |100万|12|11
-|int |1000万|137|120
-|std::string |10万|5|10
-|std::string |100万|78|81
-|std::string |1000万|804|925
+|int |100万|11|9
+|int |1000万|128|125
+|std::string |10万|9|6
+|std::string |100万|84|58
+|std::string |1000万|1065|828
 
 ### vector 性能测试总结
-可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，但是在面对复杂类型string等的时候，就出现了性能问题，后面将会对这个问题进行分析
+可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，复杂类型也略优于std，主要应该是我使用了更为简洁的空间配置方案
 
 - - -
 ### list 性能测试

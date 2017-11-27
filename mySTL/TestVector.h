@@ -5,7 +5,7 @@
 #include<vector>
 #include<string>
 
-#define TEST_ALL
+//#define TEST_ALL
 //测试所有的性能测试
 namespace STL {
 	namespace testVector {
