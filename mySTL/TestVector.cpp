@@ -27,7 +27,7 @@ namespace STL {
 			myVector<std::string> vecS;
 			vecS.push_back(testStr);
 			assert(vecS[0] == testStr);
-			vecS.push_back(std::string(testStr));
+			vecS.push_back(std::string(testStr)); 
 			assert(vecS[0] == testStr);
 			for (int i = 0; i < 10; i++) {
 				vecS.push_back(testStr);
@@ -276,7 +276,7 @@ namespace STL {
 				STL::vector<std::string> myStrVec;
 
 				for (int i = 0; i < 10000000; ++i) {
-					myStrVec.push_back(str);
+					myStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -285,7 +285,7 @@ namespace STL {
 				STL::Timer::start();
 				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 10000000; ++i) {
-					stdStrVec.push_back(str);
+					stdStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -303,7 +303,7 @@ namespace STL {
 				STL::Timer::start();
 				STL::vector<std::string> myStrVec;
 				for (int i = 0; i < 1000000; ++i) {
-					myStrVec.push_back(str);
+					myStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -312,7 +312,7 @@ namespace STL {
 				STL::Timer::start();
 				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 1000000; i++) {
-					stdStrVec.push_back(str);
+					stdStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -329,7 +329,7 @@ namespace STL {
 				STL::Timer::start();
 				STL::vector<std::string> myStrVec;
 				for (int i = 0; i < 100000; i++) {
-					myStrVec.push_back(str);
+					myStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
@@ -338,7 +338,7 @@ namespace STL {
 				STL::Timer::start();
 				std::vector<std::string> stdStrVec;
 				for (int i = 0; i < 100000; i++) {
-					stdStrVec.push_back(str);
+					stdStrVec.push_back(testStr);
 				}
 				STL::Timer::finish();
 				STL::Timer::PrintUsedTimeOnStream(std::cout);
