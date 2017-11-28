@@ -54,14 +54,12 @@ namespace STL {
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	 iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
 		 __insert(base_ptr x, base_ptr y, const value_type & v){
-		
+
 	}
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	link_type rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::__copy(link_type x, link_type p) {
-		// structural copy.  x and p must be non-null.
 		link_type top = clone_node(x);
 		top->parent = p;
-
 		if (x->right)
 			top->right = __copy(right(x), top);
 		p = top;
@@ -117,7 +115,6 @@ namespace STL {
 		 }
 		 else {
 			 root() = __copy(x.root(), header);
-			 __STL_UNWIND(put_node(header));
 			 leftmost() = minimum(root());
 			 rightmost() = maximum(root());
 		 }
