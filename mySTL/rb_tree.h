@@ -124,6 +124,8 @@ namespace STL {
 		};
 
 	}//end of detail 
+	template <class T1, class T2>
+	struct pair;
 	template <class Key, class Value, class KeyOfValue, class Compare,
 		class Alloc = alloc>
 		class rb_tree {
