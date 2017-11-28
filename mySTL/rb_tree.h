@@ -174,17 +174,30 @@ namespace STL {
 
 
 		private:
+			//空间配置方案
 			iterator __insert(base_ptr x, base_ptr y, const value_type& v);
 			link_type __copy(link_type x, link_type p);
 			void __erase(link_type x);
 			void init();
 		public:
+			//构造和析构
 			rb_tree(const Compare& comp = Compare());
 			rb_tree(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x);
 			~rb_tree();
 			rb_tree<Key, Value, KeyOfValue, Compare, Alloc>&
 				operator=(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x);
-
+			//插入操作
+			insert_equal(const Value& V);
+			insert_unique(const Value& V);
+			
+		public:
+			//get函数
+			Compare key_comp()const { return key_compare; }
+			iterator begin() { return leftmost(); }
+			iterator end() { return header; }
+			bool empty() { return 0 == node_count; }
+			size_type size() { return node_count; }
+			
 	};
 
 }

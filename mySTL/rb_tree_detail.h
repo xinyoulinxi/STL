@@ -130,6 +130,43 @@ namespace STL {
 	{
 		// TODO: 在此处插入 return 语句
 	}
+	 
+	 //允许节点键值重复的插入操作
+	 template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+	 inline rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_equal(const Value & V){
+		 
+		 link_type x = header;
+		 link_type y = root();
+		 while (x != 0) {//从根节点开始寻找适当的叶子节点进行插入
+			 y = x;
+			 x = key_compare(KeyOfValue()(v), key(x)) ? left(x) : right(x);
+			 //遇到‘大’的则向左，‘小或者等于的’则向右
+
+		 }
+		 return __insert(x, y, v);
+	 }
+
+	 //不允许节点键值重复的插入操作，若重复则无效
+	 template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+	 rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value & V)
+	 {
+		 
+		 link_type x = header;
+		 link_type y = root();
+		 bool comp = true;
+		 while (x != 0) {//从根节点开始寻找适当的叶子节点进行插入
+			 y = x;
+			 comp = key_compare(KeyOfValue()(v), key(x))
+				 x = comp ? left(x) : right(x;
+		 }
+		 //此时y为插入点的父节点
+		 iterator j = iterator(y);
+		 if (comp) {//如果离开while循环时comp为真，则表示插入点在y的左侧
+			 if (j == begin()) {
+				 
+			 }
+		 }
+	 }
 }
 
 
