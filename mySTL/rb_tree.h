@@ -2,6 +2,7 @@
 #define _RB_TREE_H_
 #include"Iterator.h"
 #include"Allocator.h"
+#include"Construct.h"
 #include<new>
 namespace STL {
 	namespace detail {
@@ -163,15 +164,29 @@ namespace STL {
 			static const Key& key(base_ptr x) { return KeyOfValue()(value(link_type(x))); }
 			static color_type& color(base_ptr x) { return (color_type&)(link_type(x)->color); }
 			//返回最大值和最小值的节点
-			static link_type minimum(link_type x) {return (link_type)__rb_tree_node_base::minimum(x);}
-			static link_type maximum(link_type x) {return (link_type)__rb_tree_node_base::maximum(x);}
+			static link_type minimum(link_type x) { return (link_type)__rb_tree_node_base::minimum(x); }
+			static link_type maximum(link_type x) { return (link_type)__rb_tree_node_base::maximum(x); }
 
 		public:
 			typedef __rb_tree_iterator<value_type, reference, pointer> iterator;
 			typedef __rb_tree_iterator<value_type, const_reference, const_pointer>
 				const_iterator;
 
+
+		private:
+			iterator __insert(base_ptr x, base_ptr y, const value_type& v);
+			link_type __copy(link_type x, link_type p);
+			void __erase(link_type x);
+			void init();
+		public:
+			rb_tree(const Compare& comp = Compare());
+			rb_tree(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x);
+			~rb_tree();
+			rb_tree<Key, Value, KeyOfValue, Compare, Alloc>&
+				operator=(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x);
+
 	};
+
 }
 //imp/detail
 #include"rb_tree_detail.h"
