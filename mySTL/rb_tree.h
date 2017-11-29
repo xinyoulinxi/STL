@@ -212,8 +212,16 @@ namespace STL {
 			bool empty() { return 0 == node_count; }
 			size_type size() { return node_count; }
 			
-	};
+		private:
 
+			
+			
+	};
+	//全局函数
+	   //旋转和平衡
+	void __single_totare_left(__rb_tree_node_base* x, __rb_tree_node_base*& root);
+	void __single_totare_right(__rb_tree_node_base* x, __rb_tree_node_base*& root);
+	inline void __rebalance_rb_tree(__rb_tree_node_base* x, __rb_tree_node_base*& root);
 }
 //imp/detail
 #include"rb_tree_detail.h"

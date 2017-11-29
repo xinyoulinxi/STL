@@ -141,7 +141,6 @@ namespace STL {
 			y = x;
 			x = key_compare(KeyOfValue()(v), key(x)) ? left(x) : right(x);
 			//遇到‘大’的则向左，‘小或者等于的’则向右
-
 		}
 		return __insert(x, y, v);
 	}
@@ -160,7 +159,7 @@ namespace STL {
 		//此时y为插入点的父节点
 		iterator j = iterator(y);
 		if (comp) {//如果离开while循环时comp为真，则表示插入点在y的左侧
-			if (j == begin()) {//如果插入点的父节点为最最左节点
+			if (j == begin()) {//如果插入点的父节点为最左节点
 				return pair<iterator, bool>(__insert(x, y, v), true);
 			}
 			else {//否则
