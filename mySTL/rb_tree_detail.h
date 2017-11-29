@@ -212,9 +212,50 @@ namespace STL {
 		}
 		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
-			__rebalance_rb_tree(__rb_tree_node_base * x, __rb_tree_node_base *& root)
-		{
-
+			__rebalance_rb_tree(__rb_tree_node_base * x, __rb_tree_node_base *& root){
+			x->color = __rb_tree_red;    //新节点为红
+			while (x != root && x->parent->color == __rb_tree_red) {  //父节点为红
+				if (x->parent == x->parent->parent->left) {           //父节点是祖父节点的左子节点
+					__rb_tree_node_base* y = x->parent->parent->right;//y为伯父节点（伯父节点指父节点的兄弟节点）
+					if (y && y->color == __rb_tree_red) {             //（情况一）—— 伯父节点存在，且为红（且父节点是祖父节点的左子节点）
+						x->parent->color = __rb_tree_black;           //更改父节点为黑
+						y->color = __rb_tree_black;                   //调整伯父节点为黑
+						x->parent->parent->color = __rb_tree_red;     //调整祖父节点为红
+						x = x->parent->parent;                        //调整节点，向上继续进行颜色调整
+					}
+					else { //无伯父节点                             
+						if (x == x->parent->right) { //（情况二）如果新节点为父节点的右子节点，且父节点是祖父节点的左子节点（进行双旋）
+							x = x->parent;
+							__single_rotate_left(x, root);//以插入点的父节点为左旋转点进行左旋
+						}
+						//（情况三）若新节点为父节点的右子节点，且父节点是祖父节点的左子节点（进行单旋转）
+						//颜色调整
+						x->parent->color = __rb_tree_black;
+						x->parent->parent->color = __rb_tree_red;
+						__single_rotate_right(x->parent->parent, root);
+					}
+				}
+				else {        //父节点为祖父节点的左子节点
+					__rb_tree_node_base* y = x->parent->parent->left;//y为伯父节点
+					if (y && y->color == __rb_tree_red) {            //（情况四）有伯父节点，且为红，且父节点为祖父节点的左子节点（进行双旋）
+						x->parent->color = __rb_tree_black;          //更改父节点颜色为黑
+						y->color = __rb_tree_black;                  //更改伯父节点为黑
+						x->parent->parent->color = __rb_tree_red;    //更改祖父节点为红
+						x = x->parent->parent;                       //向上继续进行调整
+					}
+					else {//       无伯父节点，或则伯父节点为黑
+						if (x == x->parent->left) {   //（情况五）如果新节点为父节点的左子节点，且父节点为祖父节点的左子节点（此时进行双旋）
+							x = x->parent;
+							__single_rotate_right(x, root);//以插入点的父节点为右旋点进行右旋
+						}
+						//（情况六）如果新节点为父节点的左子节点（执行单旋转）
+						x->parent->color = __rb_tree_black;
+						x->parent->parent->color = __rb_tree_red;
+						__single_rotate_left(x->parent->parent, root);//左旋
+					}
+				}
+			}// end of while
+			root->color = __rb_tree_black;//根节点永远为黑
 		}
 		//进行到此处，表示新值一定与树中的某个键值重复，那么就不进行插入
 		return pair<iterator, bool>(j, true);
