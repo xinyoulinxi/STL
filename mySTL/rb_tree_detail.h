@@ -200,15 +200,42 @@ namespace STL {
 		}
 		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
-			__single_rotate_left(__rb_tree_node_base * x, __rb_tree_node_base *& root)
-		{
-
+			__single_rotate_left(__rb_tree_node_base * x, __rb_tree_node_base *& root){
+			//X为旋转点
+			__rb_tree_node_base* y = x->right;//y为旋转点的右子节点
+			x->right = y->left;               //调整x的左子节点
+			if (y->left != 0)                 //若y有左子节点
+				y->left->parent = x;          //调整这个左子节点的父节点为x
+			y->parent = x->parent;            //调整y的父节点指向y的祖父节点
+			if (x == root) {                  //x为根节点
+				root = y;
+			}else if (x == x->parent->left) { //x为其父节点的左子节点
+				x->parent->left = y;
+			}else {                           //x为其父节点的右子节点
+				x->parent->right = y;
+			}
+			//调整旋转点自身的连接情况
+			y->left = x;
+			x->parent = y;
 		}
 		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
-			__single_rotate_right(__rb_tree_node_base * x, __rb_tree_node_base *& root)
-		{
-
+			__single_rotate_right(__rb_tree_node_base * x, __rb_tree_node_base *& root){
+			//同__single_rotate_left
+			__rb_tree_node_base* y = x->left;
+			x->left = y->right;
+			if (y->right != 0)
+				y->right->parent = x;
+			y->parent = x->parent;
+			if (x == root) {
+				root = y;
+			}else if (x == x->parent->right) {
+				x->parent->right = y;
+			}else {
+				x->parent->left = y;
+			}
+			y->right = x;
+			x->parent = y;
 		}
 		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
