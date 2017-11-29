@@ -32,6 +32,7 @@ namespace STL {
 
 	}//end of detail
 
+
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	link_type rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::create_node(const value_type & x) {
 		link_type tmp = get_node();
@@ -53,8 +54,34 @@ namespace STL {
 
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
-		__insert(base_ptr x, base_ptr y, const value_type & v) {
-
+		__insert(base_ptr x_, base_ptr y_, const value_type & v) {
+		link_type x = link_type(x_);
+		link_type y = link_type(y_);
+		link_type z;
+		if (y == header || x != 0 || key_compare(KeyOfValue()(v), Key(y))) {
+			z = create_node(v);
+			left(y) = z;
+			if (y == header) {
+				root() = z;
+				rightmost = z;
+			}
+			else if (leftmost() == y) {//如果y为最左节点
+				leftmost = z;          //令新插入节点为最左节点
+			}	
+		}
+		else {
+			z = create_node(v);
+			right(y) = z;
+			if (rightmost() == y) {
+				rightmost() = z;
+			}
+		}
+		parent(z) = y;
+		left(z) = 0;
+		right(z) = 0;
+		__rebalance_rb_tree(z, header->parent);
+		++node_count;
+		return iterator(z);
 	}
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	link_type rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::__copy(link_type x, link_type p) {
@@ -170,6 +197,24 @@ namespace STL {
 		if (key_compare(key(j.node), KeyOfValue()(v)) {
 			//新键值不与既有节点之键值重复,执行安插操作
 			return pair<iterator, bool>(__insert(x, y, v), true);
+		}
+		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
+			__single_rotate_left(__rb_tree_node_base * x, __rb_tree_node_base *& root)
+		{
+
+		}
+		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
+			__single_rotate_right(__rb_tree_node_base * x, __rb_tree_node_base *& root)
+		{
+
+		}
+		template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+		inline void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
+			__rebalance_rb_tree(__rb_tree_node_base * x, __rb_tree_node_base *& root)
+		{
+
 		}
 		//进行到此处，表示新值一定与树中的某个键值重复，那么就不进行插入
 		return pair<iterator, bool>(j, true);

@@ -203,7 +203,7 @@ namespace STL {
 			//插入操作
 			insert_equal(const Value& V);
 			insert_unique(const Value& V);
-			
+
 		public:
 			//get函数
 			Compare key_comp()const { return key_compare; }
@@ -211,17 +211,16 @@ namespace STL {
 			iterator end() { return header; }
 			bool empty() { return 0 == node_count; }
 			size_type size() { return node_count; }
-			
-		private:
 
-			
-			
+		private:
+		//旋转和平衡
+			inline void __single_rotate_left(__rb_tree_node_base* x, __rb_tree_node_base*& root);
+			inline void __single_rotate_right(__rb_tree_node_base* x, __rb_tree_node_base*& root);
+			inline void __rebalance_rb_tree(__rb_tree_node_base* x, __rb_tree_node_base*& root);
 	};
-	//全局函数
-	   //旋转和平衡
-	void __single_totare_left(__rb_tree_node_base* x, __rb_tree_node_base*& root);
-	void __single_totare_right(__rb_tree_node_base* x, __rb_tree_node_base*& root);
-	inline void __rebalance_rb_tree(__rb_tree_node_base* x, __rb_tree_node_base*& root);
+	   
+
+
 }
 //imp/detail
 #include"rb_tree_detail.h"
