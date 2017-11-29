@@ -5,135 +5,140 @@
 #include"Construct.h"
 #include<new>
 namespace STL {
-	namespace detail {
+	typedef bool __rb_tree_color_type;
+	const __rb_tree_color_type __rb_tree_red = false;   //红色  0
+	const __rb_tree_color_type __rb_tree_black = true;  //黑色  1
 
-		typedef bool __rb_tree_color_type;
-		const __rb_tree_color_type __rb_tree_red = false;   //红色  0
-		const __rb_tree_color_type __rb_tree_black = true;  //黑色  1
+	//红黑树的节点基类
+	struct __rb_tree_node_base {
+		typedef __rb_tree_color_type color_type;
+		typedef __rb_tree_node_base* base_ptr;
 
-		//红黑树的节点基类
-		struct __rb_tree_node_base {
-			typedef __rb_tree_color_type color_type;
-			typedef __rb_tree_node_base* base_ptr;
+		color_type   color;
+		base_ptr     parent;
+		base_ptr     left;
+		base_ptr     right;
+		static base_ptr minimun(base_ptr x) {//寻找最小值
+			while (nullptr != x->left)x = x->left;
+			return x;
+		}
+		static base_ptr maximum(base_ptr x) {//寻找最大值
+			while (nullptr != x->right)x = x->right;
+			return x;
+		}
+	};
 
-			color_type   color;
-			base_ptr     parent;
-			base_ptr     left;
-			base_ptr     right;
-			static base_ptr minimun(base_ptr x) {//寻找最小值
-				while (nullptr != x->left)x = x->left;
-				return x;
-			}
-			static base_ptr maximum(base_ptr x) {//寻找最大值
-				while (nullptr != x->right)x = x->right;
-				return x;
-			}
-		};
-
-		//红黑树的节点
-		template<class Value>
-		struct  __rb_tree_node :public __rb_tree_node_base {
-			typedef __rb_tree_node<Value>* link_type;
-			Value value_field;   //节点值
-		};
+	//红黑树的节点
+	template<class Value>
+	struct  __rb_tree_node :public __rb_tree_node_base {
+		typedef __rb_tree_node<Value>* link_type;
+		Value value_field;   //节点值
+	};
 
 
-		//红黑树迭代器设计
-			//迭代器基类
-		struct __rb_tree_base_iterator
-		{
-			typedef __rb_tree_node_base*                base_ptr;
-			typedef STL::bidirectional_iterator_tag     iterator_category;
-			typedef ptrdiff_t                           defference;
+	//红黑树迭代器设计
+		//迭代器基类
+	struct __rb_tree_base_iterator
+	{
+		typedef __rb_tree_node_base*                base_ptr;
+		typedef STL::bidirectional_iterator_tag     iterator_category;
+		typedef ptrdiff_t                           defference;
 
-			base_ptr  node;
-			void increment() {
-				if (nullptr != node->right) {                //如果有右子节点
-					node = node->right;                      //就向右走
-					while (nullptr != node->left) {          //然后一直往左到底
-						node = node->left;
-					}
-				}
-				else {                                        //没有右子节点
-					base_ptr y = node->parent;                //找出父节点
-					while (node == y->right) {                //上溯
-						node = y;
-						y = y->parent;
-					}
-					if (node->right != y) {
-						node = y;
-					}
+		base_ptr  node;
+		void increment() {
+			if (0 != node->right) {                //如果有右子节点
+				node = node->right;                      //就向右走
+				while (0 != node->left) {          //然后一直往左到底
+					node = node->left;
 				}
 			}
-			void decrement() {
-				if (node->color == __rb_tree_red &&
-					node->parent->parent == node)
-					node = node->right;
-				else if (node->left != 0) {
-					base_ptr y = node->left;
-					while (y->right != 0)
-						y = y->right;
+			else {                                        //没有右子节点
+				base_ptr y = node->parent;                //找出父节点
+				while (node == y->right) {                //上溯
 					node = y;
+					y = y->parent;
 				}
-				else {
-					base_ptr y = node->parent;
-					while (node == y->left) {
-						node = y;
-						y = y->parent;
-					}
+				if (node->right != y) {
 					node = y;
 				}
 			}
-		};
+		}
+		void decrement() {
+			if (node->color == __rb_tree_red &&
+				node->parent->parent == node)
+				node = node->right;
+			else if (node->left != 0) {
+				base_ptr y = node->left;
+				while (y->right != 0)
+					y = y->right;
+				node = y;
+			}
+			else {
+				base_ptr y = node->parent;
+				while (node == y->left) {
+					node = y;
+					y = y->parent;
+				}
+				node = y;
+			}
+		}
+	};
 
-		//红黑树的迭代器
-		template<class Value, class  Ref, class Ptr>
-		struct __rb_tree_iterator :public __rb_tree_base_iterator {
-			//正常typedef
-			typedef Value      value_type;
-			typedef Ref        reference;
-			typedef Ptr        pointer;
-			typedef __rb_tree_iterator<Value, Value&, Value*>             iterator;
-			typedef __rb_tree_iterator<Value, const Value&, const Value*> const_iterator;
-			typedef __rb_tree_iterator<Value, Ref, Ptr>                   self;
-			typedef __rb_tree_node<Value>* link_type;
+	//红黑树的迭代器
+	template<class Value, class  Ref, class Ptr>
+	struct __rb_tree_iterator :public __rb_tree_base_iterator {
+		//正常typedef
+		typedef Value      value_type;
+		typedef Ref        reference;
+		typedef Ptr        pointer;
+		typedef __rb_tree_iterator<Value, Value&, Value*>             iterator;
+		typedef __rb_tree_iterator<Value, const Value&, const Value*> const_iterator;
+		typedef __rb_tree_iterator<Value, Ref, Ptr>                   self;
+		typedef __rb_tree_node<Value>* link_type;
 
-			__rb_tree_iterator() {}
-			__rb_tree_iterator(link_type x) { node = x; }
-			__rb_tree_iterator(const iterator& it) { node = it.node; }
+		__rb_tree_iterator() {}
+		__rb_tree_iterator(link_type x) { node = x; }
+		__rb_tree_iterator(const iterator& it) { node = it.node; }
 
-			//符号重载
-			pointer operator->() const { return &(operator*()); }
-			reference operator*() const { return link_type(node)->value_field; }
-			self& operator++();
-			self operator++(int);
-			self& operator--();
-			self operator--(int);
-		};
-		//pair设计
-		template <class T1, class T2>
-		struct pair {
-			typedef T1 first_type;
-			typedef T2 second_type;
+		//符号重载
+		pointer operator->() const { return &(operator*()); }
+		reference operator*() const { return link_type(node)->value_field; }
+		self& operator++();
+		self operator++(int);
+		self& operator--();
+		self operator--(int);
+	};
+	inline bool operator == (const __rb_tree_base_iterator& x,
+		const __rb_tree_base_iterator& y) {
+		return x.node == y.node;
+	}
 
-			T1 first;
-			T2 second;
+	inline bool operator!=(const __rb_tree_base_iterator& x,
+		const __rb_tree_base_iterator& y) {
+		return x.node != y.node;
+	}
 
-			pair() : first(T1()), second(T2()) {}
-			pair(const T1& a, const T2& b) : first(a), second(b) {}
-		};
-
-	}//end of detail 
+	//pair设计
 	template <class T1, class T2>
-	struct pair;
+	struct pair {
+		typedef T1 first_type;
+		typedef T2 second_type;
+
+		T1 first;
+		T2 second;
+
+		pair() : first(T1()), second(T2()) {}
+		pair(const T1& a, const T2& b) : first(a), second(b) {}
+	};
+
 	template <class Key, class Value, class KeyOfValue, class Compare,
 		class Alloc = alloc>
 		class rb_tree {
 		protected:
-			typedef void*                                       void_pointer;
-			typedef  __rb_tree_node_base*                       base_ptr;
+			typedef void*                                               void_pointer;
+			typedef __rb_tree_node_base*                       base_ptr;
 			typedef __rb_tree_node<Value>                       rb_tree_node;
-			typedef STL::allocator<rb_tree_node, Alloc>         rb_tree_node_allocator;
+			typedef STL::allocator<rb_tree_node>         rb_tree_node_allocator;
 			typedef __rb_tree_color_type                        color_type;
 
 		public:
@@ -201,8 +206,8 @@ namespace STL {
 			rb_tree<Key, Value, KeyOfValue, Compare, Alloc>&
 				operator=(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x);
 			//插入操作
-			insert_equal(const Value& V);
-			insert_unique(const Value& V);
+			iterator insert_equal(const Value& V);
+			pair<iterator, bool> insert_unique(const Value& v);
 
 		public:
 			//get函数
@@ -213,14 +218,11 @@ namespace STL {
 			size_type size() { return node_count; }
 
 		private:
-		//旋转和平衡
+			//旋转和平衡
 			inline void __single_rotate_left(__rb_tree_node_base* x, __rb_tree_node_base*& root);
 			inline void __single_rotate_right(__rb_tree_node_base* x, __rb_tree_node_base*& root);
 			inline void __rebalance_rb_tree(__rb_tree_node_base* x, __rb_tree_node_base*& root);
 	};
-	   
-
-
 }
 //imp/detail
 #include"rb_tree_detail.h"
