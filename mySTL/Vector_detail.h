@@ -85,7 +85,7 @@ namespace STL {
 		NewFinish = STL::uninitialized_copy(first, last, NewFinish);
 		NewFinish = STL::uninitialized_copy(position, end(), NewFinish);
 
-		deallocate();
+		
 
 		start_ = newStart;
 		finish_ = NewFinish;
@@ -104,8 +104,7 @@ namespace STL {
 		newFinish = STL::uninitialized_fill_n(newFinish, n, value);
 		newFinish = STL::uninitialized_copy(position, end(), newFinish);
 
-		deallocate();
-
+		data_Allocator::deallocate(start_, capacity());
 		start_ = newStart;
 		finish_ = newFinish;
 		end_of_storage_ = newEndOfStorage;

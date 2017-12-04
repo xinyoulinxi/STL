@@ -292,8 +292,8 @@ namespace STL {
 				/*
 				10000000数量级情况下
 				两者对比如下：
-				myVector:    828 ms
-				std::vector: 1064 ms
+				myVector:    619 ms
+				std::vector: 635 ms
 				*/
 			}
 
