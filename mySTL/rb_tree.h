@@ -18,7 +18,7 @@ namespace STL {
 		base_ptr     parent;
 		base_ptr     left;
 		base_ptr     right;
-		static base_ptr minimun(base_ptr x) {//寻找最小值
+		static base_ptr minimum(base_ptr x) {//寻找最小值
 			while (nullptr != x->left)x = x->left;
 			return x;
 		}
@@ -159,7 +159,7 @@ namespace STL {
 			link_type clone_node(link_type x);
 			void destroy_node(link_type p);
 
-		protected:
+		public:
 			size_type node_count; // 存储树的大小
 			link_type header;     //根节点上方的头节点，一种实现方式
 			Compare key_compare;  //比较方式，默认less<T>()

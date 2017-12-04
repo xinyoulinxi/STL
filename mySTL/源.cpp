@@ -19,15 +19,18 @@ int main() {
 	STL::testVector::testAll();
 	STL::testDeque::testAll();
 	STL::testQueue::testAll();
-	STL::rb_tree<int, int,std::identity<int>,std::less<int>> rbTree;
-	rbTree.insert_unique(10);
+	STL::rb_tree<int,int,std::identity<int>,std::less<int>> rbTree;
+	rbTree.insert_unique(29);
+
+	rbTree.insert_unique(11);
+	rbTree.insert_unique(18);
+	rbTree.insert_unique(12);
 	rbTree.insert_unique(6);
 	rbTree.insert_unique(5);
-	rbTree.insert_unique(23);
-	rbTree.insert_unique(20);
-	rbTree.insert_unique(12);
-	std::cout << rbTree.size() <<std::endl;
-	std::cout << *rbTree.begin() << std::endl;
+	std::cout << rbTree.size() << std::endl;
+	//std::cout <<*STL::rb_tree<int, int, std::identity<int>, std::less<int>>::iterator(rbTree.leftmost()) << std::endl;
+	//std::cout << *STL::rb_tree<int, int, std::identity<int>, std::less<int>>::iterator(rbTree.rightmost()) << std::endl;
+	std::cout << *STL::rb_tree<int, int, std::identity<int>, std::less<int>>::iterator(rbTree.root()) << std::endl;
 	for (auto it = rbTree.begin(); it != rbTree.end(); ++it) {
 		std::cout << *it << " ";
 	}

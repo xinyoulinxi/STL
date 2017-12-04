@@ -119,6 +119,7 @@ namespace STL {
 		root() = 0;
 		leftmost() = header;
 		rightmost() = header;
+		value(header) = 0;
 	}
 	template<class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 	rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::rb_tree(const Compare & comp)
@@ -257,7 +258,7 @@ namespace STL {
 					x->parent->parent->color = __rb_tree_red;     //调整祖父节点为红
 					x = x->parent->parent;                        //调整节点，向上继续进行颜色调整
 				}
-				else { //无伯父节点                             
+				else { //无伯父节点 ,或伯父节点为黑色                         
 					if (x == x->parent->right) { //（情况二）如果新节点为父节点的右子节点，且父节点是祖父节点的左子节点（进行双旋）
 						x = x->parent;
 						__single_rotate_left(x, root);//以插入点的父节点为左旋转点进行左旋
