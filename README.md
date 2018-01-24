@@ -91,7 +91,12 @@ STL::Timer::PrintUsedTimeOnStream(std::cout);
 |std::string |1000万|1065|828
 
 ### vector 性能测试总结
-可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，复杂类型也略优于std，主要应该是我使用了更为简洁的空间配置方案
+可以看到，我实现的vector面对普通类型的时候，性能是略高于std的vector的，复杂类型也略优于std，原因应该如下：
+1. 在重新配置空间的时候，`STL::vector`申请了比`std::vector`更多的内存
+2. 在1的基础上，导致了`STL::vector`的重新申请内存空间的次数降低
+3. 在1、2的基础上，虽然可能在空间越大的时候，越有可能造成大量的闲置空间引起空间浪费，但是这样也让`STL::vector`中的对象少了很多的重新被搬运执行拷贝构造和析构的过程
+
+所以，虽然`STL::vector`内存的损耗是略大于`std::vector`，但是在时间复杂度上，是`STL::vector`比较好一点
 
 - - -
 ### list 性能测试
