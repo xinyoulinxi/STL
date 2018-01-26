@@ -126,4 +126,4 @@ Timer::PrintUsedTimeOnStream(std::cout);
 |std::string |1000万|744|296
 
 ### list 性能测试总结
-在头尾的插入上，STL::list的效率是高于std::list的，在中间插入的效率和删除的效率就不再进行测试，最主要的原因还是STL::list的节点的简单性，少了很多的判断和assert
+在头尾的插入上，STL::list的效率是高于std::list的，在中间插入的效率和删除的效率就不再进行测试.
